@@ -8,8 +8,9 @@ package Ifttt_app.Model;
  *
  * @author aless
  */
-interface Trigger {
+public interface Trigger {
     
    public boolean checkTrigger();
+  
     
 }

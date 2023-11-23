@@ -8,7 +8,7 @@ package Ifttt_app.Model;
  *
  * @author aless
  */
-interface Action {
+public interface Action {
     
     public abstract boolean execute();
 }

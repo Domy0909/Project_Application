@@ -21,11 +21,30 @@ public class Rule {
     private boolean sleeping;
     private LocalDateTime sleepingDate;
 
+    public Rule(Action action, Trigger trigger) {
+        this.action = action;
+        this.trigger = trigger;
+        this.active=true;
+        this.firedOnlyOnce=false;
+        this.fired_oo=false;
+        this.sleeping=false;
+        this.sleepingDate=LocalDateTime.now();
+    }
+    
+
     public void setAction(Action action) {
+        this.action = action;
+    }
+    
+    public void setAction(ShowDialogAction action) {
         this.action = action;
     }
 
     public void setTrigger(Trigger trigger) {
+        this.trigger = trigger;
+    }
+    
+     public void setTrigger(TimeTrigger trigger) {
         this.trigger = trigger;
     }
 

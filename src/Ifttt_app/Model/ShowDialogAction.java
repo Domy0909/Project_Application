@@ -4,6 +4,7 @@
  */
 package Ifttt_app.Model;
 
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
 /**
@@ -14,8 +15,10 @@ public class ShowDialogAction implements Action {
     String specificstring;
     @Override
     public boolean execute() {
+        Platform.runLater(() -> {
         Alert alert = new Alert (Alert.AlertType.WARNING,specificstring);
         alert.showAndWait();
+        });
         return true;
     }
 

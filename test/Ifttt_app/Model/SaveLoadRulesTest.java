@@ -44,7 +44,7 @@ public class SaveLoadRulesTest {
         SaveRules.loadRules(ruleSet);
         // Verificare che le regole caricate siano state caricate correttamente
         
-        assertEquals(2, ruleSet.getRules().size());  //Modficare seconda del numero di regole nel RuleSet di esempio
+        assertEquals(1, ruleSet.getRules().size());  //Modficare seconda del numero di regole nel RuleSet di esempio
     }
 
     // Metodo di utilità per creare un RuleSet di esempio

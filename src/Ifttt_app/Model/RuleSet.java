@@ -11,12 +11,18 @@ import javafx.collections.ObservableList;
  *
  * @author aless
  */
-public class RuleSet {
+public class RuleSet extends Thread{
     private static RuleSet instance;
     public ObservableList<Rule> ruleSet;
+    private boolean running;
 
     private RuleSet() {
         this.ruleSet = FXCollections.observableArrayList();
+    }
+
+    public RuleSet(ObservableList<Rule> ruleSet, boolean running) {
+        this.ruleSet = ruleSet;
+        this.running = running;
     }
      
     
@@ -41,5 +47,36 @@ public class RuleSet {
     public void removeallRule(){
        this.ruleSet.removeAll(this.ruleSet);
     }
-    
+    public void stopRuleChecking() {
+     running = false;
+    }
+   
+    public void runRuleChecking() {
+        /* Crea un nuovo thread per eseguire
+        il controllo delle regole*/
+        Thread checkingThread;
+        checkingThread = new Thread(() -> {
+            while (!running) {
+                for (Rule rule : ruleSet) {
+                    /* Verifica se la regola è attiva,
+                    se il trigger è attivo e se non è 
+                    già stata eseguita*/
+                    if (rule.isActive() && rule.getTrigger().checkTrigger() && rule.isFired_oo()==false) {
+                       rule.setFired_oo(true); 
+                       rule.getAction().execute();
+                    }
+                }  
+               
+                try { 
+                    // Controllo ogni 5 secondi
+                    Thread.sleep(5000);
+                
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            } 
+           });
+        checkingThread.setDaemon(true);
+        checkingThread.start();
+    }
 }

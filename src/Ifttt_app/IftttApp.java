@@ -5,6 +5,7 @@ package Ifttt_app;
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMain.java to edit this template
  */
 
+import Ifttt_app.Model.RuleSet;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -32,9 +33,14 @@ public class IftttApp extends Application {
         
         primaryStage.setScene(scene);
         primaryStage.show();
+        RuleSet.getInstance().runRuleChecking();
     }
     
-    
+     @Override
+    public void stop() throws Exception {
+        //Chiudi l'applicazione e arresta il thread di controllo dei trigger
+       RuleSet.getInstance().stopRuleChecking();
+    }
 
     /**
      * @param args the command line arguments

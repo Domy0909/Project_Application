@@ -57,6 +57,10 @@ public class FXMLDocumentController implements Initializable {
     private Spinner<Integer> ssp;
     @FXML
     private TextField messagefield;
+    @FXML
+    private Button saveRuleButton;
+    @FXML
+    private Button deleteRuleButton;
 
     /**
      * Initializes the controller class.
@@ -124,5 +128,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void Save(ActionEvent event) {
         SaveRules.saveRules(rset);
+    }
+    
+    @FXML
+    private void Delete(ActionEvent event) {
+         // Ottieni la regola selezionata dalla tabella
+        Rule selectedRule = ruleTable.getSelectionModel().getSelectedItem();
+
+        if (selectedRule != null) {
+          // Rimuovi la regola dalla ruleSet
+           rset.removeRule(selectedRule);
+          // Aggiorna la tabella
+          ruleTable.refresh();
+        }   
     }
 }

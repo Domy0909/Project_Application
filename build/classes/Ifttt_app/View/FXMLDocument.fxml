@@ -33,6 +33,7 @@
                </columnResizePolicy>
             </TableView>
             <Button fx:id="createRuleButton" layoutX="235.0" layoutY="333.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="30.0" prefWidth="130.0" text="Create Rule" />
+            <Button fx:id="saveRuleButton" layoutX="32.0" layoutY="333.0" mnemonicParsing="false" onAction="#Save" prefHeight="30.0" prefWidth="79.0" text="Save Rule" />
          </children>
       </AnchorPane>
    </children>

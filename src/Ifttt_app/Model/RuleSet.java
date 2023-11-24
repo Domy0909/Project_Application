@@ -4,6 +4,7 @@
  */
 package Ifttt_app.Model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 /**
@@ -14,16 +15,20 @@ public class RuleSet {
     private static RuleSet instance;
     public ObservableList<Rule> ruleSet;
 
-    private RuleSet(ObservableList<Rule> ruleSet) {
-        this.ruleSet = ruleSet;
+    private RuleSet() {
+        this.ruleSet = FXCollections.observableArrayList();
     }
      
     
-    public static RuleSet getInstance(ObservableList<Rule> ruleSet) {
+    public static RuleSet getInstance() {
         if (instance == null) { 
-            instance = new RuleSet(ruleSet);
+            instance = new RuleSet();
         }
         return instance;
+    }
+    
+    public ObservableList<Rule> getRules(){
+        return this.ruleSet;
     }
     
    public void addRule(Rule r){
@@ -31,6 +36,10 @@ public class RuleSet {
     }
     public void removeRule(Rule r){
        this.ruleSet.remove(r);
+    }
+    
+    public void removeallRule(){
+       this.ruleSet.removeAll(this.ruleSet);
     }
     
 }

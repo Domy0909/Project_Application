@@ -4,11 +4,13 @@
  */
 package Ifttt_app.Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author aless
  */
-public interface Trigger {
+public interface Trigger extends Serializable{
     
    public boolean checkTrigger();
   

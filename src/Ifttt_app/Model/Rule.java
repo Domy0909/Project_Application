@@ -4,13 +4,14 @@
  */
 package Ifttt_app.Model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  *
  * @author aless
  */
-public class Rule {
+public class Rule implements Serializable{
     
     
     private Action action;

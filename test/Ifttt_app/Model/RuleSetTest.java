@@ -5,11 +5,12 @@
 package Ifttt_app.Model;
 
 import java.time.LocalTime;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
 
 /**
  *
@@ -93,14 +94,9 @@ public class RuleSetTest {
      */
     @Test
     public void testRunRuleChecking() throws InterruptedException {
-        RuleSet ruleSet = RuleSet.getInstance();
-        ShowDialogAction dialog = new ShowDialogAction("Testing");
-        TimeTrigger trigger = new TimeTrigger(LocalTime.now());
-        Rule rule = new Rule (dialog, trigger);
-        ruleSet.addRule(rule);
+        ruleSet.addRule(rule1);
         ruleSet.runRuleChecking();
         Thread.sleep(6000);
-        assertEquals(true, rule.isFired_oo());    
+        assertEquals(true, rule1.isFired_oo());    
     }
-    
-}
+  }

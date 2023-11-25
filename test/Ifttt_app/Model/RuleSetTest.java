@@ -5,12 +5,11 @@
 package Ifttt_app.Model;
 
 import java.time.LocalTime;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 
 /**
  *
@@ -41,7 +40,7 @@ public class RuleSetTest {
     public void setUp() {
         ruleSet = RuleSet.getInstance();
         rule1 = new Rule(new ShowDialogAction("rule1"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 1
-        rule2 = new Rule(new ShowDialogAction("rule2"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 2
+        rule2 = new Rule(new ActionPlayAudio("src//Ifttt_app//View//Beep.wav"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 2
     }
     /**
      * Test of addRule method, of class RuleSet.
@@ -92,11 +91,24 @@ public class RuleSetTest {
      * Test of runRuleChecking method, of class RuleSet.
      * @throws java.lang.InterruptedException
      */
-    @Test
-    public void testRunRuleChecking() throws InterruptedException {
+    @Test //test azione show dialog
+    public void testRunRuleCheckingDialog() throws InterruptedException {
         ruleSet.addRule(rule1);
-        ruleSet.runRuleChecking();
+        Platform.startup(()->{
+            ruleSet.runRuleChecking();
+        });
         Thread.sleep(6000);
         assertEquals(true, rule1.isFired_oo());    
     }
+    
+    @Test //test azione play audio
+    public void testRunRuleCheckingAudio() throws InterruptedException{
+        ruleSet.addRule(rule2);
+        Platform.startup(()->{
+            ruleSet.runRuleChecking();
+        });
+        Thread.sleep(6000);
+        assertEquals(true, rule2.isFired_oo());    
+    }
   }
+

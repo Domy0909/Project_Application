@@ -85,6 +85,7 @@ public class FXMLDocumentController implements Initializable {
         
         comboTrigger.getItems().addAll("CurrentTime");
         comboAction.getItems().addAll("ShowDialog");
+        comboAction.getItems().addAll("PlayAudio");
         
         addRuleButton.disableProperty().bind(Bindings.isNull(comboTrigger.valueProperty()).or(Bindings.isNull(comboAction.valueProperty())));
         
@@ -106,6 +107,10 @@ public class FXMLDocumentController implements Initializable {
            
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
+        if (comboAction.getValue().equals("PlayAudio")){
+            String FilePath = "src//Ifttt_app//View//Beep.wav";
+            action = new ActionPlayAudio(FilePath);
+        }
         if ((action!=null) && (trigger!=null) ){
             r=new Rule(action,trigger);
         }

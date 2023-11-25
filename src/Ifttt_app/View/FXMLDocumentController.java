@@ -16,11 +16,15 @@ import javafx.scene.layout.AnchorPane;
 import Ifttt_app.Model.*;
 import java.time.LocalTime;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 /**
  * FXML Controller class
@@ -61,6 +65,21 @@ public class FXMLDocumentController implements Initializable {
     private Button saveRuleButton;
     @FXML
     private Button deleteRuleButton;
+    @FXML
+    private ContextMenu tmenu;
+    @FXML
+    private MenuItem tdelete;
+    @FXML
+    private RadioButton firedradiobutton;
+    @FXML
+    private RadioButton sleepingradiobutton;
+  
+    @FXML
+    private TextField sleepingdays;
+    @FXML
+    private TextField sleepinghours;
+    @FXML
+    private TextField sleepingminutes;
 
     /**
      * Initializes the controller class.
@@ -72,6 +91,7 @@ public class FXMLDocumentController implements Initializable {
         
         SaveRules.loadRules(rset);
         
+        
         ruleTable.setItems(rset.getRules());
         actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().getClass().getSimpleName()) );
         triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().getClass().getSimpleName()));
@@ -80,7 +100,29 @@ public class FXMLDocumentController implements Initializable {
         msp.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,59,1));
         ssp.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,59,1));
         
+        hspin.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
+        msp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
+        ssp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         
+        
+        hspin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        
+        
+        ToggleGroup toggleGroup = new ToggleGroup();
+        firedradiobutton.setToggleGroup(toggleGroup);
+        sleepingradiobutton.setToggleGroup(toggleGroup);
+        firedradiobutton.setSelected(true);
+        
+        sleepingdays.disableProperty().bind(firedradiobutton.selectedProperty());
+        sleepinghours.disableProperty().bind(firedradiobutton.selectedProperty());
+        sleepingminutes.disableProperty().bind(firedradiobutton.selectedProperty());
+        
+        
+        sleepingdays.visibleProperty().bind(sleepingradiobutton.selectedProperty());
+        sleepinghours.visibleProperty().bind(sleepingradiobutton.selectedProperty());
+        sleepingminutes.visibleProperty().bind(sleepingradiobutton.selectedProperty());
 
         
         comboTrigger.getItems().addAll("CurrentTime");

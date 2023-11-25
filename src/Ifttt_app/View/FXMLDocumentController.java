@@ -14,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import Ifttt_app.Model.*;
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalTime;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ContextMenu;
@@ -25,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.stage.FileChooser;
 
 /**
  * FXML Controller class
@@ -66,6 +69,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button deleteRuleButton;
     @FXML
+    private Button selectAudio;
+    @FXML
     private ContextMenu tmenu;
     @FXML
     private MenuItem tdelete;
@@ -80,6 +85,9 @@ public class FXMLDocumentController implements Initializable {
     private TextField sleepinghours;
     @FXML
     private TextField sleepingminutes;
+    
+    private String FilePath;
+    
 
     /**
      * Initializes the controller class.
@@ -108,6 +116,7 @@ public class FXMLDocumentController implements Initializable {
         hspin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        selectAudio.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "PlayAudio"));
         
         
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -123,7 +132,7 @@ public class FXMLDocumentController implements Initializable {
         sleepingdays.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         sleepinghours.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         sleepingminutes.visibleProperty().bind(sleepingradiobutton.selectedProperty());
-
+        
         
         comboTrigger.getItems().addAll("CurrentTime");
         comboAction.getItems().addAll("ShowDialog");
@@ -135,8 +144,10 @@ public class FXMLDocumentController implements Initializable {
             
         }
         // TODO
-    }    
-
+        
+    }
+    
+    
     @FXML
     private void addRuleButton(ActionEvent event) {
         
@@ -150,7 +161,7 @@ public class FXMLDocumentController implements Initializable {
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
         if (comboAction.getValue().equals("PlayAudio")){
-            String FilePath = "src//Ifttt_app//View//Beep.wav";
+            
             action = new ActionPlayAudio(FilePath);
         }
         if ((action!=null) && (trigger!=null) ){
@@ -188,5 +199,28 @@ public class FXMLDocumentController implements Initializable {
           // Aggiorna la tabella
           ruleTable.refresh();
         }   
+    }
+    
+    @FXML
+    void selectAudio(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // Settare titolo file chooser
+        fileChooser.setTitle("Select a File");
+
+        // Settare directory iniziale
+        File currentDirectory = new File(new File(".").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Settare extension filter per file WAV
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("WAV files (.wav)", "*.wav");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Mostra finestra id dialogo quando il bottone viene premuto
+        File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                FilePath = selectedFile.getAbsolutePath();
+            }
     }
 }

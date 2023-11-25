@@ -73,24 +73,7 @@ public class RuleSetTest {
         assertEquals(rule2, rules.get(0)); // Verifica che la regola 2 sia rimasta
     }
 
-    /**
-     * Test of removeallRule method, of class RuleSet.
-     */
-    @Test
-    public void testRemoveallRule() {
-    }
-
-    /**
-     * Test of stopRuleChecking method, of class RuleSet.
-     */
-    @Test
-    public void testStopRuleChecking() {
-    }
-
-    /**
-     * Test of runRuleChecking method, of class RuleSet.
-     * @throws java.lang.InterruptedException
-     */
+    
     @Test //test azione show dialog
     public void testRunRuleCheckingDialog() throws InterruptedException {
         ruleSet.addRule(rule1);

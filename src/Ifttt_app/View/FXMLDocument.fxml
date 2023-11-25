@@ -11,7 +11,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="ruleCreationPane" prefHeight="400.0" prefWidth="600.0">
          <children>
@@ -27,6 +27,7 @@
             <TextField fx:id="sleepingdays" layoutX="375.0" layoutY="123.0" />
             <TextField fx:id="sleepinghours" layoutX="375.0" layoutY="163.0" />
             <TextField fx:id="sleepingminutes" layoutX="375.0" layoutY="206.0" />
+            <Button fx:id="selectAudio" layoutX="209.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="400.0" prefWidth="600.0" visible="false">

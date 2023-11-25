@@ -34,7 +34,7 @@ public class ActionPlayAudio implements Action{
         this.running = running;
     }
     
-        
+     // esecuzione Azione PlayAudio
     @Override
     public boolean execute() {
         
@@ -46,7 +46,7 @@ public class ActionPlayAudio implements Action{
             if (audioFile.exists() && audioFile.canRead()) {
                 AudioInputStream audioInputStream;
                 audioInputStream = AudioSystem.getAudioInputStream(audioFile);
-                this.setRunning(true);
+                
                 Clip clip;
                 clip= AudioSystem.getClip();
                 clip.open(audioInputStream);
@@ -57,7 +57,7 @@ public class ActionPlayAudio implements Action{
 
                 clip.close();
                 audioInputStream.close();
-                
+                this.setRunning(true);
                } 
         } catch (IOException | InterruptedException | LineUnavailableException | UnsupportedAudioFileException e) {
             System.out.println("Error playing the audio: " + e.getMessage());

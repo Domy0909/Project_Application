@@ -4,6 +4,8 @@
  */
 package Ifttt_app.Model;
 
+import java.io.File;
+import java.io.IOException;
 import javafx.application.Platform;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -18,9 +20,8 @@ public class ActionPlayAudioTest {
     }
     
     @Test // test con audio valido 
-    public void testExecute_withValidAudioFile() throws InterruptedException {
-        // Given
-        String validAudioFilePath = "src//Ifttt_app//View//Beep.wav";
+    public void testExecute_withValidAudioFile() throws InterruptedException{
+        String validAudioFilePath = "sounds\\clip_1.wav";
         ActionPlayAudio action = new ActionPlayAudio(validAudioFilePath);
         Platform.startup(()->{
             action.execute();

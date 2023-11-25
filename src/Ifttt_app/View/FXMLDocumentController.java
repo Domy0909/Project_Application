@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
@@ -85,6 +86,12 @@ public class FXMLDocumentController implements Initializable {
     private TextField sleepinghours;
     @FXML
     private TextField sleepingminutes;
+    @FXML
+    private Label Lhours;
+    @FXML
+    private Label Lmin;
+    @FXML
+    private Label Lsec;
     
     private String FilePath;
     
@@ -104,19 +111,25 @@ public class FXMLDocumentController implements Initializable {
         actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().getClass().getSimpleName()) );
         triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().getClass().getSimpleName()));
         
+        Lhours.setVisible(false);
         hspin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,23,1));
+        Lmin.setVisible(false);
         msp.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,59,1));
+        Lsec.setVisible(false);
         ssp.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,59,1));
         
         hspin.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         msp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         
-        
         hspin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         selectAudio.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "PlayAudio"));
+        
+        Lhours.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        Lmin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        Lsec.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
         
         ToggleGroup toggleGroup = new ToggleGroup();

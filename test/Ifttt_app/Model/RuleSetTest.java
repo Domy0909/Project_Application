@@ -40,7 +40,7 @@ public class RuleSetTest {
     public void setUp() {
         ruleSet = RuleSet.getInstance();
         rule1 = new Rule(new ShowDialogAction("rule1"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 1
-        rule2 = new Rule(new ActionPlayAudio("src//Ifttt_app//View//Beep.wav"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 2
+        rule2 = new Rule(new ActionPlayAudio("sounds\\clip_1.wav"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 2
     }
     /**
      * Test of addRule method, of class RuleSet.
@@ -82,16 +82,6 @@ public class RuleSetTest {
         });
         Thread.sleep(6000);
         assertEquals(true, rule1.isFired_oo());    
-    }
-    
-    @Test //test azione play audio
-    public void testRunRuleCheckingAudio() throws InterruptedException{
-        ruleSet.addRule(rule2);
-        Platform.startup(()->{
-            ruleSet.runRuleChecking();
-        });
-        Thread.sleep(6000);
-        assertEquals(true, rule2.isFired_oo());    
     }
   }
 

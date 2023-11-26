@@ -29,7 +29,7 @@ public class Rule implements Serializable{
         this.action = action;
         this.trigger = trigger;
         this.active=true;
-        this.firedOnlyOnce=false;
+        this.firedOnlyOnce=true;
         this.fired_oo=false;
         this.sleeping=false;
     }
@@ -45,12 +45,12 @@ public class Rule implements Serializable{
     
     }
     
-    public Rule(Action action,Trigger trigger, boolean active, boolean firedOnlyOnce, boolean sleeping, int day, int hours, int minutes){
+    public Rule(Action action,Trigger trigger, boolean active, int day, int hours, int minutes){
         this.action = action;
         this.trigger = trigger;
         this.active = active;
-        this.firedOnlyOnce = firedOnlyOnce;
-        this.sleeping = sleeping;
+        this.firedOnlyOnce = false;
+        this.sleeping = false;
         this.awake = LocalDateTime.of(0, 1, 1, 0, 0, 0, 0);
         this.fired_oo = false;
         this.day = day;
@@ -166,8 +166,11 @@ public class Rule implements Serializable{
     */
     public boolean isAwake(){
         LocalDateTime today = LocalDateTime.now();
+        if(this.getAwake() == null)
+            return true;
         int compare = today.compareTo(this.getAwake());
         return compare > 0 || compare == 0;
+        
     }
     
 }

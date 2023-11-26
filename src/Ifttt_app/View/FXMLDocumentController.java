@@ -31,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
@@ -100,6 +101,10 @@ public class FXMLDocumentController implements Initializable {
     private String FilePath;
     @FXML
     private Text ruleWarning;
+    @FXML
+    private TableColumn<Rule, Boolean> activecol;
+    @FXML
+    private MenuItem tactiveDeactive;
     
 
     /**
@@ -143,6 +148,7 @@ public class FXMLDocumentController implements Initializable {
         ruleTable.setItems(rset.getRules());
         actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().getClass().getSimpleName()) );
         triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().getClass().getSimpleName()));
+        activecol.setCellValueFactory(new PropertyValueFactory<>("active"));
         
         Lhours.setVisible(false);
         hspin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,23,1));
@@ -186,7 +192,7 @@ public class FXMLDocumentController implements Initializable {
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
         
-        addRuleButton.disableProperty().bind(Bindings.isNull(comboTrigger.valueProperty()).or(Bindings.isNull(comboAction.valueProperty())));
+        addRuleButton.disableProperty().bind(Bindings.isNull(comboTrigger.valueProperty()).or(Bindings.isNull(comboAction.valueProperty())).or(sleepingradiobutton.selectedProperty().and(sleepingdays.textProperty().isEmpty().or(sleepinghours.textProperty().isEmpty().or(sleepingminutes.textProperty().isEmpty())))));        
         
         if(comboTrigger.valueProperty().equals("CurrentTime")){
             
@@ -220,6 +226,16 @@ public class FXMLDocumentController implements Initializable {
             r=new Rule(action,trigger);
         }
         
+        if(r!=null & firedradiobutton.isSelected())
+            r.setFiredOnlyOnce(true);
+        if(r!=null && sleepingradiobutton.isSelected()){
+            r.setSleeping(true);
+            r.setDay(Integer.parseInt(sleepingdays.getText()));
+            r.setHours(Integer.parseInt(sleepinghours.getText()));
+            r.setMinutes(Integer.parseInt(sleepingminutes.getText()));
+            
+        }
+        
         if((r!=null)){
          rset.addRule(r);
          ruleCreationPane.setDisable(true);
@@ -227,6 +243,8 @@ public class FXMLDocumentController implements Initializable {
          ruleTablePane.setDisable(false);
          ruleTablePane.setVisible(true);
         }
+        
+        
     }
 
     @FXML
@@ -279,4 +297,13 @@ public class FXMLDocumentController implements Initializable {
                 FilePath = selectedFile.getAbsolutePath();
             }
     }
+
+    @FXML
+    private void activeDeactive(ActionEvent event) {
+        //Prendo la regola selezionata
+        Rule selectedRule = ruleTable.getSelectionModel().getSelectedItem();
+        selectedRule.setActive(!selectedRule.isActive());
+        ruleTable.refresh();
+    }
+
 }

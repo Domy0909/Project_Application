@@ -61,6 +61,12 @@ public class RuleSet extends Thread{
                     /* Verifica se la regola è attiva,
                     se il trigger è attivo e se non è 
                     già stata eseguita*/
+                    if(rule.isSleeping() && rule.isActive()){
+                        if(rule.isAwake() && rule.getTrigger().checkTrigger()){
+                            rule.getAction().execute();
+                            rule.whenAwake();
+                        }
+                    }
                     if (rule.isActive() && rule.getTrigger().checkTrigger() && rule.isFired_oo()==false) {
                        rule.setFired_oo(true); 
                        rule.getAction().execute();

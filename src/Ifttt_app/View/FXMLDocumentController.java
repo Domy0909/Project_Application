@@ -17,6 +17,8 @@ import Ifttt_app.Model.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.function.UnaryOperator;
+import java.util.regex.Pattern;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -27,7 +29,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 
 /**
@@ -94,6 +98,8 @@ public class FXMLDocumentController implements Initializable {
     private Label Lsec;
     
     private String FilePath;
+    @FXML
+    private Text ruleWarning;
     
 
     /**
@@ -105,6 +111,33 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         SaveRules.loadRules(rset);
+        
+        
+        //Crea un UnaryOperator per filtrare l'input e consentire solo numeri interi
+        UnaryOperator<TextFormatter.Change> filter = change -> {
+            String newText = change.getControlNewText();
+
+            if (newText.isEmpty()) {
+                return change;
+            }
+
+            if (Pattern.matches("^\\d*$", newText)) {
+                return change;
+            } else {
+                return null; // Reject the change
+            }
+        };
+        
+        sleepingdays.setTextFormatter(new TextFormatter<>(filter));
+        sleepinghours.setTextFormatter(new TextFormatter<>(filter));
+        sleepingminutes.setTextFormatter(new TextFormatter<>(filter));
+        
+        hspin.getEditor().setTextFormatter(new TextFormatter<>(filter));
+        msp.getEditor().setTextFormatter(new TextFormatter<>(filter));
+        ssp.getEditor().setTextFormatter(new TextFormatter<>(filter));
+        
+        
+        
         
         
         ruleTable.setItems(rset.getRules());
@@ -125,7 +158,9 @@ public class FXMLDocumentController implements Initializable {
         hspin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
+        
         selectAudio.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "PlayAudio"));
+        messagefield.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "ShowDialog"));
         
         Lhours.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         Lmin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
@@ -164,7 +199,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void addRuleButton(ActionEvent event) {
         
-        
+        ruleWarning.setText("");
         Trigger trigger=null;
         Action action=null;
         Rule r=null;
@@ -174,18 +209,24 @@ public class FXMLDocumentController implements Initializable {
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
         if (comboAction.getValue().equals("PlayAudio")){
-            
-            action = new ActionPlayAudio(FilePath);
+            if(FilePath!=null){
+             action = new ActionPlayAudio(FilePath);
+             
+            }
+            else
+                ruleWarning.setText(ruleWarning.getText()+"No valid audio file selected."+"\n");
         }
         if ((action!=null) && (trigger!=null) ){
             r=new Rule(action,trigger);
         }
         
-        rset.addRule(r);
-        ruleCreationPane.setDisable(true);
-        ruleCreationPane.setVisible(false);
-        ruleTablePane.setDisable(false);
-        ruleTablePane.setVisible(true);
+        if((r!=null)){
+         rset.addRule(r);
+         ruleCreationPane.setDisable(true);
+         ruleCreationPane.setVisible(false);
+         ruleTablePane.setDisable(false);
+         ruleTablePane.setVisible(true);
+        }
     }
 
     @FXML
@@ -194,6 +235,8 @@ public class FXMLDocumentController implements Initializable {
         ruleTablePane.setVisible(false);
         ruleCreationPane.setDisable(false);
         ruleCreationPane.setVisible(true);
+        FilePath=null;
+        ruleWarning.setText("");
     }
     
     @FXML

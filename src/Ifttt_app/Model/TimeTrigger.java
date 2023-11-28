@@ -29,6 +29,11 @@ public class TimeTrigger implements Trigger{
         this.timetrigger = timetrigger;
     }
 
+    @Override
+    public String description() {
+      return TimeTrigger.class.getSimpleName()+"\n"+"after "+timetrigger.toString();
+    }
+
    
    
 }

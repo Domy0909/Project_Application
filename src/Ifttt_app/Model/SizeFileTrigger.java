@@ -5,6 +5,8 @@
 package Ifttt_app.Model;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  *
@@ -27,6 +29,13 @@ public class SizeFileTrigger implements Trigger{
     public SizeFileTrigger(String filePath, int thresholdBytes) {
         this.filePath = filePath;
         this.thresholdBytes = thresholdBytes;
+    }
+
+    @Override
+    public String description() {
+        Path path=Paths.get(filePath);
+        String fileName=path.getFileName().toString();
+        return SizeFileTrigger.class.getSimpleName()+"\n"+"when size of "+fileName+"\n"+"is bigger than "+thresholdBytes+ " bytes";
     }
     
     

@@ -8,6 +8,8 @@ import java.io.BufferedWriter;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 
 /**
@@ -37,6 +39,13 @@ public class SpecifiedStringAction implements Action {
     public SpecifiedStringAction(String filePath, String contentToAppend) {
         this.filePath = filePath;
         this.contentToAppend = contentToAppend;
+    }
+
+    @Override
+    public String description() {
+        Path path=Paths.get(filePath);
+        String filename=path.getFileName().toString();
+        return SpecifiedStringAction.class.getSimpleName()+"\n"+"append this: "+contentToAppend+"\non:"+filename;
     }
     
 }

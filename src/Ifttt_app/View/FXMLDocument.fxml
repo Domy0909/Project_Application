@@ -14,9 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="400.0" prefWidth="700.0" visible="false">
          <children>
             <ComboBox fx:id="comboAction" layoutX="209.0" layoutY="65.0" prefWidth="150.0" promptText="Action Selector" />
             <ComboBox fx:id="comboTrigger" layoutX="38.0" layoutY="65.0" prefWidth="150.0" promptText="Trigger Selector" />
@@ -25,11 +25,11 @@
             <Spinner fx:id="msp" editable="true" layoutX="92.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
             <Spinner fx:id="ssp" editable="true" layoutX="145.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
             <TextField fx:id="messagefield" layoutX="210.0" layoutY="123.0" />
-            <RadioButton fx:id="firedradiobutton" layoutX="375.0" layoutY="69.0" mnemonicParsing="false" text="Fired only once" />
-            <RadioButton fx:id="sleepingradiobutton" layoutX="482.0" layoutY="69.0" mnemonicParsing="false" text="Sleeping Period" />
-            <TextField fx:id="sleepingdays" layoutX="375.0" layoutY="123.0" promptText="insert sleeping days" />
-            <TextField fx:id="sleepinghours" layoutX="375.0" layoutY="163.0" promptText="insert sleeping hours" />
-            <TextField fx:id="sleepingminutes" layoutX="375.0" layoutY="206.0" promptText="insert sleeping minutes" />
+            <RadioButton fx:id="firedradiobutton" layoutX="416.0" layoutY="69.0" mnemonicParsing="false" text="Fired only once" />
+            <RadioButton fx:id="sleepingradiobutton" layoutX="537.0" layoutY="69.0" mnemonicParsing="false" text="Sleeping Period" />
+            <TextField fx:id="sleepingdays" layoutX="537.0" layoutY="123.0" promptText="insert sleeping days" />
+            <TextField fx:id="sleepinghours" layoutX="537.0" layoutY="163.0" promptText="insert sleeping hours" />
+            <TextField fx:id="sleepingminutes" layoutX="537.0" layoutY="206.0" promptText="insert sleeping minutes" />
             <Button fx:id="selectAudio" layoutX="209.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
             <Label fx:id="Lhours" layoutX="39.0" layoutY="106.0" text="Hours" />
             <Label fx:id="Lmin" layoutX="90.0" layoutY="106.0" prefHeight="17.0" prefWidth="45.0" text="Minutes" />
@@ -43,20 +43,18 @@
             <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
             <TextField fx:id="fileTextField" layoutX="38.0" layoutY="194.0" promptText="inserisci il nome del file" />
             <Button fx:id="fileSizeSelectorButton" layoutX="39.0" layoutY="231.0" mnemonicParsing="false" onAction="#fileSizeSelector" prefHeight="25.0" prefWidth="149.0" text="Select File" />
-            <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="262.0" prefHeight="25.0" prefWidth="150.0" />
+            <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="262.0" prefHeight="25.0" prefWidth="150.0" promptText="insert a threshold in bytes" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <AnchorPane fx:id="ruleTablePane" prefHeight="400.0" prefWidth="700.0">
          <children>
-            <TableView fx:id="ruleTable" layoutX="32.0" layoutY="34.0" prefHeight="276.0" prefWidth="536.0">
+            <TableView fx:id="ruleTable" layoutX="8.0" layoutY="34.0" prefHeight="280.0" prefWidth="682.0">
               <columns>
                 <TableColumn fx:id="triggercol" prefWidth="75.0" text="Trigger" />
                 <TableColumn fx:id="actioncol" prefWidth="75.0" text="Action" />
                   <TableColumn fx:id="activecol" prefWidth="75.0" text="Active" />
+                  <TableColumn fx:id="repcolumn" prefWidth="75.0" text="Repetition" />
               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
                <contextMenu>
                   <ContextMenu fx:id="tmenu">
                     <items>
@@ -65,10 +63,13 @@
                     </items>
                   </ContextMenu>
                </contextMenu>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
-            <Button fx:id="createRuleButton" layoutX="235.0" layoutY="333.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="30.0" prefWidth="130.0" text="Create Rule" />
+            <Button fx:id="createRuleButton" layoutX="281.0" layoutY="333.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="30.0" prefWidth="130.0" text="Create Rule" />
             <Button fx:id="saveRuleButton" layoutX="32.0" layoutY="333.0" mnemonicParsing="false" onAction="#Save" prefHeight="30.0" prefWidth="79.0" text="Save Rule" />
-            <Button fx:id="deleteRuleButton" layoutX="488.0" layoutY="333.0" mnemonicParsing="false" onAction="#Delete" prefHeight="30.0" prefWidth="79.0" text="Delete Rule" />
+            <Button fx:id="deleteRuleButton" layoutX="581.0" layoutY="333.0" mnemonicParsing="false" onAction="#Delete" prefHeight="30.0" prefWidth="79.0" text="Delete Rule" />
          </children>
       </AnchorPane>
    </children>

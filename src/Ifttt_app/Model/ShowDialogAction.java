@@ -29,6 +29,11 @@ public class ShowDialogAction implements Action {
     public String getSpecificstring() {
         return specificstring;
     }
+
+    @Override
+    public String description() {
+       return ShowDialogAction.class.getSimpleName()+"\n"+"message: "+specificstring;
+    }
     
     
 }

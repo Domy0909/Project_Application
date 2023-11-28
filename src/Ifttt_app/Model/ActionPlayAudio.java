@@ -5,6 +5,8 @@
 package Ifttt_app.Model;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.application.Platform;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -64,5 +66,12 @@ public class ActionPlayAudio implements Action{
         }
         }); 
             return false;
+    }
+
+    @Override
+    public String description() {
+        Path path=Paths.get(audioFilePath);
+        String filename=path.getFileName().toString();
+        return ActionPlayAudio.class.getSimpleName()+"\n"+"play: "+filename;
     }
 }

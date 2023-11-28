@@ -25,5 +25,12 @@ public class ExistenceTrigger implements Trigger {
         this.directoryPath = directoryPath;
         this.fileName = fileName;
     }
+
+    @Override
+    public String description() {
+        Path path=Paths.get(directoryPath);
+        String dirname=path.getFileName().toString();
+        return ExistenceTrigger.class.getSimpleName()+"\n"+"on existance of: "+fileName+"\n"+"in directory: "+dirname;
+    }
     
 }

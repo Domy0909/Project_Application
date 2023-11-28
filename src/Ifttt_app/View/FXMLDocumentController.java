@@ -120,6 +120,8 @@ public class FXMLDocumentController implements Initializable {
     private Button fileSizeSelectorButton;
     @FXML
     private TextField fileSizeTextField;
+    @FXML
+    private TableColumn<Rule, String> repcolumn;
     
 
     /**
@@ -162,9 +164,21 @@ public class FXMLDocumentController implements Initializable {
         
         
         
-        ruleTable.setItems(rset.getRules());
-        actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().getClass().getSimpleName()) );
-        triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().getClass().getSimpleName()));
+        ruleTable.setItems(rset.getRules()); 
+        actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().description()) );
+        triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().description()));
+        repcolumn.setCellValueFactory(cellData -> {
+        Rule rowData = cellData.getValue();
+
+       if (!rowData.isSleeping()) {
+        // If isSleeping() returns false, set the value as isfoo
+        return new SimpleStringProperty("Can only be triggered once"+"\nhas been fired: "+Boolean.toString(rowData.isFired_oo()));
+       } else {
+        // If isSleeping() returns true, set the value as getday + gethour
+        return new SimpleStringProperty("when triggered sleeps for :\n"+rowData.getDay()+" days\n"+rowData.getHours()+" hours \n"+rowData.getMinutes()+" minutes");
+       }
+      });
+                
         activecol.setCellValueFactory(new PropertyValueFactory<>("active"));
         
         Lhours.setVisible(false);

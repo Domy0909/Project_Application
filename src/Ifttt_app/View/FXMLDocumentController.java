@@ -33,6 +33,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
 /**
@@ -99,12 +100,26 @@ public class FXMLDocumentController implements Initializable {
     private Label Lsec;
     
     private String FilePath;
+    private String textFilePath;
+    private String directoryPath;
+    private String sizeFilePath;
+            
     @FXML
     private Text ruleWarning;
     @FXML
     private TableColumn<Rule, Boolean> activecol;
     @FXML
     private MenuItem tactiveDeactive;
+    @FXML
+    private Button selectTextFileButton;
+    @FXML
+    private Button selectDirectoryButton;
+    @FXML
+    private TextField fileTextField;
+    @FXML
+    private Button fileSizeSelectorButton;
+    @FXML
+    private TextField fileSizeTextField;
     
 
     /**
@@ -141,6 +156,8 @@ public class FXMLDocumentController implements Initializable {
         msp.getEditor().setTextFormatter(new TextFormatter<>(filter));
         ssp.getEditor().setTextFormatter(new TextFormatter<>(filter));
         
+        fileSizeTextField.setTextFormatter(new TextFormatter<>(filter));
+        
         
         
         
@@ -157,6 +174,12 @@ public class FXMLDocumentController implements Initializable {
         Lsec.setVisible(false);
         ssp.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,59,1));
         
+        
+        hspin.getValueFactory().setValue(LocalTime.now().getHour());
+        msp.getValueFactory().setValue(LocalTime.now().getMinute());
+        ssp.getValueFactory().setValue(LocalTime.now().getSecond());
+                
+        
         hspin.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         msp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
@@ -165,8 +188,16 @@ public class FXMLDocumentController implements Initializable {
         msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
+        selectDirectoryButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
+        fileTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
+                
+        
+        fileSizeSelectorButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileSize"));
+        fileSizeTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileSize"));
+                
         selectAudio.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "PlayAudio"));
-        messagefield.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "ShowDialog"));
+        selectTextFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "AppendStringAtFile"));
+        messagefield.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "ShowDialog").or(Bindings.equal(comboAction.valueProperty(), "AppendStringAtFile")));
         
         Lhours.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         Lmin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
@@ -189,14 +220,15 @@ public class FXMLDocumentController implements Initializable {
         
         
         comboTrigger.getItems().addAll("CurrentTime");
+        comboTrigger.getItems().addAll("FileExistence");
+        comboTrigger.getItems().addAll("FileSize");
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
+        comboAction.getItems().addAll("AppendStringAtFile");
         
         addRuleButton.disableProperty().bind(Bindings.isNull(comboTrigger.valueProperty()).or(Bindings.isNull(comboAction.valueProperty())).or(sleepingradiobutton.selectedProperty().and(sleepingdays.textProperty().isEmpty().or(sleepinghours.textProperty().isEmpty().or(sleepingminutes.textProperty().isEmpty())))));        
         
-        if(comboTrigger.valueProperty().equals("CurrentTime")){
-            
-        }
+    
         // TODO
         
     }
@@ -211,16 +243,37 @@ public class FXMLDocumentController implements Initializable {
         Rule r=null;
         if (comboTrigger.getValue().equals("CurrentTime"))
             trigger=new TimeTrigger(LocalTime.of(hspin.getValue(), msp.getValue(), ssp.getValue()));
-           
+        if (comboTrigger.getValue().equals("FileExistence")){
+           if(directoryPath!=null && fileTextField.getText()!=null)
+             trigger=new ExistenceTrigger(directoryPath,fileTextField.getText());
+           else if(directoryPath==null)
+                ruleWarning.setText(ruleWarning.getText()+"No valid trigger directory selected."+"\n");
+           else if(fileTextField.getText()!=null)
+                ruleWarning.setText(ruleWarning.getText()+"empty name for file trigger existence."+"\n");
+        }
+         if (comboTrigger.getValue().equals("FileSize")){
+           if(sizeFilePath!=null)
+             trigger=new SizeFileTrigger(sizeFilePath,Integer.parseInt(fileSizeTextField.getText()));
+           else if(directoryPath==null)
+                ruleWarning.setText(ruleWarning.getText()+"No valid file selected."+"\n");
+           else if(fileSizeTextField.getText()!=null)
+                ruleWarning.setText(ruleWarning.getText()+"0 bytes to size trigger"+"\n");
+        }
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
         if (comboAction.getValue().equals("PlayAudio")){
             if(FilePath!=null){
              action = new ActionPlayAudio(FilePath);
-             
             }
             else
                 ruleWarning.setText(ruleWarning.getText()+"No valid audio file selected."+"\n");
+        }
+        if (comboAction.getValue().equals("AppendStringAtFile")){
+            if(textFilePath!=null){
+             action = new SpecifiedStringAction(textFilePath,messagefield.getText());
+            }
+            else
+                ruleWarning.setText(ruleWarning.getText()+"No valid text file selected."+"\n");
         }
         if ((action!=null) && (trigger!=null) ){
             r=new Rule(action,trigger);
@@ -238,6 +291,7 @@ public class FXMLDocumentController implements Initializable {
         
         if((r!=null)){
          rset.addRule(r);
+         FilePath=null;
          ruleCreationPane.setDisable(true);
          ruleCreationPane.setVisible(false);
          ruleTablePane.setDisable(false);
@@ -306,4 +360,71 @@ public class FXMLDocumentController implements Initializable {
         ruleTable.refresh();
     }
 
-}
+    @FXML
+    private void selectTextFile(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // Settare titolo file chooser
+        fileChooser.setTitle("Select a File");
+
+        // Settare directory iniziale
+        File currentDirectory = new File(new File(".").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Settare extension filter per file text
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text files (.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Mostra finestra id dialogo quando il bottone viene premuto
+        File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                textFilePath = selectedFile.getAbsolutePath();
+            }
+    }
+
+    @FXML
+    private void selectDirectoryButton(ActionEvent event) throws IOException {
+         
+        // Creo un DirectoryChooser
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+
+      
+        directoryChooser.setTitle("Select a Directory");
+
+        // Settare directory iniziale
+        File currentDirectory = new File(new File(".").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        directoryChooser.setInitialDirectory( initialDirectory);
+
+        //Mostra finestra di dialogo quando il bottone viene premuto
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory != null) {
+            System.out.println("Selected Directory: " + selectedDirectory.getAbsolutePath());
+            directoryPath=selectedDirectory.getAbsolutePath();
+        } else {
+            System.out.println("No directory selected.");
+        }
+    }
+
+    @FXML
+    private void fileSizeSelector(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // Settare titolo file chooser
+        fileChooser.setTitle("Select a File");
+
+        // Settare directory iniziale
+        File currentDirectory = new File(new File(".").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        //Mostra finestra id dialogo quando il bottone viene premuto
+        File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+               sizeFilePath = selectedFile.getAbsolutePath();
+            }
+    }
+    }
+

@@ -14,16 +14,16 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <AnchorPane fx:id="ruleCreationPane" prefHeight="400.0" prefWidth="600.0">
          <children>
             <ComboBox fx:id="comboAction" layoutX="209.0" layoutY="65.0" prefWidth="150.0" promptText="Action Selector" />
             <ComboBox fx:id="comboTrigger" layoutX="38.0" layoutY="65.0" prefWidth="150.0" promptText="Trigger Selector" />
             <Button fx:id="addRuleButton" layoutX="210.0" layoutY="318.0" mnemonicParsing="false" onAction="#addRuleButton" prefHeight="45.0" prefWidth="150.0" text="AddRule" />
-            <Spinner fx:id="hspin" editable="true" layoutX="39.0" layoutY="123.0" />
-            <Spinner fx:id="msp" editable="true" layoutX="39.0" layoutY="163.0" />
-            <Spinner fx:id="ssp" editable="true" layoutX="39.0" layoutY="206.0" />
+            <Spinner fx:id="hspin" editable="true" layoutX="39.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
+            <Spinner fx:id="msp" editable="true" layoutX="92.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
+            <Spinner fx:id="ssp" editable="true" layoutX="145.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
             <TextField fx:id="messagefield" layoutX="210.0" layoutY="123.0" />
             <RadioButton fx:id="firedradiobutton" layoutX="375.0" layoutY="69.0" mnemonicParsing="false" text="Fired only once" />
             <RadioButton fx:id="sleepingradiobutton" layoutX="482.0" layoutY="69.0" mnemonicParsing="false" text="Sleeping Period" />
@@ -32,16 +32,21 @@
             <TextField fx:id="sleepingminutes" layoutX="375.0" layoutY="206.0" promptText="insert sleeping minutes" />
             <Button fx:id="selectAudio" layoutX="209.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
             <Label fx:id="Lhours" layoutX="39.0" layoutY="106.0" text="Hours" />
-            <Label fx:id="Lmin" layoutX="39.0" layoutY="148.0" text="Minutes" />
-            <Label fx:id="Lsec" layoutX="38.0" layoutY="192.0" text="Seconds" />
+            <Label fx:id="Lmin" layoutX="90.0" layoutY="106.0" prefHeight="17.0" prefWidth="45.0" text="Minutes" />
+            <Label fx:id="Lsec" layoutX="145.0" layoutY="106.0" text="Seconds" />
             <Text fx:id="ruleWarning" fill="RED" layoutX="375.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" underline="true">
                <font>
                   <Font name="System Bold" size="10.0" />
                </font>
             </Text>
+            <Button fx:id="selectTextFileButton" layoutX="209.0" layoutY="206.0" mnemonicParsing="false" onAction="#selectTextFile" prefHeight="25.0" prefWidth="150.0" text="Select Text File" />
+            <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
+            <TextField fx:id="fileTextField" layoutX="38.0" layoutY="194.0" promptText="inserisci il nome del file" />
+            <Button fx:id="fileSizeSelectorButton" layoutX="39.0" layoutY="231.0" mnemonicParsing="false" onAction="#fileSizeSelector" prefHeight="25.0" prefWidth="149.0" text="Select File" />
+            <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="262.0" prefHeight="25.0" prefWidth="150.0" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" prefHeight="400.0" prefWidth="600.0">
+      <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <TableView fx:id="ruleTable" layoutX="32.0" layoutY="34.0" prefHeight="276.0" prefWidth="536.0">
               <columns>

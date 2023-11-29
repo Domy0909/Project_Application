@@ -3,15 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/src/Ifttt_app/Model/TriggerDayMonth.java</file>
             <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/test/Ifttt_app/Model/TriggerDayTest.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/src/Ifttt_app/Model/SaveRules.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/test/Ifttt_app/Model/RuleSetTest.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/src/Ifttt_app/View/FXMLDocument.fxml</file>
             <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/src/Ifttt_app/Model/TriggerDay.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/test/Ifttt_app/Model/TimeTriggerTest.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/src/Ifttt_app/View/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/test/Ifttt_app/Model/RuleTest.java</file>
-            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/src/Ifttt_app/Model/TimeTrigger.java</file>
+            <file>file:/C:/Users/Asus/Desktop/progetto%20se/Project_Application/test/Ifttt_app/Model/TriggerDayMonthTest.java</file>
         </group>
     </open-files>
 </project-private>

@@ -37,6 +37,9 @@ import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import javafx.beans.value.ObservableStringValue;
 
 /**
  * FXML Controller class
@@ -102,6 +105,8 @@ public class FXMLDocumentController implements Initializable {
     private Label Lsec;
     @FXML
     private Label Lday;
+    @FXML
+    private Label Lmonth;
      
     private String FilePath;
     private String textFilePath;
@@ -128,6 +133,8 @@ public class FXMLDocumentController implements Initializable {
     private TableColumn<Rule, String> repcolumn;
     @FXML
     private ComboBox<String> daySelector;
+    @FXML
+    private Spinner<Integer> daySpinner;
 
     /**
      * Initializes the controller class.
@@ -165,9 +172,7 @@ public class FXMLDocumentController implements Initializable {
         
         fileSizeTextField.setTextFormatter(new TextFormatter<>(filter));
         
-        
-        
-        
+       
         
         ruleTable.setItems(rset.getRules()); 
         actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().description()) );
@@ -197,7 +202,7 @@ public class FXMLDocumentController implements Initializable {
         hspin.getValueFactory().setValue(LocalTime.now().getHour());
         msp.getValueFactory().setValue(LocalTime.now().getMinute());
         ssp.getValueFactory().setValue(LocalTime.now().getSecond());
-                
+        
         
         hspin.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         msp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
@@ -209,6 +214,15 @@ public class FXMLDocumentController implements Initializable {
         
         daySelector.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Week"));
         Lday.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Week"));
+        daySelector.setValue(LocalDate.now().getDayOfWeek().toString());
+        
+        daySpinner.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Month"));
+        Lmonth.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Month"));
+        daySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+        1,
+        YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue()).lengthOfMonth(),
+        LocalDate.now().getDayOfMonth()));
+        
         
         selectDirectoryButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
         fileTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
@@ -243,7 +257,7 @@ public class FXMLDocumentController implements Initializable {
         
         comboTrigger.getItems().addAll("CurrentTime");
         comboTrigger.getItems().addAll("Day Of Week");
-        comboTrigger.getItems().addAll("Day of Month ");
+        comboTrigger.getItems().addAll("Day Of Month");
         comboTrigger.getItems().addAll("FileExistence");
         comboTrigger.getItems().addAll("FileSize");
         comboAction.getItems().addAll("ShowDialog");
@@ -286,6 +300,9 @@ public class FXMLDocumentController implements Initializable {
         
         if (comboTrigger.getValue().equals("Day Of Week")){
             trigger= new TriggerDay(DayOfWeek.valueOf(daySelector.getValue().toUpperCase()));
+        }
+        if (comboTrigger.getValue().equals("Day Of Month")){
+            trigger= new TriggerDayMonth(daySpinner.getValue());
         }
         
          if (comboTrigger.getValue().equals("FileSize")){

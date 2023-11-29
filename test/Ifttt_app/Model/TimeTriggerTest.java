@@ -48,6 +48,6 @@ public class TimeTriggerTest {
         // The trigger should return true, as it's in the future
         assertFalse(timeTrigger.checkTrigger());
     }
-    
+  
     
 }

@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import Ifttt_app.Model.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
@@ -35,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import java.time.DayOfWeek;
 
 /**
  * FXML Controller class
@@ -98,7 +100,9 @@ public class FXMLDocumentController implements Initializable {
     private Label Lmin;
     @FXML
     private Label Lsec;
-    
+    @FXML
+    private Label Lday;
+     
     private String FilePath;
     private String textFilePath;
     private String directoryPath;
@@ -122,7 +126,8 @@ public class FXMLDocumentController implements Initializable {
     private TextField fileSizeTextField;
     @FXML
     private TableColumn<Rule, String> repcolumn;
-    
+    @FXML
+    private ComboBox<String> daySelector;
 
     /**
      * Initializes the controller class.
@@ -202,6 +207,9 @@ public class FXMLDocumentController implements Initializable {
         msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
+        daySelector.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Week"));
+        Lday.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Week"));
+        
         selectDirectoryButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
         fileTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
                 
@@ -234,11 +242,21 @@ public class FXMLDocumentController implements Initializable {
         
         
         comboTrigger.getItems().addAll("CurrentTime");
+        comboTrigger.getItems().addAll("Day Of Week");
+        comboTrigger.getItems().addAll("Day of Month ");
         comboTrigger.getItems().addAll("FileExistence");
         comboTrigger.getItems().addAll("FileSize");
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
         comboAction.getItems().addAll("AppendStringAtFile");
+        
+        daySelector.getItems().addAll("Monday");
+        daySelector.getItems().addAll("Tuesday");
+        daySelector.getItems().addAll("Wednesday");
+        daySelector.getItems().addAll("Thursday");
+        daySelector.getItems().addAll("Friday");
+        daySelector.getItems().addAll("Saturday");
+        daySelector.getItems().addAll("Sunday");
         
         addRuleButton.disableProperty().bind(Bindings.isNull(comboTrigger.valueProperty()).or(Bindings.isNull(comboAction.valueProperty())).or(sleepingradiobutton.selectedProperty().and(sleepingdays.textProperty().isEmpty().or(sleepinghours.textProperty().isEmpty().or(sleepingminutes.textProperty().isEmpty())))));        
         
@@ -265,6 +283,11 @@ public class FXMLDocumentController implements Initializable {
            else if(fileTextField.getText()!=null)
                 ruleWarning.setText(ruleWarning.getText()+"empty name for file trigger existence."+"\n");
         }
+        
+        if (comboTrigger.getValue().equals("Day Of Week")){
+            trigger= new TriggerDay(DayOfWeek.valueOf(daySelector.getValue().toUpperCase()));
+        }
+        
          if (comboTrigger.getValue().equals("FileSize")){
            if(sizeFilePath!=null)
              trigger=new SizeFileTrigger(sizeFilePath,Integer.parseInt(fileSizeTextField.getText()));

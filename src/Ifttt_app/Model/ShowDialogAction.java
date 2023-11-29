@@ -7,10 +7,7 @@ package Ifttt_app.Model;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-/**
- *
- * @author aless
- */
+
 public class ShowDialogAction implements Action {
     String specificstring;
     @Override

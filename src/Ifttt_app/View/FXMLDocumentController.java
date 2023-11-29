@@ -107,7 +107,13 @@ public class FXMLDocumentController implements Initializable {
     private Label Lday;
     @FXML
     private Label Lmonth;
-     
+    @FXML
+    private Label LdayDate;
+    @FXML
+    private Label LmonthDate;
+    @FXML
+    private Label LyearDate;
+    
     private String FilePath;
     private String textFilePath;
     private String directoryPath;
@@ -135,6 +141,12 @@ public class FXMLDocumentController implements Initializable {
     private ComboBox<String> daySelector;
     @FXML
     private Spinner<Integer> daySpinner;
+    @FXML
+    private Spinner<Integer> daySpn;
+    @FXML
+    private Spinner<Integer> monthSpn;
+    @FXML
+    private Spinner<Integer> yearSpn;
 
     /**
      * Initializes the controller class.
@@ -223,6 +235,20 @@ public class FXMLDocumentController implements Initializable {
         YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue()).lengthOfMonth(),
         LocalDate.now().getDayOfMonth()));
         
+        LdayDate.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
+        LmonthDate.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
+        LyearDate.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
+        daySpn.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
+        monthSpn.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
+        yearSpn.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
+        daySpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+        1,
+        YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue()).lengthOfMonth(),
+        LocalDate.now().getDayOfMonth()));
+        monthSpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+        1,12,LocalDate.now().getMonthValue()));
+        yearSpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
+        LocalDate.now().getYear(), LocalDate.now().plusYears(50).getYear() ,LocalDate.now().getYear()));
         
         selectDirectoryButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
         fileTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
@@ -258,8 +284,10 @@ public class FXMLDocumentController implements Initializable {
         comboTrigger.getItems().addAll("CurrentTime");
         comboTrigger.getItems().addAll("Day Of Week");
         comboTrigger.getItems().addAll("Day Of Month");
+        comboTrigger.getItems().addAll("Date");
         comboTrigger.getItems().addAll("FileExistence");
         comboTrigger.getItems().addAll("FileSize");
+        
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
         comboAction.getItems().addAll("AppendStringAtFile");
@@ -304,8 +332,11 @@ public class FXMLDocumentController implements Initializable {
         if (comboTrigger.getValue().equals("Day Of Month")){
             trigger= new TriggerDayMonth(daySpinner.getValue());
         }
+        if (comboTrigger.getValue().equals("Date")){
+            trigger= new TriggerDate(LocalDate.of(yearSpn.getValue(), monthSpn.getValue(), daySpn.getValue()));
+        }
         
-         if (comboTrigger.getValue().equals("FileSize")){
+        if (comboTrigger.getValue().equals("FileSize")){
            if(sizeFilePath!=null)
              trigger=new SizeFileTrigger(sizeFilePath,Integer.parseInt(fileSizeTextField.getText()));
            else if(directoryPath==null)

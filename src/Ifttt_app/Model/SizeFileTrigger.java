@@ -8,10 +8,7 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- * @author aless
- */
+
 public class SizeFileTrigger implements Trigger{
     String filePath;
     int thresholdBytes;

@@ -12,10 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.application.Platform;
 
-/**
- *
- * @author aless
- */
+
 public class SpecifiedStringAction implements Action {
     String filePath;
     String contentToAppend;

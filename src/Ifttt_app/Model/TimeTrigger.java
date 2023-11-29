@@ -7,10 +7,7 @@ package Ifttt_app.Model;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-/**
- *
- * @author aless
- */
+
 public class TimeTrigger implements Trigger{
     
     LocalTime timetrigger;

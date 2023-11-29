@@ -44,10 +44,16 @@
             <TextField fx:id="fileTextField" layoutX="38.0" layoutY="194.0" promptText="inserisci il nome del file" />
             <Button fx:id="fileSizeSelectorButton" layoutX="39.0" layoutY="231.0" mnemonicParsing="false" onAction="#fileSizeSelector" prefHeight="25.0" prefWidth="149.0" text="Select File" />
             <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="262.0" prefHeight="25.0" prefWidth="150.0" promptText="insert a threshold in bytes" />
-            <ComboBox fx:id="daySelector" layoutX="37.0" layoutY="317.0" prefWidth="150.0" />
-            <Spinner fx:id="daySpinner" editable="true" layoutX="37.0" layoutY="368.0" />
+            <ComboBox fx:id="daySelector" layoutX="37.0" layoutY="312.0" prefWidth="150.0" />
+            <Spinner fx:id="daySpinner" editable="true" layoutX="37.0" layoutY="356.0" prefHeight="26.0" prefWidth="54.0" />
             <Label fx:id="Lday" layoutX="37.0" layoutY="294.0" text="Day" />
-            <Label fx:id="Lmonth" layoutX="33.0" layoutY="350.0" text="Day" />
+            <Label fx:id="Lmonth" layoutX="37.0" layoutY="338.0" text="Day" />
+            <Spinner fx:id="daySpn" editable="true" layoutX="25.0" layoutY="406.0" prefHeight="26.0" prefWidth="54.0" />
+            <Spinner fx:id="monthSpn" editable="true" layoutX="79.0" layoutY="406.0" prefHeight="13.0" prefWidth="54.0" />
+            <Spinner fx:id="yearSpn" editable="true" layoutX="133.0" layoutY="406.0" prefHeight="26.0" prefWidth="72.0" />
+            <Label fx:id="LdayDate" layoutX="27.0" layoutY="385.0" text="Day" />
+            <Label fx:id="LmonthDate" layoutX="79.0" layoutY="385.0" text="Month" />
+            <Label fx:id="LyearDate" layoutX="131.0" layoutY="385.0" text="Year" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">

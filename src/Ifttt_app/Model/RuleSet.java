@@ -7,10 +7,7 @@ package Ifttt_app.Model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-/**
- *
- * @author aless
- */
+
 public class RuleSet extends Thread{
     private static RuleSet instance;
     public ObservableList<Rule> ruleSet;

@@ -14,10 +14,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/**
- *
- * @author Asus
- */
+
 public class ActionPlayAudio implements Action{
         private final String audioFilePath;
         private boolean running;

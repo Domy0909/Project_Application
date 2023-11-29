@@ -6,10 +6,7 @@ package Ifttt_app.Model;
 
 import java.io.Serializable;
 
-/**
- *
- * @author aless
- */
+
 public interface Action extends Serializable{
     
     public abstract boolean execute();

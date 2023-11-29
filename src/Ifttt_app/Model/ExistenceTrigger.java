@@ -8,10 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- *
- * @author aless
- */
+
 public class ExistenceTrigger implements Trigger {
     String directoryPath;
     String fileName;

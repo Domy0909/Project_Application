@@ -6,9 +6,9 @@ package Ifttt_app.Model;
 
 import java.time.LocalDate;
 
-//This class represents a trigger based on a specific day 
-//of the month. It allows users to set a trigger for a 
-//particular day within a month.
+/*This class represents a trigger based on a specific day 
+  of the month. It allows users to set a trigger for a 
+  particular day within a month.*/
 public class TriggerDayMonth implements Trigger {
     private int dayOfMonth;
 

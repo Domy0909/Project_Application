@@ -14,10 +14,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author User
- */
+
 public class SaveRules {
      // Metodo per salvare la regola presente nella classe RuleSet su un file, utilizzando la serializzazione.
     public static void saveRules(RuleSet ruleSet) {

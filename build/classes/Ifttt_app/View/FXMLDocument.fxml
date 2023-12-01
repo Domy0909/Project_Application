@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
          <children>
@@ -54,6 +54,7 @@
             <Label fx:id="LdayDate" layoutX="27.0" layoutY="385.0" text="Day" />
             <Label fx:id="LmonthDate" layoutX="79.0" layoutY="385.0" text="Month" />
             <Label fx:id="LyearDate" layoutX="131.0" layoutY="385.0" text="Year" />
+            <Button fx:id="selectProgram" layoutX="284.0" layoutY="94.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">

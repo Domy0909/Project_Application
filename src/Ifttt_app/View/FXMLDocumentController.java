@@ -116,6 +116,7 @@ public class FXMLDocumentController implements Initializable {
     
     private String FilePath;
     private String textFilePath;
+    private String ProgramPath;
     private String directoryPath;
     private String sizeFilePath;
             
@@ -147,6 +148,8 @@ public class FXMLDocumentController implements Initializable {
     private Spinner<Integer> monthSpn;
     @FXML
     private Spinner<Integer> yearSpn;
+    @FXML
+    private Button selectProgram;
 
     /**
      * Initializes the controller class.
@@ -265,6 +268,8 @@ public class FXMLDocumentController implements Initializable {
         Lmin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         Lsec.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
+        selectProgram.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
+        
         
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
@@ -291,6 +296,7 @@ public class FXMLDocumentController implements Initializable {
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
         comboAction.getItems().addAll("AppendStringAtFile");
+        comboAction.getItems().addAll("RunExternalProgramAction");
         
         daySelector.getItems().addAll("Monday");
         daySelector.getItems().addAll("Tuesday");
@@ -359,6 +365,17 @@ public class FXMLDocumentController implements Initializable {
             }
             else
                 ruleWarning.setText(ruleWarning.getText()+"No valid text file selected."+"\n");
+        }if (comboAction.getValue().equals("RunExternalProgramAction")) {
+        if(FilePath!=null){
+             action = new RunExternalProgramAction(FilePath);
+            }
+            else
+                ruleWarning.setText(ruleWarning.getText()+"No valid program file selected."+"\n");
+    
+        }if(comboAction.getValue().equals("RunExternalProgramAction")){
+            if(ProgramPath!=null){
+                action = new RunExternalProgramAction(ProgramPath);
+            }
         }
         if ((action!=null) && (trigger!=null) ){
             r=new Rule(action,trigger);
@@ -511,5 +528,30 @@ public class FXMLDocumentController implements Initializable {
                sizeFilePath = selectedFile.getAbsolutePath();
             }
     }
+    
+    @FXML
+    void selectProgram(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+
+        // Settare titolo file chooser
+        fileChooser.setTitle("Select a File");
+
+        // Settare directory iniziale
+        File currentDirectory = new File(new File("./External Programs").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        fileChooser.setInitialDirectory(initialDirectory);
+
+        // Settare extension filter per file WAV
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("BAT files (.bat)", "*.bat");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Mostra finestra id dialogo quando il bottone viene premuto
+        File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                ProgramPath = selectedFile.getAbsolutePath();
+            }
+            
     }
+ 
+  }
 

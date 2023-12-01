@@ -150,6 +150,10 @@ public class FXMLDocumentController implements Initializable {
     private Spinner<Integer> yearSpn;
     @FXML
     private Button selectProgram;
+    @FXML
+    private TextField externalTxt;
+    @FXML
+    private Button selectProgram1;
 
     /**
      * Initializes the controller class.
@@ -269,7 +273,8 @@ public class FXMLDocumentController implements Initializable {
         Lsec.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
         selectProgram.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
-        
+        selectProgram1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
+        externalTxt.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
@@ -292,6 +297,7 @@ public class FXMLDocumentController implements Initializable {
         comboTrigger.getItems().addAll("Date");
         comboTrigger.getItems().addAll("FileExistence");
         comboTrigger.getItems().addAll("FileSize");
+        comboTrigger.getItems().addAll("RunExternalProgramTrigger");
         
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
@@ -349,7 +355,9 @@ public class FXMLDocumentController implements Initializable {
                 ruleWarning.setText(ruleWarning.getText()+"No valid file selected."+"\n");
            else if(fileSizeTextField.getText()!=null)
                 ruleWarning.setText(ruleWarning.getText()+"0 bytes to size trigger"+"\n");
-        }
+        }if (comboTrigger.getValue().equals("RunExternalProgramTrigger")){
+             trigger = new TriggerExternalProgram(ProgramPath,Integer.parseInt(externalTxt.getText())) ;
+         }
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
         if (comboAction.getValue().equals("PlayAudio")){

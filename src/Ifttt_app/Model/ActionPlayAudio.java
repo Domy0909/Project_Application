@@ -14,7 +14,8 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-
+/*The ActionPlayAudio class implements the Action interface and manages
+the playback of audio files. */
 public class ActionPlayAudio implements Action{
         private final String audioFilePath;
         private boolean running;
@@ -33,15 +34,20 @@ public class ActionPlayAudio implements Action{
         this.running = running;
     }
     
-     // esecuzione Azione PlayAudio
+     /**
+     * Attempts to play the specified audio file.
+     * Checks if the file exists and is readable, then initiates playback.
+     * Updates the 'running' flag upon successful playback completion.
+     * 
+     * @return 'true' if audio playback is successful, 'false' otherwise
+     */
     @Override
     public boolean execute() {
-        
+        this.setRunning(false);
         Platform.runLater(() -> {
         try {
             File audioFile = new File(audioFilePath);
 
-            // Check se esiste e se è riproducibile 
             if (audioFile.exists() && audioFile.canRead()) {
                 AudioInputStream audioInputStream;
                 audioInputStream = AudioSystem.getAudioInputStream(audioFile);
@@ -50,8 +56,7 @@ public class ActionPlayAudio implements Action{
                 clip= AudioSystem.getClip();
                 clip.open(audioInputStream);
                 clip.start();
-                
-                // Attesa per la fine dell'audio
+               
                 Thread.sleep(clip.getMicrosecondLength() / 1000);
 
                 clip.close();
@@ -62,7 +67,7 @@ public class ActionPlayAudio implements Action{
             System.out.println("Error playing the audio: " + e.getMessage());
         }
         }); 
-            return false;
+            return this.isRunning();
     }
 
     @Override

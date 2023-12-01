@@ -47,17 +47,19 @@ public class RuleSet extends Thread{
     public void stopRuleChecking() {
      running = false;
     }
-   
+   /*
+  
+ * Starts rule checking in a separate thread.
+ * For each rule in the list, periodically checks if the rule is active,
+ * if its trigger is active, and if it has already been executed.
+ * If the rule meets the conditions, it executes the associated action.
+ * The check is performed every second.
+ */
     public void runRuleChecking() {
-        /* Crea un nuovo thread per eseguire
-        il controllo delle regole*/
         Thread checkingThread;
         checkingThread = new Thread(() -> {
             while (!running) {
                 for (Rule rule : ruleSet) {
-                    /* Verifica se la regola è attiva,
-                    se il trigger è attivo e se non è 
-                    già stata eseguita*/
                     if(rule.isSleeping() && rule.isActive()){
                         if(rule.isAwake() && rule.getTrigger().checkTrigger()){
                             rule.getAction().execute();
@@ -71,8 +73,7 @@ public class RuleSet extends Thread{
                 }  
                
                 try { 
-                    // Controllo ogni 5 secondi
-                    Thread.sleep(5000);
+                    Thread.sleep(1000);
                 
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();

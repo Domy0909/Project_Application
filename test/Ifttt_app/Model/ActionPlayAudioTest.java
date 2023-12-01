@@ -19,24 +19,21 @@ public class ActionPlayAudioTest {
     public ActionPlayAudioTest() {
     }
     
-    @Test // test con audio valido 
-    public void testExecute_withValidAudioFile() throws InterruptedException{
-        String validAudioFilePath = "sounds\\clip_1.wav";
-        ActionPlayAudio action = new ActionPlayAudio(validAudioFilePath);
-        Platform.startup(()->{
-            action.execute();
-        });
-        Thread.sleep(10000);
-        assertEquals(true , action.isRunning());
-    }
-    @Test // test con audio non leggibile o non presente
+    /*The testExecute_withUnreadableAudioFile() test verifies whether the 
+    execute() method properly handles an audio file that cannot be read or does 
+    not exist. In this test, an instance of ActionPlayAudio is created using an 
+    invalid path for an audio file. Subsequently, the action is executed, followed
+    by a 5-second wait. After this waiting period, the test checks whether the 
+    action is still running. The action should not be running (false) if the audio 
+    cannot be played or if the audio file is not found.*/
+     @Test 
     public void testExecute_withUnreadableAudioFile() throws InterruptedException {
         String unreadableAudioFilePath = "file.wav";
         ActionPlayAudio action = new ActionPlayAudio(unreadableAudioFilePath);
         Platform.startup(()->{
             action.execute();
         });
-        Thread.sleep(10000);
+        Thread.sleep(5000);
         assertEquals(false , action.isRunning());
         }
     

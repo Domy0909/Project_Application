@@ -74,7 +74,7 @@ public class RuleSetTest {
     }
 
     
-    @Test //test azione show dialog
+    @Test //test  show dialog
     public void testRunRuleCheckingDialog() throws InterruptedException {
         ruleSet.addRule(rule1);
         Platform.startup(()->{

@@ -533,19 +533,15 @@ public class FXMLDocumentController implements Initializable {
     void selectProgram(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
 
-        // Settare titolo file chooser
         fileChooser.setTitle("Select a File");
 
-        // Settare directory iniziale
         File currentDirectory = new File(new File("./External Programs").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         fileChooser.setInitialDirectory(initialDirectory);
 
-        // Settare extension filter per file WAV
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("BAT files (.bat)", "*.bat");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        //Mostra finestra id dialogo quando il bottone viene premuto
         File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 ProgramPath = selectedFile.getAbsolutePath();

@@ -1,7 +1,10 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
+ * This test class, SaveLoadRulesTest, is designed to test the functionality of saving and loading rules using the SaveRules class.
+ * The testSaveRules method creates a sample RuleSet, saves it to a file, and verifies the existence and non-emptiness of the file.
+ * The testLoadRules method tests loading rules from a file, ensuring the file exists, loading rules into an empty RuleSet, and verifying the loaded rules.
+ * The createSampleRuleSet method is a utility to generate a sample RuleSet with a rule containing a ShowDialogAction triggered by the current time.
  */
+
 package Ifttt_app.Model;
 
 import java.io.File;
@@ -20,12 +23,12 @@ public class SaveLoadRulesTest {
         RuleSet ruleSet = createSampleRuleSet();
 
         String filePath = "Ruleset.bin";
-        // Chiamare il metodo di salvataggio
+        
         SaveRules.saveRules(ruleSet);
-        // Verificare che il file esista dopo averlo salvato
+        
         File file = new File(filePath);
         assertTrue(file.exists());
-        // Verificare che il file non sia vuoto
+        
         assertTrue(file.length() > 0);
     }
 
@@ -33,25 +36,22 @@ public class SaveLoadRulesTest {
     public void testLoadRules() {
         RuleSet ruleSet = createSampleRuleSet();
 
-        String filePath = "Ruleset.bin"; // Output del messaggio di errore
-        // Salvare le regole su un file
-        //SaveRules.saveRules(createSampleRuleSet());
-        // Verificare che il file esista prima di tentare di caricarlo
+        String filePath = "Ruleset.bin"; 
+       
         File file = new File(filePath);
         assertTrue(file.exists());
         // Chiamare il metodo di caricamento
         ruleSet.removeallRule();
         SaveRules.loadRules(ruleSet);
-        // Verificare che le regole caricate siano state caricate correttamente
         
-        assertEquals(1, ruleSet.getRules().size());  //Modficare seconda del numero di regole nel RuleSet di esempio
+        assertEquals(1, ruleSet.getRules().size());  
     }
 
-    // Metodo di utilità per creare un RuleSet di esempio
+
     private RuleSet createSampleRuleSet() {
         RuleSet ruleSet = RuleSet.getInstance();
         ruleSet.addRule(new Rule(new ShowDialogAction("Messaggio di prova"), new TimeTrigger(LocalTime.now())));
-        // Aggiungi altre regole se necessario
+       
         return ruleSet;
     }
     }

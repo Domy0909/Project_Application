@@ -19,7 +19,7 @@ import javafx.scene.control.Alert;
 
 public class RunExternalProgramAction implements Action {
    private String programPath;
-   private String[] commandLineArguments;
+   private String[] command;
    private int exitcode;
    private boolean result=false;
 
@@ -47,8 +47,8 @@ public class RunExternalProgramAction implements Action {
     public String executeWithOutput() throws IOException, InterruptedException {
         List<String> commands = new ArrayList<>();
         commands.add(programPath);
-        if (commandLineArguments != null) {
-            commands.addAll(Arrays.asList(commandLineArguments));
+        if (command != null) {
+            commands.addAll(Arrays.asList(command));
         }
 
         ProcessBuilder processBuilder = new ProcessBuilder(commands);
@@ -62,9 +62,8 @@ public class RunExternalProgramAction implements Action {
             output.append(line).append("\n");
         }
 
-        setExitcode(process.waitFor());
-        //System.out.println("Script exited with code " + exitCode);
-
+        this.setExitcode(process.waitFor());
+        
         return output.toString();
     }
     private String executeBatchFile(String batchFilePath) {
@@ -86,8 +85,8 @@ public class RunExternalProgramAction implements Action {
             }
 
             // Attendi il termine del processo
-            int exitCode = process.waitFor();
-            output.append("\nExit Code: ").append(exitCode);
+            this.setExitcode(process.waitFor()); 
+            output.append("\nExit Code: ").append(this.getExitcode());
 
         } catch (IOException | InterruptedException e) {
             
@@ -124,7 +123,7 @@ public class RunExternalProgramAction implements Action {
             // Il programma non esiste, quindi non può essere eseguito correttamente
             this.setResult(false);
             System.err.println("Il programma non esiste: " + programFile.getAbsolutePath());
-            
+             
         }
         
         return true;

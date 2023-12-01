@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
+ * This test class, named RunExternalProgramActionTest, is designed to verify the behavior of the RunExternalProgramAction class.
+ * The test involves executing a specified external program in the setUp method and ensuring that the execution is successful within a waiting period.
+ * Note: When the external program runs successfully and the showDialog appears, click the OK button before the thread finishes its wait.
  */
 package Ifttt_app.Model;
 
@@ -9,16 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author User
- */
 public class RunExternalProgramActionTest {
     
      private RunExternalProgramAction action;
     @Before
     public void setUp() {
-        String programPath = "./External Programs\\myscript123.bat";
+        String programPath = "./External Programs\\scriptSounds.bat";
         action = new RunExternalProgramAction(programPath);
     }
 
@@ -28,7 +25,7 @@ public class RunExternalProgramActionTest {
             action.execute();
         });
         Thread.sleep(5000);
-        assertEquals(false,action.isResult());
+        assertEquals(true,action.isResult());
         }
     
 }

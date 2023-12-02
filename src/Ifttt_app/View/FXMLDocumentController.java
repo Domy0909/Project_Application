@@ -119,6 +119,8 @@ public class FXMLDocumentController implements Initializable {
     private String ProgramPath;
     private String directoryPath;
     private String sizeFilePath;
+    private String copyFilePath;
+    private String directoryPathFile;
             
     @FXML
     private Text ruleWarning;
@@ -154,6 +156,10 @@ public class FXMLDocumentController implements Initializable {
     private TextField externalTxt;
     @FXML
     private Button selectProgram1;
+    @FXML
+    private Button selectFileButton;
+    @FXML
+    private Button ButtonDirectory;
 
     /**
      * Initializes the controller class.
@@ -290,6 +296,9 @@ public class FXMLDocumentController implements Initializable {
         sleepinghours.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         sleepingminutes.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         
+        selectFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")).or(Bindings.equal(comboAction.valueProperty(), "Delete File")));
+        ButtonDirectory.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")));
+
         
         comboTrigger.getItems().addAll("CurrentTime");
         comboTrigger.getItems().addAll("Day Of Week");
@@ -303,6 +312,9 @@ public class FXMLDocumentController implements Initializable {
         comboAction.getItems().addAll("PlayAudio");
         comboAction.getItems().addAll("AppendStringAtFile");
         comboAction.getItems().addAll("RunExternalProgramAction");
+        comboAction.getItems().addAll("Copy File");
+        comboAction.getItems().addAll("Move File");
+        comboAction.getItems().addAll("Delete File");
         
         daySelector.getItems().addAll("Monday");
         daySelector.getItems().addAll("Tuesday");
@@ -385,6 +397,19 @@ public class FXMLDocumentController implements Initializable {
                 action = new RunExternalProgramAction(ProgramPath);
             }
         }
+        if(comboAction.getValue().equals("Copy File")){
+            if(directoryPathFile != null && copyFilePath != null)
+                action = new CopyFileAction(copyFilePath,directoryPathFile);
+        }
+        if(comboAction.getValue().equals("Move File")){
+            if(directoryPathFile != null && copyFilePath != null)
+                action = new MoveFileAction(copyFilePath,directoryPathFile);
+        }
+        if(comboAction.getValue().equals("Delete File")){
+            if(copyFilePath != null)
+                action = new DeleteFileAction(copyFilePath);
+        }
+        
         if ((action!=null) && (trigger!=null) ){
             r=new Rule(action,trigger);
         }
@@ -555,6 +580,46 @@ public class FXMLDocumentController implements Initializable {
                 ProgramPath = selectedFile.getAbsolutePath();
             }
             
+    }
+
+    @FXML
+    private void selectFileButton(ActionEvent event) throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        
+        fileChooser.setTitle(FilePath);
+        
+        File currentDirectory = new File(new File(".").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        
+        fileChooser.setInitialDirectory(initialDirectory);
+        
+        File selectedFile = fileChooser.showOpenDialog(null);
+        if(selectedFile != null)
+            copyFilePath = selectedFile.getAbsolutePath();
+    }
+
+    @FXML
+    private void buttonSelectDirectory(ActionEvent event) throws IOException {
+        // Creo un DirectoryChooser
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+
+      
+        directoryChooser.setTitle("Select a Directory");
+
+        // Settare directory iniziale
+        File currentDirectory = new File(new File(".").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        directoryChooser.setInitialDirectory( initialDirectory);
+
+        //Mostra finestra di dialogo quando il bottone viene premuto
+        File selectedDirectory = directoryChooser.showDialog(null);
+
+        if (selectedDirectory != null) {
+            System.out.println("Selected Directory: " + selectedDirectory.getAbsolutePath());
+            directoryPathFile=selectedDirectory.getAbsolutePath();
+        } else {
+            System.out.println("No directory selected.");
+        }
     }
  
   }

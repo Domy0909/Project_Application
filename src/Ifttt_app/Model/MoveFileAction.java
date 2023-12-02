@@ -51,7 +51,7 @@ public class MoveFileAction implements Action{
 
     @Override
     public String description() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return MoveFileAction.class.getSimpleName() + "\n" + "move this file:" + this.getFilePath() + "\n" + "to this directory" + this.getDirectoryPath();
     }
     
     

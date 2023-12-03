@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 // This class represents a trigger based on a specific date
 public class TriggerDate implements Trigger{
-    LocalDate date;
+    private LocalDate date;
 
     public TriggerDate(LocalDate date) {
         this.date = date;

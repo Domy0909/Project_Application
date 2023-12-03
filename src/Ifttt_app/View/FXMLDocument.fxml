@@ -21,7 +21,7 @@
          <children>
             <ComboBox fx:id="comboAction" layoutX="284.0" layoutY="65.0" prefWidth="150.0" promptText="Action Selector" />
             <ComboBox fx:id="comboTrigger" layoutX="38.0" layoutY="65.0" prefWidth="150.0" promptText="Trigger Selector" />
-            <Button fx:id="addRuleButton" layoutX="624.0" layoutY="419.0" mnemonicParsing="false" onAction="#addRuleButton" prefHeight="45.0" prefWidth="150.0" text="AddRule" />
+            <Button fx:id="addRuleButton" layoutX="546.0" layoutY="321.0" mnemonicParsing="false" onAction="#addRuleButton" prefHeight="45.0" prefWidth="150.0" text="AddRule" />
             <Spinner fx:id="hspin" editable="true" layoutX="39.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
             <Spinner fx:id="msp" editable="true" layoutX="92.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
             <Spinner fx:id="ssp" editable="true" layoutX="145.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
@@ -31,7 +31,7 @@
             <TextField fx:id="sleepingdays" layoutX="537.0" layoutY="123.0" promptText="insert sleeping days" />
             <TextField fx:id="sleepinghours" layoutX="537.0" layoutY="163.0" promptText="insert sleeping hours" />
             <TextField fx:id="sleepingminutes" layoutX="537.0" layoutY="206.0" promptText="insert sleeping minutes" />
-            <Button fx:id="selectAudio" layoutX="283.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
+            <Button fx:id="selectAudio" layoutX="284.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
             <Label fx:id="Lhours" layoutX="39.0" layoutY="106.0" text="Hours" />
             <Label fx:id="Lmin" layoutX="90.0" layoutY="106.0" prefHeight="17.0" prefWidth="45.0" text="Minutes" />
             <Label fx:id="Lsec" layoutX="145.0" layoutY="106.0" text="Seconds" />
@@ -40,32 +40,32 @@
                   <Font name="System Bold" size="10.0" />
                </font>
             </Text>
-            <Button fx:id="selectTextFileButton" layoutX="284.0" layoutY="194.0" mnemonicParsing="false" onAction="#selectTextFile" prefHeight="25.0" prefWidth="150.0" text="Select Text File" />
-            <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
-            <TextField fx:id="fileTextField" layoutX="38.0" layoutY="194.0" promptText="inserisci il nome del file" />
-            <Button fx:id="fileSizeSelectorButton" layoutX="39.0" layoutY="231.0" mnemonicParsing="false" onAction="#fileSizeSelector" prefHeight="25.0" prefWidth="149.0" text="Select File" />
-            <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="262.0" prefHeight="25.0" prefWidth="150.0" promptText="insert a threshold in bytes" />
-            <ComboBox fx:id="daySelector" layoutX="37.0" layoutY="312.0" prefWidth="150.0" />
-            <Spinner fx:id="daySpinner" editable="true" layoutX="37.0" layoutY="356.0" prefHeight="26.0" prefWidth="54.0" />
-            <Label fx:id="Lday" layoutX="37.0" layoutY="294.0" text="Day" />
-            <Label fx:id="Lmonth" layoutX="37.0" layoutY="338.0" text="Day" />
-            <Spinner fx:id="daySpn" editable="true" layoutX="25.0" layoutY="406.0" prefHeight="26.0" prefWidth="54.0" />
-            <Spinner fx:id="monthSpn" editable="true" layoutX="79.0" layoutY="406.0" prefHeight="13.0" prefWidth="54.0" />
-            <Spinner fx:id="yearSpn" editable="true" layoutX="133.0" layoutY="406.0" prefHeight="26.0" prefWidth="72.0" />
-            <Label fx:id="LdayDate" layoutX="27.0" layoutY="385.0" text="Day" />
-            <Label fx:id="LmonthDate" layoutX="79.0" layoutY="385.0" text="Month" />
-            <Label fx:id="LyearDate" layoutX="131.0" layoutY="385.0" text="Year" />
-            <Button fx:id="selectProgramAction" layoutX="284.0" layoutY="94.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
-            <TextField fx:id="externalTxt" layoutX="38.0" layoutY="442.0" promptText="Insert status code 0 o 1" />
-            <Button fx:id="selectProgram1" layoutX="38.0" layoutY="464.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="150.0" text="Select External Program" />
-            <ListView fx:id="commandlinelistTrigger" layoutX="210.0" layoutY="421.0" prefHeight="67.0" prefWidth="150.0" />
-            <Button fx:id="addcommandLineTriggerButton" layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onAction="#addCommandLine" prefHeight="25.0" prefWidth="149.0" text="Add command line arg" />
-            <TextField fx:id="commandLineTextfieldTrigger" layoutX="369.0" layoutY="442.0" promptText="add argument" />
-            <ListView fx:id="commandlinelistAction" layoutX="285.0" layoutY="227.0" prefHeight="59.0" prefWidth="150.0" />
-            <Button fx:id="addcommandLineButtonAction" layoutX="285.0" layoutY="317.0" mnemonicParsing="false" onAction="#addCommandLineAction" prefHeight="25.0" prefWidth="150.0" text="Add command line arg" />
-            <TextField fx:id="commandLineTextfieldAction" layoutX="285.0" layoutY="291.0" prefHeight="25.0" prefWidth="150.0" promptText="add argument" />
-            <Button fx:id="selectFileButton" layoutX="284.0" layoutY="231.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
-            <Button fx:id="ButtonDirectory" layoutX="284.0" layoutY="262.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
+            <Button fx:id="selectTextFileButton" layoutX="284.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectTextFile" prefHeight="25.0" prefWidth="150.0" text="Select Text File" />
+            <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
+            <TextField fx:id="fileTextField" layoutX="38.0" layoutY="163.0" promptText="inserisci il nome del file" />
+            <Button fx:id="fileSizeSelectorButton" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#fileSizeSelector" prefHeight="25.0" prefWidth="149.0" text="Select File" />
+            <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="163.0" prefHeight="25.0" prefWidth="150.0" promptText="insert a threshold in bytes" />
+            <ComboBox fx:id="daySelector" layoutX="38.0" layoutY="124.0" prefWidth="150.0" />
+            <Spinner fx:id="daySpinner" editable="true" layoutX="39.0" layoutY="123.0" prefHeight="26.0" prefWidth="54.0" />
+            <Label fx:id="Lday" layoutX="40.0" layoutY="106.0" text="Day" />
+            <Label fx:id="Lmonth" layoutX="40.0" layoutY="106.0" text="Day" />
+            <Spinner fx:id="daySpn" editable="true" layoutX="39.0" layoutY="123.0" prefHeight="26.0" prefWidth="54.0" />
+            <Spinner fx:id="monthSpn" editable="true" layoutX="92.0" layoutY="123.0" prefHeight="13.0" prefWidth="54.0" />
+            <Spinner fx:id="yearSpn" editable="true" layoutX="145.0" layoutY="123.0" prefHeight="26.0" prefWidth="72.0" />
+            <Label fx:id="LdayDate" layoutX="40.0" layoutY="106.0" text="Day" />
+            <Label fx:id="LmonthDate" layoutX="94.0" layoutY="106.0" text="Month" />
+            <Label fx:id="LyearDate" layoutX="146.0" layoutY="106.0" text="Year" />
+            <Button fx:id="selectProgramAction" layoutX="284.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
+            <TextField fx:id="externalTxt" layoutX="38.0" layoutY="163.0" promptText="Insert status code 0 o 1" />
+            <Button fx:id="selectProgram1" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="150.0" text="Select External Program" />
+            <ListView fx:id="commandlinelistTrigger" layoutX="37.0" layoutY="254.0" prefHeight="67.0" prefWidth="150.0" />
+            <Button fx:id="addcommandLineTriggerButton" layoutX="38.0" layoutY="194.0" mnemonicParsing="false" onAction="#addCommandLine" prefHeight="25.0" prefWidth="149.0" text="Add command line arg" />
+            <TextField fx:id="commandLineTextfieldTrigger" layoutX="38.0" layoutY="219.0" promptText="add argument" />
+            <ListView fx:id="commandlinelistAction" layoutX="284.0" layoutY="258.0" prefHeight="59.0" prefWidth="150.0" />
+            <Button fx:id="addcommandLineButtonAction" layoutX="284.0" layoutY="194.0" mnemonicParsing="false" onAction="#addCommandLineAction" prefHeight="25.0" prefWidth="150.0" text="Add command line arg" />
+            <TextField fx:id="commandLineTextfieldAction" layoutX="284.0" layoutY="219.0" prefHeight="25.0" prefWidth="150.0" promptText="add argument" />
+            <Button fx:id="selectFileButton" layoutX="284.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
+            <Button fx:id="ButtonDirectory" layoutX="284.0" layoutY="163.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">

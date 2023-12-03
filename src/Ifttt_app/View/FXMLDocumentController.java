@@ -39,7 +39,13 @@ import javafx.stage.FileChooser;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javafx.beans.value.ObservableStringValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
 
 /**
  * FXML Controller class
@@ -117,10 +123,14 @@ public class FXMLDocumentController implements Initializable {
     private String FilePath;
     private String textFilePath;
     private String ProgramPath;
+    private String ProgramPath1;
     private String directoryPath;
     private String sizeFilePath;
     private String copyFilePath;
     private String directoryPathFile;
+    private ObservableList<String> triggerCommandList = FXCollections.observableArrayList();
+    private ObservableList<String> actionCommandList  = FXCollections.observableArrayList();
+            
             
     @FXML
     private Text ruleWarning;
@@ -151,8 +161,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Spinner<Integer> yearSpn;
     @FXML
-    private Button selectProgram;
-    @FXML
     private TextField externalTxt;
     @FXML
     private Button selectProgram1;
@@ -160,6 +168,20 @@ public class FXMLDocumentController implements Initializable {
     private Button selectFileButton;
     @FXML
     private Button ButtonDirectory;
+    @FXML
+    private ListView<String> commandlinelistTrigger;
+    @FXML
+    private Button addcommandLineTriggerButton;
+    @FXML
+    private TextField commandLineTextfieldTrigger;
+    @FXML
+    private ListView<String> commandlinelistAction;
+    @FXML
+    private Button addcommandLineButtonAction;
+    @FXML
+    private TextField commandLineTextfieldAction;
+    @FXML
+    private Button selectProgramAction;
 
     /**
      * Initializes the controller class.
@@ -278,9 +300,20 @@ public class FXMLDocumentController implements Initializable {
         Lmin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         Lsec.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
-        selectProgram.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
+        commandlinelistAction.setItems(actionCommandList);
+        commandlinelistTrigger.setItems(triggerCommandList);
+        
+        commandlinelistTrigger.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
+        commandlinelistAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
+        addcommandLineButtonAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
+        addcommandLineTriggerButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
+        commandLineTextfieldAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
+        commandLineTextfieldTrigger.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
+               
+        selectProgramAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
         selectProgram1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         externalTxt.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
+        
         
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
@@ -367,8 +400,10 @@ public class FXMLDocumentController implements Initializable {
                 ruleWarning.setText(ruleWarning.getText()+"No valid file selected."+"\n");
            else if(fileSizeTextField.getText()!=null)
                 ruleWarning.setText(ruleWarning.getText()+"0 bytes to size trigger"+"\n");
+           
         }if (comboTrigger.getValue().equals("RunExternalProgramTrigger")){
-             trigger = new TriggerExternalProgram(ProgramPath,Integer.parseInt(externalTxt.getText())) ;
+             ArrayList<String> arguments = new ArrayList<>(triggerCommandList);
+             trigger = new TriggerExternalProgramAll(ProgramPath,arguments,Integer.parseInt(externalTxt.getText())) ;
          }
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
@@ -386,16 +421,12 @@ public class FXMLDocumentController implements Initializable {
             else
                 ruleWarning.setText(ruleWarning.getText()+"No valid text file selected."+"\n");
         }if (comboAction.getValue().equals("RunExternalProgramAction")) {
-        if(FilePath!=null){
-             action = new RunExternalProgramAction(FilePath);
+        if(ProgramPath1!=null){
+             ArrayList<String> arguments = new ArrayList<>(actionCommandList);
+             action = new RunExternalProgramActionAll(ProgramPath1,arguments);
             }
             else
                 ruleWarning.setText(ruleWarning.getText()+"No valid program file selected."+"\n");
-    
-        }if(comboAction.getValue().equals("RunExternalProgramAction")){
-            if(ProgramPath!=null){
-                action = new RunExternalProgramAction(ProgramPath);
-            }
         }
         if(comboAction.getValue().equals("Copy File")){
             if(directoryPathFile != null && copyFilePath != null)
@@ -427,6 +458,8 @@ public class FXMLDocumentController implements Initializable {
         if((r!=null)){
          rset.addRule(r);
          FilePath=null;
+         triggerCommandList.clear();
+         actionCommandList.clear();
          ruleCreationPane.setDisable(true);
          ruleCreationPane.setVisible(false);
          ruleTablePane.setDisable(false);
@@ -571,15 +604,23 @@ public class FXMLDocumentController implements Initializable {
         File currentDirectory = new File(new File("./External Programs").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         fileChooser.setInitialDirectory(initialDirectory);
+        fileChooser.setTitle("Open Executable File");
+        // Define a list of executable file extensions
+        List<String> executableExtensions = Arrays.asList(
+                "*.exe", "*.com", "*.bat", "*.cmd", "*.msi",
+                "*.vbs", "*.js", "*.jar", "*.ps1", "*.psm1",
+                "*.py", "*.pyc", "*.ps1xml", "*.wsf"
+        );
 
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("BAT files (.bat)", "*.bat");
-        fileChooser.getExtensionFilters().add(extFilter);
-
+        // Create an ExtensionFilter that includes all executable extensions
+        FileChooser.ExtensionFilter executableFilter = new FileChooser.ExtensionFilter(
+                "Executable Files", executableExtensions
+        );
+        fileChooser.getExtensionFilters().add(executableFilter);
         File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 ProgramPath = selectedFile.getAbsolutePath();
             }
-            
     }
 
     @FXML
@@ -620,6 +661,46 @@ public class FXMLDocumentController implements Initializable {
         } else {
             System.out.println("No directory selected.");
         }
+    }
+
+    @FXML
+    private void addCommandLine(ActionEvent event) {
+        triggerCommandList.add(commandLineTextfieldTrigger.getText());
+        commandLineTextfieldTrigger.setText("");
+    }
+
+    @FXML
+    private void addCommandLineAction(ActionEvent event) {
+        actionCommandList.add(commandLineTextfieldAction.getText());
+        commandLineTextfieldAction.setText("");
+    }
+
+    @FXML
+    private void selectProgramAction(ActionEvent event) throws IOException {
+          FileChooser fileChooser = new FileChooser();
+
+        fileChooser.setTitle("Select a File");
+
+        File currentDirectory = new File(new File("./External Programs").getAbsolutePath());
+        File initialDirectory = new File(currentDirectory.getCanonicalPath());
+        fileChooser.setInitialDirectory(initialDirectory);
+        fileChooser.setTitle("Open Executable File");
+        // Define a list of executable file extensions
+        List<String> executableExtensions = Arrays.asList(
+                "*.exe", "*.com", "*.bat", "*.cmd", "*.msi",
+                "*.vbs", "*.js", "*.jar", "*.ps1", "*.psm1",
+                "*.py", "*.pyc", "*.ps1xml", "*.wsf"
+        );
+
+        // Create an ExtensionFilter that includes all executable extensions
+        FileChooser.ExtensionFilter executableFilter = new FileChooser.ExtensionFilter(
+                "Executable Files", executableExtensions
+        );
+        fileChooser.getExtensionFilters().add(executableFilter);
+        File selectedFile = fileChooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                ProgramPath1 = selectedFile.getAbsolutePath();
+            }
     }
  
   }

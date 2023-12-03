@@ -61,14 +61,20 @@ public class RuleSet extends Thread{
             while (!running) {
                 for (Rule rule : ruleSet) {
                     if(rule.isSleeping() && rule.isActive()){
-                        if(rule.isAwake() && rule.getTrigger().checkTrigger()){
-                            rule.getAction().execute();
-                            rule.whenAwake();
+                        if(rule.isAwake()){
+                           if(rule.getTrigger().checkTrigger()){
+                               rule.getAction().execute();
+                               rule.whenAwake();
+                           }
+                           
                         }
                     }
-                    if (rule.isActive() && rule.getTrigger().checkTrigger() && rule.isFired_oo()==false) {
-                       rule.setFired_oo(true); 
-                       rule.getAction().execute();
+                    if (rule.isActive() && rule.isFired_oo()==false) {
+                       if(rule.getTrigger().checkTrigger()){
+                         rule.setFired_oo(true); 
+                         rule.getAction().execute();  
+                       } 
+                       
                     }
                 }  
                

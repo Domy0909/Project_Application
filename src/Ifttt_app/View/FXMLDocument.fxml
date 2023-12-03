@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
          <children>
@@ -54,9 +55,15 @@
             <Label fx:id="LdayDate" layoutX="27.0" layoutY="385.0" text="Day" />
             <Label fx:id="LmonthDate" layoutX="79.0" layoutY="385.0" text="Month" />
             <Label fx:id="LyearDate" layoutX="131.0" layoutY="385.0" text="Year" />
-            <Button fx:id="selectProgram" layoutX="284.0" layoutY="94.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
+            <Button fx:id="selectProgramAction" layoutX="284.0" layoutY="94.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
             <TextField fx:id="externalTxt" layoutX="38.0" layoutY="442.0" promptText="Insert status code 0 o 1" />
             <Button fx:id="selectProgram1" layoutX="38.0" layoutY="464.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="150.0" text="Select External Program" />
+            <ListView fx:id="commandlinelistTrigger" layoutX="210.0" layoutY="421.0" prefHeight="67.0" prefWidth="150.0" />
+            <Button fx:id="addcommandLineTriggerButton" layoutX="369.0" layoutY="464.0" mnemonicParsing="false" onAction="#addCommandLine" prefHeight="25.0" prefWidth="149.0" text="Add command line arg" />
+            <TextField fx:id="commandLineTextfieldTrigger" layoutX="369.0" layoutY="442.0" promptText="add argument" />
+            <ListView fx:id="commandlinelistAction" layoutX="285.0" layoutY="227.0" prefHeight="59.0" prefWidth="150.0" />
+            <Button fx:id="addcommandLineButtonAction" layoutX="285.0" layoutY="317.0" mnemonicParsing="false" onAction="#addCommandLineAction" prefHeight="25.0" prefWidth="150.0" text="Add command line arg" />
+            <TextField fx:id="commandLineTextfieldAction" layoutX="285.0" layoutY="291.0" prefHeight="25.0" prefWidth="150.0" promptText="add argument" />
             <Button fx:id="selectFileButton" layoutX="284.0" layoutY="231.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
             <Button fx:id="ButtonDirectory" layoutX="284.0" layoutY="262.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
          </children>

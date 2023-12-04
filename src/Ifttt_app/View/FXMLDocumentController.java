@@ -123,7 +123,6 @@ public class FXMLDocumentController implements Initializable {
     private String FilePath;
     private String textFilePath;
     private String ProgramPath;
-    private String ProgramPath1;
     private String directoryPath;
     private String sizeFilePath;
     private String copyFilePath;
@@ -403,7 +402,7 @@ public class FXMLDocumentController implements Initializable {
            
         }if (comboTrigger.getValue().equals("RunExternalProgramTrigger")){
              ArrayList<String> arguments = new ArrayList<>(triggerCommandList);
-             trigger = new TriggerExternalProgramAll(ProgramPath,arguments,Integer.parseInt(externalTxt.getText())) ;
+             trigger = new TriggerExternalProgram(ProgramPath,arguments,Integer.parseInt(externalTxt.getText())) ;
          }
         if (comboAction.getValue().equals("ShowDialog"))
             action= new ShowDialogAction(messagefield.getText());
@@ -421,9 +420,9 @@ public class FXMLDocumentController implements Initializable {
             else
                 ruleWarning.setText(ruleWarning.getText()+"No valid text file selected."+"\n");
         }if (comboAction.getValue().equals("RunExternalProgramAction")) {
-        if(ProgramPath1!=null){
+        if(ProgramPath!=null){
              ArrayList<String> arguments = new ArrayList<>(actionCommandList);
-             action = new RunExternalProgramActionAll(ProgramPath1,arguments);
+             action = new RunExternalProgramAction(ProgramPath,arguments);
             }
             else
                 ruleWarning.setText(ruleWarning.getText()+"No valid program file selected."+"\n");
@@ -699,7 +698,7 @@ public class FXMLDocumentController implements Initializable {
         fileChooser.getExtensionFilters().add(executableFilter);
         File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
-                ProgramPath1 = selectedFile.getAbsolutePath();
+                ProgramPath = selectedFile.getAbsolutePath();
             }
     }
  

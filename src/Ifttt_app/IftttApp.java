@@ -30,6 +30,7 @@ public class IftttApp extends Application {
         
         Scene scene = new Scene(root);
         
+        primaryStage.setTitle("IFTTT APP");
         
         primaryStage.setScene(scene);
         primaryStage.show();

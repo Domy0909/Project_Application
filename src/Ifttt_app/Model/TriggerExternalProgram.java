@@ -8,21 +8,24 @@
 
 package Ifttt_app.Model;
 
+import java.util.ArrayList;
+
 
 public class TriggerExternalProgram implements Trigger{
-    
-    private String programPath;
-    private int expectedExitStatus;
+    private final ArrayList<String> arguments;
+    private final String programPath;
+    private final int expectedExitStatus;
 
-    public TriggerExternalProgram(String programPath, int expectedExitStatus) {
+    public TriggerExternalProgram(String programPath, ArrayList<String> arguments,int expectedExitStatus) {
         this.programPath = programPath;
+        this.arguments=arguments;
         this.expectedExitStatus = expectedExitStatus;
     }
     
     @Override
     public boolean checkTrigger() {
         try {
-            RunExternalProgramAction action = new RunExternalProgramAction(programPath);
+            RunExternalProgramAction action = new RunExternalProgramAction(programPath,arguments);
             int actualExitStatus = action.getExitcode();
             if(actualExitStatus == expectedExitStatus){
                 return true;

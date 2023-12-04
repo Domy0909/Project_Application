@@ -17,7 +17,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
+      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
          <children>
             <ComboBox fx:id="comboAction" layoutX="284.0" layoutY="65.0" prefWidth="150.0" promptText="Action Selector" />
             <ComboBox fx:id="comboTrigger" layoutX="38.0" layoutY="65.0" prefWidth="150.0" promptText="Trigger Selector" />
@@ -68,9 +68,9 @@
             <Button fx:id="ButtonDirectory" layoutX="284.0" layoutY="163.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
+      <AnchorPane fx:id="ruleTablePane" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <TableView fx:id="ruleTable" layoutX="8.0" layoutY="34.0" prefHeight="280.0" prefWidth="682.0">
+            <TableView fx:id="ruleTable" layoutX="59.0" layoutY="43.0" prefHeight="280.0" prefWidth="682.0">
               <columns>
                 <TableColumn fx:id="triggercol" prefWidth="75.0" text="Trigger" />
                 <TableColumn fx:id="actioncol" prefWidth="75.0" text="Action" />
@@ -89,9 +89,9 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Button fx:id="createRuleButton" layoutX="281.0" layoutY="333.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="30.0" prefWidth="130.0" text="Create Rule" />
-            <Button fx:id="saveRuleButton" layoutX="32.0" layoutY="333.0" mnemonicParsing="false" onAction="#Save" prefHeight="30.0" prefWidth="79.0" text="Save Rule" />
-            <Button fx:id="deleteRuleButton" layoutX="581.0" layoutY="333.0" mnemonicParsing="false" onAction="#Delete" prefHeight="30.0" prefWidth="79.0" text="Delete Rule" />
+            <Button fx:id="createRuleButton" layoutX="329.0" layoutY="330.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="36.0" prefWidth="143.0" text="Create Rule" />
+            <Button fx:id="saveRuleButton" layoutX="59.0" layoutY="330.0" mnemonicParsing="false" onAction="#Save" prefHeight="36.0" prefWidth="79.0" text="Save Rule" />
+            <Button fx:id="deleteRuleButton" layoutX="662.0" layoutY="330.0" mnemonicParsing="false" onAction="#Delete" prefHeight="36.0" prefWidth="79.0" text="Delete Rule" />
          </children>
       </AnchorPane>
    </children>

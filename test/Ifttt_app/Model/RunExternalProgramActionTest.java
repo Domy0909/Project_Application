@@ -5,6 +5,7 @@
  */
 package Ifttt_app.Model;
 
+import java.util.ArrayList;
 import javafx.application.Platform;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,20 +13,51 @@ import static org.junit.Assert.*;
 
 public class RunExternalProgramActionTest {
     
-     private RunExternalProgramAction action;
+     private RunExternalProgramAction action1,action2,action3;
     @Before
     public void setUp() {
         String programPath = "./External Programs\\scriptSounds.bat";
-        action = new RunExternalProgramAction(programPath);
+        ArrayList<String> argument= new ArrayList<>();
+        argument.add("Hello");
+        action1 = new RunExternalProgramAction(programPath,argument);
+        String filepath="./External Programs\\CommandLine2.jar";
+        ArrayList<String> argument2= new ArrayList<>();
+        argument2.add("Hello");
+        argument2.add("I am");
+        argument2.add("Gennaro");
+        action2= new RunExternalProgramAction(filepath,argument2);
+        String filepath2="./External Programs\\FileDoesNotExist.jar";
+        ArrayList<String> argument3= new ArrayList<>();
+        argument3.add("Hello");
+        argument3.add("I am");
+        argument3.add("Marco");
+        action3= new RunExternalProgramAction(filepath2,argument3);
     }
 
      @Test
-    public void execute() throws InterruptedException{ 
+    public void TeatExecute1() throws InterruptedException{ 
         Platform.startup(()->{
-            action.execute();
+            action1.execute();
         });
         Thread.sleep(5000);
-        assertEquals(true,action.isResult());
+        assertEquals(true,action1.isResult());
         }
     
+    @Test
+    public void TeatExecute2() throws InterruptedException{ 
+        Platform.startup(()->{
+            action2.execute();
+        });
+        Thread.sleep(5000);
+        assertEquals(true,action2.isResult());
+        }
+    
+    @Test
+    public void testExecuteNONE() throws InterruptedException {
+        Platform.startup(()->{
+            action3.execute();
+        });
+        Thread.sleep(5000);
+        assertEquals(false,action3.isResult());
+      }
 }

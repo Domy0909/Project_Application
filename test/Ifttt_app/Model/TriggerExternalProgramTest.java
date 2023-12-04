@@ -6,6 +6,8 @@
 
 package Ifttt_app.Model;
 
+import java.util.ArrayList;
+import javafx.application.Platform;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -14,17 +16,24 @@ public class TriggerExternalProgramTest {
     
     @Test
     public void testCheckTrigger() {
-        int i=5;
+        Platform.startup(()->{
+            int i=5;
         String programPath = "./External Programs\\myscript.bat";
-        TriggerExternalProgram trigger= new  TriggerExternalProgram(programPath,i);
+        ArrayList<String> argument = new ArrayList<>();
+        TriggerExternalProgram trigger= new  TriggerExternalProgram(programPath,argument,i);
         assertFalse(trigger.checkTrigger());
+        });
+        
     }
     @Test
     public void testCheckTriggerbis() {
-        int i=0;
+        Platform.startup(()->{
+            int i=0;
         String programPath = "./External Programs\\myscript.bat";
-        TriggerExternalProgram trigger= new  TriggerExternalProgram(programPath,i);
+        ArrayList<String> argument = new ArrayList<>();
+        TriggerExternalProgram trigger= new  TriggerExternalProgram(programPath,argument,i);
         assertTrue(trigger.checkTrigger());
+        });
     }
     
 }

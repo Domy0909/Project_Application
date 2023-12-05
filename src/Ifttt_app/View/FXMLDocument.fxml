@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
@@ -8,8 +9,11 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -17,32 +21,25 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
+      <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <ComboBox fx:id="comboAction" layoutX="284.0" layoutY="65.0" prefWidth="150.0" promptText="Action Selector" />
-            <ComboBox fx:id="comboTrigger" layoutX="38.0" layoutY="65.0" prefWidth="150.0" promptText="Trigger Selector" />
-            <Button fx:id="addRuleButton" layoutX="546.0" layoutY="321.0" mnemonicParsing="false" onAction="#addRuleButton" prefHeight="45.0" prefWidth="150.0" text="AddRule" />
-            <Spinner fx:id="hspin" editable="true" layoutX="39.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
-            <Spinner fx:id="msp" editable="true" layoutX="92.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
-            <Spinner fx:id="ssp" editable="true" layoutX="145.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
-            <TextField fx:id="messagefield" layoutX="284.0" layoutY="123.0" />
-            <RadioButton fx:id="firedradiobutton" layoutX="546.0" layoutY="56.0" mnemonicParsing="false" text="Fired only once" />
-            <RadioButton fx:id="sleepingradiobutton" layoutX="546.0" layoutY="82.0" mnemonicParsing="false" text="Sleeping Period" />
-            <TextField fx:id="sleepingdays" layoutX="537.0" layoutY="123.0" promptText="insert sleeping days" />
-            <TextField fx:id="sleepinghours" layoutX="537.0" layoutY="163.0" promptText="insert sleeping hours" />
-            <TextField fx:id="sleepingminutes" layoutX="537.0" layoutY="206.0" promptText="insert sleeping minutes" />
-            <Button fx:id="selectAudio" layoutX="284.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
-            <Label fx:id="Lhours" layoutX="39.0" layoutY="106.0" text="Hours" />
-            <Label fx:id="Lmin" layoutX="90.0" layoutY="106.0" prefHeight="17.0" prefWidth="45.0" text="Minutes" />
-            <Label fx:id="Lsec" layoutX="145.0" layoutY="106.0" text="Seconds" />
-            <Text fx:id="ruleWarning" fill="RED" layoutX="375.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" underline="true">
-               <font>
-                  <Font name="System Bold" size="10.0" />
-               </font>
-            </Text>
-            <Button fx:id="selectTextFileButton" layoutX="284.0" layoutY="163.0" mnemonicParsing="false" onAction="#selectTextFile" prefHeight="25.0" prefWidth="150.0" text="Select Text File" />
-            <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
-            <TextField fx:id="fileTextField" layoutX="38.0" layoutY="163.0" promptText="inserisci il nome del file" />
+            <TabPane fx:id="tabpaneRuleCreation" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="tabTrigger" text="Trigger Creation">
+                  <content>
+                    <AnchorPane fx:id="triggerpane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0">
+                           <children>
+                              <Button fx:id="selectProgram1" layoutX="37.0" layoutY="362.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="150.0" text="Select External Program" />
+                               <ComboBox fx:id="comboTrigger" layoutX="38.0" layoutY="65.0" prefWidth="150.0" promptText="Trigger Selector" />
+                                 <Spinner fx:id="hspin" editable="true" layoutX="39.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
+                                 <Spinner fx:id="msp" editable="true" layoutX="92.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
+                                 <Spinner fx:id="ssp" editable="true" layoutX="145.0" layoutY="123.0" prefHeight="25.0" prefWidth="53.0" />
+                                 <Label fx:id="Lhours" layoutX="39.0" layoutY="106.0" text="Hours" />
+                                 <Label fx:id="Lmin" layoutX="90.0" layoutY="106.0" prefHeight="17.0" prefWidth="45.0" text="Minutes" />
+                                 <Label fx:id="Lsec" layoutX="145.0" layoutY="106.0" text="Seconds" />
+                                 <ListView fx:id="commandlinelistTrigger" layoutX="37.0" layoutY="254.0" prefHeight="67.0" prefWidth="150.0" />
+            <Button fx:id="addcommandLineTriggerButton" layoutX="38.0" layoutY="194.0" mnemonicParsing="false" onAction="#addCommandLine" prefHeight="25.0" prefWidth="149.0" text="Add command line arg" />
+            <TextField fx:id="commandLineTextfieldTrigger" layoutX="38.0" layoutY="219.0" promptText="add argument" />
             <Button fx:id="fileSizeSelectorButton" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#fileSizeSelector" prefHeight="25.0" prefWidth="149.0" text="Select File" />
             <TextField fx:id="fileSizeTextField" layoutX="38.0" layoutY="163.0" prefHeight="25.0" prefWidth="150.0" promptText="insert a threshold in bytes" />
             <ComboBox fx:id="daySelector" layoutX="38.0" layoutY="124.0" prefWidth="150.0" />
@@ -55,20 +52,125 @@
             <Label fx:id="LdayDate" layoutX="40.0" layoutY="106.0" text="Day" />
             <Label fx:id="LmonthDate" layoutX="94.0" layoutY="106.0" text="Month" />
             <Label fx:id="LyearDate" layoutX="146.0" layoutY="106.0" text="Year" />
-            <Button fx:id="selectProgramAction" layoutX="284.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
-            <TextField fx:id="externalTxt" layoutX="38.0" layoutY="163.0" promptText="Insert status code 0 o 1" />
-            <Button fx:id="selectProgram1" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectProgram" prefHeight="25.0" prefWidth="150.0" text="Select External Program" />
-            <ListView fx:id="commandlinelistTrigger" layoutX="37.0" layoutY="254.0" prefHeight="67.0" prefWidth="150.0" />
-            <Button fx:id="addcommandLineTriggerButton" layoutX="38.0" layoutY="194.0" mnemonicParsing="false" onAction="#addCommandLine" prefHeight="25.0" prefWidth="149.0" text="Add command line arg" />
-            <TextField fx:id="commandLineTextfieldTrigger" layoutX="38.0" layoutY="219.0" promptText="add argument" />
-            <ListView fx:id="commandlinelistAction" layoutX="284.0" layoutY="258.0" prefHeight="59.0" prefWidth="150.0" />
-            <Button fx:id="addcommandLineButtonAction" layoutX="284.0" layoutY="194.0" mnemonicParsing="false" onAction="#addCommandLineAction" prefHeight="25.0" prefWidth="150.0" text="Add command line arg" />
-            <TextField fx:id="commandLineTextfieldAction" layoutX="284.0" layoutY="219.0" prefHeight="25.0" prefWidth="150.0" promptText="add argument" />
-            <Button fx:id="selectFileButton" layoutX="284.0" layoutY="123.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
-            <Button fx:id="ButtonDirectory" layoutX="284.0" layoutY="163.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
-         </children>
+             <TextField fx:id="externalTxt" layoutX="38.0" layoutY="163.0" promptText="Insert status code 0 o 1" />
+                              <TableView fx:id="triggertable" layoutX="400.0" layoutY="24.0" prefHeight="350.0" prefWidth="360.0">
+                                <columns>
+                                  <TableColumn fx:id="triggerList" prefWidth="75.0" text="Triggers" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="selectTrigger" mnemonicParsing="false" onAction="#SelectTrigger" text="Select This Trigger" />
+                                          <MenuItem fx:id="triggerfield1" mnemonicParsing="false" onAction="#TriggerField1" text="Set Frist Composite field" />
+                                          <MenuItem fx:id="Triggerfield2" mnemonicParsing="false" onAction="#triggerField2" text="Set Second Composite Field" />
+                                          <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#DeleteTrigger" text="Dekete Trigger" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                              <Button fx:id="createTrigger" layoutX="217.0" layoutY="65.0" mnemonicParsing="false" onAction="#CreateTrigger" prefHeight="25.0" prefWidth="143.0" text="Create Trigger" />
+                              <TextArea fx:id="fristTriggerFieldTA" editable="false" layoutX="31.0" layoutY="128.0" prefHeight="70.0" prefWidth="286.0" promptText="Select a trigger from the following tableview,  click on the set frist composite trigger field " />
+                              <ComboBox fx:id="logicalbox" layoutX="87.0" layoutY="223.0" prefHeight="25.0" prefWidth="162.0" promptText="LOGICAL OPERATORS" />
+                              <TextArea fx:id="secondTriggerFieldTA" editable="false" layoutX="35.0" layoutY="272.0" prefHeight="70.0" prefWidth="278.0" promptText="Select a trigger from the following tableview,  click on the set  second composite trigger field " />
+                              <CheckBox fx:id="notcheck" layoutX="217.0" layoutY="98.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="143.0" text="NOT condition">
+                                 <font>
+                                    <Font name="System Bold Italic" size="12.0" />
+                                 </font>
+                              </CheckBox>
+           
+            
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Action Creation">
+                  <content>
+                    <AnchorPane fx:id="actionpane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0">
+                           <children>
+                                <ComboBox fx:id="comboAction" layoutX="38.0" layoutY="62.0" prefWidth="150.0" promptText="Action Selector" />
+                                 <TextField fx:id="messagefield" layoutX="39.0" layoutY="95.0" />
+                                 <Button fx:id="selectTextFileButton" layoutX="38.0" layoutY="160.0" mnemonicParsing="false" onAction="#selectTextFile" prefHeight="25.0" prefWidth="150.0" text="Select Text File" />
+                                 <Button fx:id="selectAudio" layoutX="38.0" layoutY="112.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
+                                  <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
+            <ListView fx:id="commandlinelistAction" layoutX="38.0" layoutY="255.0" prefHeight="59.0" prefWidth="150.0" />
+            <Button fx:id="addcommandLineButtonAction" layoutX="38.0" layoutY="191.0" mnemonicParsing="false" onAction="#addCommandLineAction" prefHeight="25.0" prefWidth="150.0" text="Add command line arg" />
+            <TextField fx:id="commandLineTextfieldAction" layoutX="38.0" layoutY="216.0" prefHeight="25.0" prefWidth="150.0" promptText="add argument" />
+            <Button fx:id="selectFileButton" layoutX="38.0" layoutY="120.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
+            <Button fx:id="ButtonDirectory" layoutX="38.0" layoutY="160.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
+     
+                                  <TextField fx:id="fileTextField" layoutX="38.0" layoutY="163.0" promptText="inserisci il nome del file" />
+             <Button fx:id="selectProgramAction" layoutX="39.0" layoutY="148.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
+                              <TableView fx:id="actionTable" layoutX="400.0" layoutY="30.0" prefHeight="386.0" prefWidth="330.0">
+                                <columns>
+                                  <TableColumn fx:id="actionList" prefWidth="75.0" text="Actions" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="SelectAction" mnemonicParsing="false" onAction="#SelectAction" text="Select Action" />
+                                          <MenuItem mnemonicParsing="false" onAction="#DeleteAction" text="Delete Action" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                              <Button fx:id="createActionButton" layoutX="224.0" layoutY="62.0" mnemonicParsing="false" onAction="#CreateAction" prefHeight="25.0" prefWidth="122.0" text="Create Action" />
+                         </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                  <Tab text="Rule Creation">
+                    <content>
+                      <AnchorPane fx:id="rulepane" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="800.0">
+                           <children>
+                                   <Button fx:id="addRuleButton" layoutX="546.0" layoutY="381.0" mnemonicParsing="false" onAction="#addRuleButton" prefHeight="45.0" prefWidth="150.0" text="AddRule" />
+                                     <RadioButton fx:id="firedradiobutton" layoutX="546.0" layoutY="56.0" mnemonicParsing="false" text="Fired only once" />
+            <RadioButton fx:id="sleepingradiobutton" layoutX="546.0" layoutY="82.0" mnemonicParsing="false" text="Sleeping Period" />
+            <TextField fx:id="sleepingdays" layoutX="537.0" layoutY="123.0" promptText="insert sleeping days" />
+            <TextField fx:id="sleepinghours" layoutX="537.0" layoutY="163.0" promptText="insert sleeping hours" />
+            <TextField fx:id="sleepingminutes" layoutX="537.0" layoutY="206.0" promptText="insert sleeping minutes" />
+                        <Text fx:id="ruleWarning" fill="RED" layoutX="375.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" underline="true">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Text>
+                              <TextArea fx:id="triggerTA" layoutX="53.0" layoutY="63.0" prefHeight="124.0" prefWidth="336.0" promptText="Select the trigger from the trigger creation" />
+                              <TextArea fx:id="actionTA" layoutX="185.0" layoutY="260.0" prefHeight="128.0" prefWidth="316.0" promptText="select action from the action pane" />
+                              <Label layoutX="63.0" layoutY="33.0" prefHeight="32.0" prefWidth="47.0" text="IF ">
+                                 <font>
+                                    <Font name="System Bold Italic" size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="185.0" layoutY="215.0" prefHeight="32.0" prefWidth="87.0" text="THEN">
+                                 <font>
+                                    <Font name="System Bold Italic" size="22.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+           
+            
+           
+          
+            
+          
+     
+            
+
+            
+            
+             </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" prefHeight="500.0" prefWidth="800.0">
+      <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
          <children>
             <TableView fx:id="ruleTable" layoutX="59.0" layoutY="43.0" prefHeight="280.0" prefWidth="682.0">
               <columns>

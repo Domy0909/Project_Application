@@ -45,7 +45,11 @@ import java.util.List;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextArea;
 
 /**
  * FXML Controller class
@@ -129,6 +133,10 @@ public class FXMLDocumentController implements Initializable {
     private String directoryPathFile;
     private ObservableList<String> triggerCommandList = FXCollections.observableArrayList();
     private ObservableList<String> actionCommandList  = FXCollections.observableArrayList();
+    private ObservableList<Trigger> triggertbList= FXCollections.observableArrayList();
+    private ObservableList<Action> actiontbList= FXCollections.observableArrayList();
+    private Trigger a;
+    private Trigger b;
             
             
     @FXML
@@ -181,6 +189,53 @@ public class FXMLDocumentController implements Initializable {
     private TextField commandLineTextfieldAction;
     @FXML
     private Button selectProgramAction;
+    @FXML
+    private TabPane tabpaneRuleCreation;
+    @FXML
+    private Tab tabTrigger;
+    @FXML
+    private AnchorPane triggerpane;
+    @FXML
+    private AnchorPane actionpane;
+    @FXML
+    private AnchorPane rulepane;
+    @FXML
+    private TableView<Trigger> triggertable;
+    @FXML
+    private Button createTrigger;
+    @FXML
+    private TextArea fristTriggerFieldTA;
+    @FXML
+    private TableColumn<Trigger, String> triggerList;
+    @FXML
+    private TextArea secondTriggerFieldTA;
+    @FXML
+    private ComboBox<String> logicalbox;
+    @FXML
+    private MenuItem selectTrigger;
+    @FXML
+    private MenuItem triggerfield1;
+    @FXML
+    private MenuItem Triggerfield2;
+    @FXML
+    private MenuItem delete;
+    @FXML
+    private TableView<Action> actionTable;
+    @FXML
+    private TableColumn<Action, String> actionList;
+    @FXML
+    private Button createActionButton;
+    
+    private Trigger triggerselected;
+    private Action actionselected;
+    @FXML
+    private MenuItem SelectAction;
+    @FXML
+    private TextArea triggerTA;
+    @FXML
+    private TextArea actionTA;
+    @FXML
+    private CheckBox notcheck;
 
     /**
      * Initializes the controller class.
@@ -191,6 +246,13 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         SaveRules.loadRules(rset);
+        
+        triggertable.setItems(triggertbList);
+        triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
+        
+        actionTable.setItems(actiontbList);
+        triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
+        actionList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         
         
         //Crea un UnaryOperator per filtrare l'input e consentire solo numeri interi
@@ -225,6 +287,8 @@ public class FXMLDocumentController implements Initializable {
         triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().description()));
         repcolumn.setCellValueFactory(cellData -> {
         Rule rowData = cellData.getValue();
+        
+        
 
        if (!rowData.isSleeping()) {
         // If isSleeping() returns false, set the value as isfoo
@@ -313,6 +377,10 @@ public class FXMLDocumentController implements Initializable {
         selectProgram1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         externalTxt.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         
+        fristTriggerFieldTA.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
+        secondTriggerFieldTA.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
+        logicalbox.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));;
+                
         
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
@@ -330,7 +398,7 @@ public class FXMLDocumentController implements Initializable {
         
         selectFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")).or(Bindings.equal(comboAction.valueProperty(), "Delete File")));
         ButtonDirectory.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")));
-
+        
         
         comboTrigger.getItems().addAll("CurrentTime");
         comboTrigger.getItems().addAll("Day Of Week");
@@ -339,6 +407,7 @@ public class FXMLDocumentController implements Initializable {
         comboTrigger.getItems().addAll("FileExistence");
         comboTrigger.getItems().addAll("FileSize");
         comboTrigger.getItems().addAll("RunExternalProgramTrigger");
+        comboTrigger.getItems().addAll("CompositeTrigger");
         
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
@@ -356,7 +425,26 @@ public class FXMLDocumentController implements Initializable {
         daySelector.getItems().addAll("Saturday");
         daySelector.getItems().addAll("Sunday");
         
-        addRuleButton.disableProperty().bind(Bindings.isNull(comboTrigger.valueProperty()).or(Bindings.isNull(comboAction.valueProperty())).or(sleepingradiobutton.selectedProperty().and(sleepingdays.textProperty().isEmpty().or(sleepinghours.textProperty().isEmpty().or(sleepingminutes.textProperty().isEmpty())))));        
+        logicalbox.getItems().addAll("AND","OR");
+        
+        
+        
+       addRuleButton.disableProperty().bind(
+    Bindings.createBooleanBinding(() ->
+        triggerTA.getText().isEmpty() ||
+        actionTA.getText().isEmpty() ||
+        (sleepingradiobutton.isSelected() &&
+            (sleepingdays.getText().isEmpty() ||
+             sleepinghours.getText().isEmpty() ||
+             sleepingminutes.getText().isEmpty())),
+        triggerTA.textProperty(),
+        actionTA.textProperty(),
+        sleepingradiobutton.selectedProperty(),
+        sleepingdays.textProperty(),
+        sleepinghours.textProperty(),
+        sleepingminutes.textProperty()
+    )
+);
         
     
         // TODO
@@ -368,77 +456,9 @@ public class FXMLDocumentController implements Initializable {
     private void addRuleButton(ActionEvent event) {
         
         ruleWarning.setText("");
-        Trigger trigger=null;
-        Action action=null;
+        Trigger trigger=triggerselected;
+        Action action=actionselected;
         Rule r=null;
-        if (comboTrigger.getValue().equals("CurrentTime"))
-            trigger=new TimeTrigger(LocalTime.of(hspin.getValue(), msp.getValue(), ssp.getValue()));
-        if (comboTrigger.getValue().equals("FileExistence")){
-           if(directoryPath!=null && fileTextField.getText()!=null)
-             trigger=new ExistenceTrigger(directoryPath,fileTextField.getText());
-           else if(directoryPath==null)
-                ruleWarning.setText(ruleWarning.getText()+"No valid trigger directory selected."+"\n");
-           else if(fileTextField.getText()!=null)
-                ruleWarning.setText(ruleWarning.getText()+"empty name for file trigger existence."+"\n");
-        }
-        
-        if (comboTrigger.getValue().equals("Day Of Week")){
-            trigger= new TriggerDay(DayOfWeek.valueOf(daySelector.getValue().toUpperCase()));
-        }
-        if (comboTrigger.getValue().equals("Day Of Month")){
-            trigger= new TriggerDayMonth(daySpinner.getValue());
-        }
-        if (comboTrigger.getValue().equals("Date")){
-            trigger= new TriggerDate(LocalDate.of(yearSpn.getValue(), monthSpn.getValue(), daySpn.getValue()));
-        }
-        
-        if (comboTrigger.getValue().equals("FileSize")){
-           if(sizeFilePath!=null)
-             trigger=new SizeFileTrigger(sizeFilePath,Integer.parseInt(fileSizeTextField.getText()));
-           else if(directoryPath==null)
-                ruleWarning.setText(ruleWarning.getText()+"No valid file selected."+"\n");
-           else if(fileSizeTextField.getText()!=null)
-                ruleWarning.setText(ruleWarning.getText()+"0 bytes to size trigger"+"\n");
-           
-        }if (comboTrigger.getValue().equals("RunExternalProgramTrigger")){
-             ArrayList<String> arguments = new ArrayList<>(triggerCommandList);
-             trigger = new TriggerExternalProgram(ProgramPath,arguments,Integer.parseInt(externalTxt.getText())) ;
-         }
-        if (comboAction.getValue().equals("ShowDialog"))
-            action= new ShowDialogAction(messagefield.getText());
-        if (comboAction.getValue().equals("PlayAudio")){
-            if(FilePath!=null){
-             action = new ActionPlayAudio(FilePath);
-            }
-            else
-                ruleWarning.setText(ruleWarning.getText()+"No valid audio file selected."+"\n");
-        }
-        if (comboAction.getValue().equals("AppendStringAtFile")){
-            if(textFilePath!=null){
-             action = new SpecifiedStringAction(textFilePath,messagefield.getText());
-            }
-            else
-                ruleWarning.setText(ruleWarning.getText()+"No valid text file selected."+"\n");
-        }if (comboAction.getValue().equals("RunExternalProgramAction")) {
-        if(ProgramPath!=null){
-             ArrayList<String> arguments = new ArrayList<>(actionCommandList);
-             action = new RunExternalProgramAction(ProgramPath,arguments);
-            }
-            else
-                ruleWarning.setText(ruleWarning.getText()+"No valid program file selected."+"\n");
-        }
-        if(comboAction.getValue().equals("Copy File")){
-            if(directoryPathFile != null && copyFilePath != null)
-                action = new CopyFileAction(copyFilePath,directoryPathFile);
-        }
-        if(comboAction.getValue().equals("Move File")){
-            if(directoryPathFile != null && copyFilePath != null)
-                action = new MoveFileAction(copyFilePath,directoryPathFile);
-        }
-        if(comboAction.getValue().equals("Delete File")){
-            if(copyFilePath != null)
-                action = new DeleteFileAction(copyFilePath);
-        }
         
         if ((action!=null) && (trigger!=null) ){
             r=new Rule(action,trigger);
@@ -463,7 +483,13 @@ public class FXMLDocumentController implements Initializable {
          ruleCreationPane.setVisible(false);
          ruleTablePane.setDisable(false);
          ruleTablePane.setVisible(true);
+         actionselected=null;
+         triggerselected=null;
+         triggerTA.setText("");
+         actionTA.setText("");
         }
+        
+        
         
         
     }
@@ -701,6 +727,193 @@ public class FXMLDocumentController implements Initializable {
                 ProgramPath = selectedFile.getAbsolutePath();
             }
     }
+
+    @FXML
+    private void CreateTrigger(ActionEvent event) {
+        
+        String triggerValue = comboTrigger.getValue();
+        Trigger trigger=null;
+
+if (triggerValue != null) {
+    switch (triggerValue) {
+        case "CurrentTime":
+            trigger = new TimeTrigger(LocalTime.of(hspin.getValue(), msp.getValue(), ssp.getValue()));
+            break;
+
+        case "FileExistence":
+            if (directoryPath != null && fileTextField.getText() != null) {
+                trigger = new ExistenceTrigger(directoryPath, fileTextField.getText());
+            } else {
+                if (directoryPath == null) {
+                    ruleWarning.setText(ruleWarning.getText() + "No valid trigger directory selected." + "\n");
+                }
+                if (fileTextField.getText() == null) {
+                    ruleWarning.setText(ruleWarning.getText() + "Empty name for file trigger existence." + "\n");
+                }
+            }
+            break;
+
+        case "Day Of Week":
+            trigger = new TriggerDay(DayOfWeek.valueOf(daySelector.getValue().toUpperCase()));
+            break;
+
+        case "Day Of Month":
+            trigger = new TriggerDayMonth(daySpinner.getValue());
+            break;
+
+        case "Date":
+            trigger = new TriggerDate(LocalDate.of(yearSpn.getValue(), monthSpn.getValue(), daySpn.getValue()));
+            break;
+
+        case "FileSize":
+            if (sizeFilePath != null) {
+                trigger = new SizeFileTrigger(sizeFilePath, Integer.parseInt(fileSizeTextField.getText()));
+            } else {
+                if (directoryPath == null) {
+                    ruleWarning.setText(ruleWarning.getText() + "No valid file selected." + "\n");
+                }
+                if (fileSizeTextField.getText() == null) {
+                    ruleWarning.setText(ruleWarning.getText() + "0 bytes to size trigger" + "\n");
+                }
+            }
+            break;
+
+        case "RunExternalProgramTrigger":
+            ArrayList<String> arguments = new ArrayList<>(triggerCommandList);
+            trigger = new TriggerExternalProgram(ProgramPath, arguments, Integer.parseInt(externalTxt.getText()));
+            break;
+      
+        case "CompositeTrigger":
+          
+            
+            if ((a != null)&&(a != null) && !logicalbox.getValue().isEmpty()) {
+                if(logicalbox.getValue().equals("AND"))
+                    trigger = new CompositeTrigger(a,b,true);
+                else
+                    trigger = new CompositeTrigger(a,b,false);
+             } 
+            
+            break;    
+        default:
+            // Handle unknown trigger value
+            break;     
+    }
+     if(notcheck.isSelected())
+         trigger= new NotTrigger(trigger);
+     triggertbList.add(trigger);
+}
+    }
+
+    @FXML
+    private void SelectTrigger(ActionEvent event) {
+        triggerselected=triggertable.getSelectionModel().getSelectedItem();
+        triggerTA.setText(triggerselected.description());
+    }
+
+    @FXML
+    private void TriggerField1(ActionEvent event) {
+        a=triggertable.getSelectionModel().getSelectedItem();
+        fristTriggerFieldTA.setText(a.description());
+        
+    }
+
+    @FXML
+    private void triggerField2(ActionEvent event) {
+        b=triggertable.getSelectionModel().getSelectedItem();
+        secondTriggerFieldTA.setText(b.description());
+    }
+
+    @FXML
+    private void DeleteTrigger(ActionEvent event) {
+           Trigger selectedTrigger= triggertable.getSelectionModel().getSelectedItem();
+
+        if (selectedTrigger != null) {
+          // Rimuovi la regola dalla ruleSet
+           triggertbList.remove(selectedTrigger);
+          // Aggiorna la tabella
+          triggertable.refresh();
+        }  
+    }
+
+    @FXML
+    private void CreateAction(ActionEvent event) {
+  if (comboAction.getValue() != null) {
+    String actionType = comboAction.getValue();
+    Action action=null;
+    switch (actionType) {
+        case "ShowDialog":
+            action = new ShowDialogAction(messagefield.getText());
+            break;
+        case "PlayAudio":
+            if (FilePath != null) {
+                action = new ActionPlayAudio(FilePath);
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid audio file selected.\n");
+            }
+            break;
+        case "AppendStringAtFile":
+            if (textFilePath != null) {
+                action = new SpecifiedStringAction(textFilePath, messagefield.getText());
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid text file selected.\n");
+            }
+            break;
+        case "RunExternalProgramAction":
+            if (ProgramPath != null) {
+                ArrayList<String> arguments = new ArrayList<>(actionCommandList);
+                action = new RunExternalProgramAction(ProgramPath, arguments);
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+            }
+            break;
+        case "Copy File":
+        case "Move File":
+        case "Delete File":
+            if (copyFilePath != null && directoryPathFile != null) {
+                switch (actionType) {
+                    case "Copy File":
+                        action = new CopyFileAction(copyFilePath, directoryPathFile);
+                        break;
+                    case "Move File":
+                        action = new MoveFileAction(copyFilePath, directoryPathFile);
+                        break;
+                    case "Delete File":
+                        action = new DeleteFileAction(copyFilePath);
+                        break;
+                }
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid file paths selected.\n");
+            }
+            break;
+        default:
+            // Handle unknown action type
+            break;
+    }
+    
+    actiontbList.add(action);
+}
+}
+
+    @FXML
+    private void SelectAction(ActionEvent event) {
+        actionselected = actionTable.getSelectionModel().getSelectedItem();
+        actionTA.setText(actionselected.description());
+    }
+
+    @FXML
+    private void DeleteAction(ActionEvent event) {
+         Action selectedAction= actionTable.getSelectionModel().getSelectedItem();
+
+        if ( selectedAction != null) {
+          // Rimuovi la regola dalla ruleSet
+          actiontbList.remove( selectedAction);
+          // Aggiorna la tabella
+          actionTable.refresh();
+        }  
+    }
+        
+        
+    }
  
-  }
+  
 

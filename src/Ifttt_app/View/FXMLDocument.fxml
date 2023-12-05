@@ -65,7 +65,7 @@
                                       <items>
                                         <MenuItem fx:id="selectTrigger" mnemonicParsing="false" onAction="#SelectTrigger" text="Select This Trigger" />
                                           <MenuItem fx:id="triggerfield1" mnemonicParsing="false" onAction="#TriggerField1" text="Set Frist Composite field" />
-                                          <MenuItem fx:id="Triggerfield2" mnemonicParsing="false" onAction="#triggerField2" text="Set Second Composite Field" />
+                                          <MenuItem fx:id="triggerfield2" mnemonicParsing="false" onAction="#triggerField2" text="Set Second Composite Field" />
                                           <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#DeleteTrigger" text="Dekete Trigger" />
                                       </items>
                                     </ContextMenu>
@@ -111,15 +111,31 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                                  <contextMenu>
-                                    <ContextMenu>
+                                    <ContextMenu fx:id="deleteActionmenu">
                                       <items>
                                         <MenuItem fx:id="SelectAction" mnemonicParsing="false" onAction="#SelectAction" text="Select Action" />
                                           <MenuItem mnemonicParsing="false" onAction="#DeleteAction" text="Delete Action" />
+                                          <MenuItem fx:id="addseqmenu" mnemonicParsing="false" onAction="#addSequenceAction" text="Add to sequence" />
                                       </items>
                                     </ContextMenu>
                                  </contextMenu>
                               </TableView>
                               <Button fx:id="createActionButton" layoutX="224.0" layoutY="62.0" mnemonicParsing="false" onAction="#CreateAction" prefHeight="25.0" prefWidth="122.0" text="Create Action" />
+                              <TableView fx:id="actionseqTA" layoutX="38.0" layoutY="163.0" prefHeight="253.0" prefWidth="262.0">
+                                <columns>
+                                  <TableColumn fx:id="actionseqcol" prefWidth="75.0" text="Sequence of Actions" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="deleteSqaction" mnemonicParsing="false" onAction="#DeleteActionFromSequence" text="Delete Action from sequence" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
                          </children>
                         </AnchorPane>
                   </content>

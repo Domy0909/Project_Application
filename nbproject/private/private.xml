@@ -3,7 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/src/Ifttt_app/Model/NotTrigger.java</file>
+            <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/test/Ifttt_app/Model/NotTriggerTest.java</file>
             <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/src/Ifttt_app/View/FXMLDocument.fxml</file>
+            <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/src/Ifttt_app/View/FXMLDocumentController.java</file>
+            <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/src/Ifttt_app/Model/CompositeTrigger.java</file>
+            <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/test/Ifttt_app/Model/CompositeTriggerTest.java</file>
+            <file>file:/C:/Users/aless/OneDrive/Documenti/NetBeansProjects/ASE/Project_Application/src/Ifttt_app/Model/CompositeAction.java</file>
         </group>
     </open-files>
 </project-private>

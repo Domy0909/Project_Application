@@ -135,6 +135,7 @@ public class FXMLDocumentController implements Initializable {
     private ObservableList<String> actionCommandList  = FXCollections.observableArrayList();
     private ObservableList<Trigger> triggertbList= FXCollections.observableArrayList();
     private ObservableList<Action> actiontbList= FXCollections.observableArrayList();
+    private ObservableList<Action> actionseq= FXCollections.observableArrayList();
     private Trigger a;
     private Trigger b;
             
@@ -216,7 +217,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private MenuItem triggerfield1;
     @FXML
-    private MenuItem Triggerfield2;
+    private MenuItem triggerfield2;
     @FXML
     private MenuItem delete;
     @FXML
@@ -228,6 +229,7 @@ public class FXMLDocumentController implements Initializable {
     
     private Trigger triggerselected;
     private Action actionselected;
+    private CompositeAction compaction=new CompositeAction();
     @FXML
     private MenuItem SelectAction;
     @FXML
@@ -236,6 +238,17 @@ public class FXMLDocumentController implements Initializable {
     private TextArea actionTA;
     @FXML
     private CheckBox notcheck;
+    @FXML
+    private MenuItem addseqmenu;
+    @FXML
+    private TableView<Action> actionseqTA;
+    @FXML
+    private ContextMenu deleteActionmenu;
+    @FXML
+    private MenuItem deleteSqaction;
+    @FXML
+    private TableColumn<Action, String> actionseqcol;
+    
 
     /**
      * Initializes the controller class.
@@ -251,8 +264,11 @@ public class FXMLDocumentController implements Initializable {
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         
         actionTable.setItems(actiontbList);
+        actionseqTA.setItems(actionseq);
+        
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         actionList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
+        actionseqcol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         
         
         //Crea un UnaryOperator per filtrare l'input e consentire solo numeri interi
@@ -379,8 +395,13 @@ public class FXMLDocumentController implements Initializable {
         
         fristTriggerFieldTA.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         secondTriggerFieldTA.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
-        logicalbox.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));;
-                
+        logicalbox.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
+        triggerfield1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
+        triggerfield2.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
+        
+        addseqmenu.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));
+        deleteSqaction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));  
+        actionseqTA.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));  
         
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
@@ -416,6 +437,7 @@ public class FXMLDocumentController implements Initializable {
         comboAction.getItems().addAll("Copy File");
         comboAction.getItems().addAll("Move File");
         comboAction.getItems().addAll("Delete File");
+        comboAction.getItems().addAll("Action Sequence");
         
         daySelector.getItems().addAll("Monday");
         daySelector.getItems().addAll("Tuesday");
@@ -885,6 +907,15 @@ if (triggerValue != null) {
                 ruleWarning.setText(ruleWarning.getText() + "No valid file paths selected.\n");
             }
             break;
+            case "Action Sequence":
+           if (actionseq.size()>0) {
+                ArrayList<Action> arguments = new ArrayList<>(actionseq);
+                action = new CompositeAction(arguments);
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+            }
+
+            break;
         default:
             // Handle unknown action type
             break;
@@ -910,6 +941,25 @@ if (triggerValue != null) {
           // Aggiorna la tabella
           actionTable.refresh();
         }  
+    }
+
+    @FXML
+    private void addSequenceAction(ActionEvent event) {
+        actionseq.add(actionTable.getSelectionModel().getSelectedItem());
+        actionseqTA.refresh();
+        
+    }
+
+    private void removeSequenceAction(ActionEvent event) {
+        compaction.removeAction(actionTable.getSelectionModel().getSelectedItem());
+        actionseqTA.refresh();
+      
+    }
+
+    @FXML
+    private void DeleteActionFromSequence(ActionEvent event) {
+        actionseq.remove(actionseqTA.getSelectionModel().getSelectedItem());
+        actionseqTA.refresh();
     }
         
         

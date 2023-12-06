@@ -7,6 +7,7 @@ package Ifttt_app.Model;
 import java.time.LocalTime;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -41,6 +42,7 @@ public class RuleSetTest {
         ruleSet = RuleSet.getInstance();
         rule1 = new Rule(new ShowDialogAction("rule1"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 1
         rule2 = new Rule(new ActionPlayAudio("sounds\\clip_1.wav"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 2
+   
     }
     /**
      * Test of addRule method, of class RuleSet.
@@ -55,6 +57,7 @@ public class RuleSetTest {
       assertEquals(2, rules.size());
       assertEquals(rule1, rules.get(0));
       assertEquals(rule2, rules.get(1));
+      ruleSet.getRules().removeAll(ruleSet.getRules());
     }
 
     /**
@@ -65,12 +68,13 @@ public class RuleSetTest {
         ruleSet.addRule(rule1);
         ruleSet.addRule(rule2);
 
-        ruleSet.removeRule(rule1);
+        ruleSet.removeRule(rule2);
 
         ObservableList<Rule> rules = ruleSet.getRules();
         
         assertEquals(1, rules.size()); // Verifica che solo una regola sia stata rimossa
-        assertEquals(rule2, rules.get(0)); // Verifica che la regola 2 sia rimasta
+        assertEquals(rule1, rules.get(0)); // Verifica che la regola 2 sia rimasta
+        ruleSet.getRules().removeAll(ruleSet.getRules());
     }
 
     
@@ -82,6 +86,11 @@ public class RuleSetTest {
         });
         Thread.sleep(6000);
         assertEquals(true, rule1.isFired_oo());    
+        ruleSet.getRules().removeAll(ruleSet.getRules());
     }
+    @After
+    public void afterTesting(){
+      ruleSet.getRules().removeAll(ruleSet.getRules());
+     }
   }
 

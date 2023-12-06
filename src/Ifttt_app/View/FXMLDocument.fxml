@@ -21,7 +21,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
+      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
          <children>
             <TabPane fx:id="tabpaneRuleCreation" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -186,30 +186,71 @@
             
              </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
+      <AnchorPane fx:id="ruleTablePane" prefHeight="500.0" prefWidth="800.0">
          <children>
-            <TableView fx:id="ruleTable" layoutX="59.0" layoutY="43.0" prefHeight="280.0" prefWidth="682.0">
-              <columns>
-                <TableColumn fx:id="triggercol" prefWidth="75.0" text="Trigger" />
-                <TableColumn fx:id="actioncol" prefWidth="75.0" text="Action" />
-                  <TableColumn fx:id="activecol" prefWidth="75.0" text="Active" />
-                  <TableColumn fx:id="repcolumn" prefWidth="75.0" text="Repetition" />
-              </columns>
-               <contextMenu>
-                  <ContextMenu fx:id="tmenu">
-                    <items>
-                      <MenuItem fx:id="tdelete" mnemonicParsing="false" onAction="#Delete" text="delete" />
-                        <MenuItem fx:id="tactiveDeactive" mnemonicParsing="false" onAction="#activeDeactive" text="activeDeactive" />
-                    </items>
-                  </ContextMenu>
-               </contextMenu>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Button fx:id="createRuleButton" layoutX="329.0" layoutY="330.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="36.0" prefWidth="143.0" text="Create Rule" />
-            <Button fx:id="saveRuleButton" layoutX="59.0" layoutY="330.0" mnemonicParsing="false" onAction="#Save" prefHeight="36.0" prefWidth="79.0" text="Save Rule" />
-            <Button fx:id="deleteRuleButton" layoutX="662.0" layoutY="330.0" mnemonicParsing="false" onAction="#Delete" prefHeight="36.0" prefWidth="79.0" text="Delete Rule" />
+            <TabPane fx:id="ruleTabPane" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Rule">
+                  <content>
+                    <AnchorPane fx:id="ruleView" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="ruleTable" layoutX="8.0" layoutY="34.0" prefHeight="280.0" prefWidth="780.0">
+                                <columns>
+                                  <TableColumn fx:id="triggercol" prefWidth="75.0" text="Trigger" />
+                                  <TableColumn fx:id="actioncol" prefWidth="75.0" text="Action" />
+                                    <TableColumn fx:id="activecol" prefWidth="75.0" text="Active" />
+                                    <TableColumn fx:id="repcolumn" prefWidth="75.0" text="Repetition" />
+                                </columns>
+                                 <contextMenu>
+                                    <ContextMenu fx:id="tmenu">
+                                      <items>
+                                        <MenuItem fx:id="tdelete" mnemonicParsing="false" onAction="#Delete" text="delete" />
+                                          <MenuItem fx:id="tactiveDeactive" mnemonicParsing="false" onAction="#activeDeactive" text="activeDeactive" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <Button fx:id="createRuleButton" layoutX="278.0" layoutY="338.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="36.0" prefWidth="143.0" text="Create Rule" />
+                              <Button fx:id="saveRuleButton" layoutX="28.0" layoutY="338.0" mnemonicParsing="false" onAction="#Save" prefHeight="36.0" prefWidth="79.0" text="Save Rule" />
+                              <Button fx:id="deleteRuleButton" layoutX="651.0" layoutY="338.0" mnemonicParsing="false" onAction="#Delete" prefHeight="36.0" prefWidth="79.0" text="Delete Rule" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Counters">
+                  <content>
+                    <AnchorPane fx:id="counterView" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="counterTable" layoutX="23.0" layoutY="16.0" prefHeight="326.0" prefWidth="746.0">
+                                <columns>
+                                  <TableColumn fx:id="counterNameCol" prefWidth="75.0" text="Counter Name" />
+                                  <TableColumn fx:id="counterValueCol" prefWidth="75.0" text="Counter Value" />
+                                </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                                 <contextMenu>
+                                    <ContextMenu>
+                                      <items>
+                                        <MenuItem fx:id="modify_menucounter" mnemonicParsing="false" text="Modify Value" />
+                                          <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                      </items>
+                                    </ContextMenu>
+                                 </contextMenu>
+                              </TableView>
+                              <Button fx:id="create_counter_button" layoutX="297.0" layoutY="391.0" mnemonicParsing="false" onAction="#createCounter" prefHeight="47.0" prefWidth="198.0" text="Create Counter" />
+                              <TextField fx:id="namecounter_TF" layoutX="85.0" layoutY="389.0" prefHeight="25.0" prefWidth="189.0" promptText="insert a name to create a counter " />
+                              <TextField fx:id="valuecounter_TF" layoutX="123.0" layoutY="425.0" prefHeight="25.0" prefWidth="151.0" promptText="insert a starting value" />
+                              <Label layoutX="35.0" layoutY="393.0" text=" Name :" />
+                              <Label layoutX="71.0" layoutY="429.0" text="Value :" />
+                           </children></AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
          </children>
       </AnchorPane>
    </children>

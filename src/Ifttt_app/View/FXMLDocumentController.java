@@ -50,6 +50,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter.Change;
 
 /**
  * FXML Controller class
@@ -59,6 +60,7 @@ import javafx.scene.control.TextArea;
 public class FXMLDocumentController implements Initializable {
     
     RuleSet rset=RuleSet.getInstance(); 
+    CounterSet cset=CounterSet.getInstance();
     
     @FXML
     private AnchorPane ruleCreationPane;
@@ -248,6 +250,26 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem deleteSqaction;
     @FXML
     private TableColumn<Action, String> actionseqcol;
+    @FXML
+    private TabPane ruleTabPane;
+    @FXML
+    private AnchorPane ruleView;
+    @FXML
+    private AnchorPane counterView;
+    @FXML
+    private TableView<Counter> counterTable;
+    @FXML
+    private TableColumn<Counter, String> counterNameCol;
+    @FXML
+    private TableColumn<Counter,String> counterValueCol;
+    @FXML
+    private Button create_counter_button;
+    @FXML
+    private TextField namecounter_TF;
+    @FXML
+    private TextField valuecounter_TF;
+    @FXML
+    private MenuItem modify_menucounter;
     
 
     /**
@@ -260,6 +282,11 @@ public class FXMLDocumentController implements Initializable {
         
         SaveRules.loadRules(rset);
         
+        counterTable.setItems(cset.getCounter_set());
+        counterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        counterValueCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue().toString()));
+        configureNegativeNumericTextField(valuecounter_TF);
+       
         triggertable.setItems(triggertbList);
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         
@@ -450,7 +477,7 @@ public class FXMLDocumentController implements Initializable {
         logicalbox.getItems().addAll("AND","OR");
         
         
-        
+       
        addRuleButton.disableProperty().bind(
     Bindings.createBooleanBinding(() ->
         triggerTA.getText().isEmpty() ||
@@ -468,6 +495,14 @@ public class FXMLDocumentController implements Initializable {
     )
 );
         
+       
+       create_counter_button.disableProperty().bind(
+               Bindings.createBooleanBinding(()-> namecounter_TF.getText().isEmpty() || valuecounter_TF.getText().isEmpty()
+                       , namecounter_TF.textProperty(),
+                       valuecounter_TF.textProperty()
+               )
+       );
+               
     
         // TODO
         
@@ -961,7 +996,37 @@ if (triggerValue != null) {
         actionseq.remove(actionseqTA.getSelectionModel().getSelectedItem());
         actionseqTA.refresh();
     }
+
+    @FXML
+    private void createCounter(ActionEvent event) {
+        String name=namecounter_TF.getText();
+        Integer value=Integer.parseInt(valuecounter_TF.getText());
+        if((name!=null)&&(value!=null)){
+            cset.addCounter(new Counter(name,value));
+        }
+        namecounter_TF.setText("");
+        valuecounter_TF.setText("");
         
+      counterTable.refresh();
+        
+     }
+     
+    
+    
+    private void configureNegativeNumericTextField(TextField textField) {
+        Pattern validEditingState = Pattern.compile("-?\\d*");
+
+        UnaryOperator<Change> filter = change -> {
+            String text = change.getControlNewText();
+            if (validEditingState.matcher(text).matches()) {
+                return change;
+            }
+            return null;
+        };
+
+        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
+        textField.setTextFormatter(textFormatter);
+    }
         
     }
  

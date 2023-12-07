@@ -66,7 +66,7 @@
                                         <MenuItem fx:id="selectTrigger" mnemonicParsing="false" onAction="#SelectTrigger" text="Select This Trigger" />
                                           <MenuItem fx:id="triggerfield1" mnemonicParsing="false" onAction="#TriggerField1" text="Set Frist Composite field" />
                                           <MenuItem fx:id="triggerfield2" mnemonicParsing="false" onAction="#triggerField2" text="Set Second Composite Field" />
-                                          <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#DeleteTrigger" text="Dekete Trigger" />
+                                          <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#DeleteTrigger" text="Delete Trigger" />
                                       </items>
                                     </ContextMenu>
                                  </contextMenu>

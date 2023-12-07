@@ -4,6 +4,7 @@
  */
 package Ifttt_app.Model;
 
+import Ifttt_app.Model.ChainOfResponsability.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -58,24 +59,15 @@ public class RuleSet extends Thread{
     public void runRuleChecking() {
         Thread checkingThread;
         checkingThread = new Thread(() -> {
+            RuleHandler firedOnlyOnceHandler=new FiredOnlyOnceHandler();
+            RuleHandler sleepingPeriodHandler=new SleepingPeriodHandler();
+            
             while (!running) {
                 for (Rule rule : ruleSet) {
-                    if(rule.isSleeping() && rule.isActive()){
-                        if(rule.isAwake()){
-                           if(rule.getTrigger().checkTrigger()){
-                               rule.getAction().execute();
-                               rule.whenAwake();
-                           }
-                           
-                        }
-                    }
-                    if (rule.isActive() && rule.isFired_oo()==false) {
-                       if(rule.getTrigger().checkTrigger()){
-                         rule.setFired_oo(true); 
-                         rule.getAction().execute();  
-                       } 
-                       
-                    }
+                    //Configures handler succession
+                    firedOnlyOnceHandler.setSuccessor(sleepingPeriodHandler);
+                    
+                    firedOnlyOnceHandler.handle(rule);
                 }  
                
                 try { 

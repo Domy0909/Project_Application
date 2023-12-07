@@ -26,7 +26,7 @@ public class Rule implements Serializable{
         this.action = action;
         this.trigger = trigger;
         this.active=true;
-        this.firedOnlyOnce=true;
+        this.firedOnlyOnce=false;
         this.fired_oo=false;
         this.sleeping=false;
     }

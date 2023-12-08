@@ -4,6 +4,8 @@
  */
 package Ifttt_app.Model;
 
+import Ifttt_app.Model.Composite.ShowDialogAction;
+import Ifttt_app.Model.Composite.Action;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 

@@ -4,6 +4,8 @@
  */
 package Ifttt_app.Model;
 
+import Ifttt_app.Model.Composite.ShowDialogAction;
+import Ifttt_app.Model.Composite.ActionPlayAudio;
 import java.time.LocalTime;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -20,7 +22,8 @@ public class RuleSetTest {
      RuleSet ruleSet;
      Rule rule1;
      Rule rule2;
-    public RuleSetTest() {
+    
+     public RuleSetTest() {
     }
 
     /**
@@ -40,9 +43,8 @@ public class RuleSetTest {
     @Before
     public void setUp() {
         ruleSet = RuleSet.getInstance();
-        rule1 = new Rule(new ShowDialogAction("rule1"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 1
-        rule2 = new Rule(new ActionPlayAudio("sounds\\clip_1.wav"), new TimeTrigger(LocalTime.now())); // Inizializza la regola 2
-   
+        rule1 = new Rule(new ShowDialogAction("rule1"), new TimeTrigger(LocalTime.now())); 
+        rule2 = new Rule(new ActionPlayAudio("sounds\\clip_1.wav"), new TimeTrigger(LocalTime.now())); 
     }
     /**
      * Test of addRule method, of class RuleSet.

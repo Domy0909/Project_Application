@@ -4,6 +4,7 @@
  */
 package Ifttt_app.Model;
 
+import Ifttt_app.Model.Composite.ShowDialogAction;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import org.junit.*;

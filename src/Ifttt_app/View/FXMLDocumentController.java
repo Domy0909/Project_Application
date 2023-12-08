@@ -4,6 +4,15 @@
  */
 package Ifttt_app.View;
 
+import Ifttt_app.Model.Composite.RunExternalProgramAction;
+import Ifttt_app.Model.Composite.ShowDialogAction;
+import Ifttt_app.Model.Composite.SpecifiedStringAction;
+import Ifttt_app.Model.Composite.MoveFileAction;
+import Ifttt_app.Model.Composite.DeleteFileAction;
+import Ifttt_app.Model.Composite.CopyFileAction;
+import Ifttt_app.Model.Composite.CompositeAction;
+import Ifttt_app.Model.Composite.ActionPlayAudio;
+import Ifttt_app.Model.Composite.Action;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;

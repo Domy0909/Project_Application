@@ -7,6 +7,7 @@
 
 package Ifttt_app.Model;
 
+import Ifttt_app.Model.Composite.ShowDialogAction;
 import java.io.File;
 import java.time.LocalTime;
 import org.junit.Test;
@@ -16,8 +17,11 @@ import static org.junit.Assert.*;
  *
  * @author User
  */
+
+// Test suite to verify save and load operations of rules.
 public class SaveLoadRulesTest {
     
+    // Verifies if rules are correctly saved to a file.
     @Test
     public void testSaveRules() {
         RuleSet ruleSet = createSampleRuleSet();
@@ -31,7 +35,18 @@ public class SaveLoadRulesTest {
         
         assertTrue(file.length() > 0);
     }
+    
+    //Verifies the failure of rules saving by creating a file with a specific name.
+    @Test
+    public void testSaveRulesFailure() {
+        RuleSet ruleSet = createSampleRuleSet();
+        String filePath = "RulesetFailure.bin";
+        
+        File file = new File(filePath);
+        assertFalse(file.exists());
+    }
 
+    //Verifies the proper loading of rules from a file and their integrity.
     @Test
     public void testLoadRules() {
         RuleSet ruleSet = createSampleRuleSet();
@@ -54,7 +69,7 @@ public class SaveLoadRulesTest {
        
         return ruleSet;
     }
-    }
+}
 
     
 

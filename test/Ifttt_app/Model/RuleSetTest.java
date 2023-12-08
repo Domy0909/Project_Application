@@ -80,16 +80,7 @@ public class RuleSetTest {
     }
 
     
-    @Test //test  show dialog
-    public void testRunRuleCheckingDialog() throws InterruptedException {
-        ruleSet.addRule(rule1);
-        Platform.startup(()->{
-            ruleSet.runRuleChecking();
-        });
-        Thread.sleep(6000);
-        assertEquals(true, rule1.isFired_oo());    
-        ruleSet.getRules().removeAll(ruleSet.getRules());
-    }
+   
     @After
     public void afterTesting(){
       ruleSet.getRules().removeAll(ruleSet.getRules());

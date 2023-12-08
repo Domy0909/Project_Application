@@ -25,7 +25,6 @@ public class ExistenceTriggerTest {
         String fileName = "TestFile.txt";
 
         ExistenceTrigger existenceTrigger = new ExistenceTrigger(directoryPath, fileName);
-
         assertTrue("Trigger should be true for an existing file.",existenceTrigger.checkTrigger());
     }
      @Test

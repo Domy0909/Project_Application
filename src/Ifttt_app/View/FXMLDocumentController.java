@@ -279,6 +279,18 @@ public class FXMLDocumentController implements Initializable {
     private TextField valuecounter_TF;
     @FXML
     private MenuItem modify_menucounter;
+    @FXML
+    private ComboBox<String> combo_counterT1;
+    @FXML
+    private ComboBox<String> combo_counterT2;
+    @FXML
+    private ComboBox<String> combo_counterA1;
+    @FXML
+    private ComboBox<String> combo_counterA2;
+    @FXML
+    private MenuItem delete_menucounter;
+    @FXML
+    private Button go_back_button;
     
 
     /**
@@ -435,9 +447,54 @@ public class FXMLDocumentController implements Initializable {
         triggerfield1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         triggerfield2.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         
+        
+        combo_counterT1.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboTriggerValue = comboTrigger.valueProperty().getValue();
+            return ("Compare Counter to Value".equals( comboTriggerValue) || "Compare Counter to Counter".equals( comboTriggerValue));
+        },
+        comboTrigger.valueProperty()  
+        )
+        );
+        
+        combo_counterT2.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboTriggerValue = comboTrigger.valueProperty().getValue();
+            return ("Compare Counter to Counter".equals( comboTriggerValue));
+        },
+        comboTrigger.valueProperty()  
+        )
+        );
+        
         addseqmenu.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));
         deleteSqaction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));  
         actionseqTA.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));  
+        
+        combo_counterA1.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboActionValue = comboAction.valueProperty().getValue();
+            return ("SetCounterValue".equals(comboActionValue) || "Add Value to Counter".equals(comboActionValue) || "Sum two Counters".equals(comboActionValue));
+        },
+        comboAction.valueProperty()  
+        )
+        );
+        
+        
+        combo_counterA2.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboActionValue = comboAction.valueProperty().getValue();
+            return ("Sum two Counters".equals(comboActionValue));
+        },
+        comboAction.valueProperty()  
+        )
+        ); 
+       
+       
+       
         
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
@@ -465,6 +522,8 @@ public class FXMLDocumentController implements Initializable {
         comboTrigger.getItems().addAll("FileSize");
         comboTrigger.getItems().addAll("RunExternalProgramTrigger");
         comboTrigger.getItems().addAll("CompositeTrigger");
+        comboTrigger.getItems().addAll("Compare Counter to Value");
+        comboTrigger.getItems().addAll("Compare Counter to Counter");
         
         comboAction.getItems().addAll("ShowDialog");
         comboAction.getItems().addAll("PlayAudio");
@@ -474,6 +533,11 @@ public class FXMLDocumentController implements Initializable {
         comboAction.getItems().addAll("Move File");
         comboAction.getItems().addAll("Delete File");
         comboAction.getItems().addAll("Action Sequence");
+        comboAction.getItems().addAll("SetCounterValue");
+        comboAction.getItems().addAll("Add Value to Counter");
+        comboAction.getItems().addAll("Sum two Counters");
+       
+        
         
         daySelector.getItems().addAll("Monday");
         daySelector.getItems().addAll("Tuesday");
@@ -484,6 +548,9 @@ public class FXMLDocumentController implements Initializable {
         daySelector.getItems().addAll("Sunday");
         
         logicalbox.getItems().addAll("AND","OR");
+        
+
+       
         
         
        
@@ -1012,11 +1079,20 @@ if (triggerValue != null) {
         String name=namecounter_TF.getText();
         Integer value=Integer.parseInt(valuecounter_TF.getText());
         if((name!=null)&&(value!=null)){
-            cset.addCounter(new Counter(name,value));
+            if(cset.getCounter(name)==null){
+                cset.addCounter(new Counter(name,value));
+                combo_counterT1.getItems().addAll(name); 
+                combo_counterT2.getItems().addAll(name); 
+                combo_counterA1.getItems().addAll(name); 
+                combo_counterA2.getItems().addAll(name); 
+            }
+              
+            else
+                cset.getCounter(name).setValue(value);
         }
         namecounter_TF.setText("");
         valuecounter_TF.setText("");
-        
+       
       counterTable.refresh();
         
      }
@@ -1036,6 +1112,32 @@ if (triggerValue != null) {
 
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         textField.setTextFormatter(textFormatter);
+    }
+
+    @FXML
+    private void deleteCounter(ActionEvent event) {
+        Counter c=counterTable.getSelectionModel().getSelectedItem();
+        String name=c.getName();
+        cset.removeCounter(c);
+        combo_counterT1.getItems().remove(name);
+        combo_counterT2.getItems().remove(name);
+        combo_counterA1.getItems().remove(name);
+        combo_counterA2.getItems().remove(name);
+    }
+
+    @FXML
+    private void goBack(ActionEvent event) {
+         FilePath=null;
+         triggerCommandList.clear();
+         actionCommandList.clear();
+         ruleCreationPane.setDisable(true);
+         ruleCreationPane.setVisible(false);
+         ruleTablePane.setDisable(false);
+         ruleTablePane.setVisible(true);
+         actionselected=null;
+         triggerselected=null;
+         triggerTA.setText("");
+         actionTA.setText("");
     }
         
     }

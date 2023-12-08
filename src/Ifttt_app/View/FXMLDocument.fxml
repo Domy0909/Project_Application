@@ -80,6 +80,8 @@
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </CheckBox>
+                              <ComboBox fx:id="combo_counterT1" layoutX="38.0" layoutY="111.0" prefWidth="150.0" promptText="Select the counter" />
+                              <ComboBox fx:id="combo_counterT2" layoutX="38.0" layoutY="163.0" prefWidth="150.0" promptText="Second Counter" />
            
             
                            </children>
@@ -136,6 +138,8 @@
                                     </ContextMenu>
                                  </contextMenu>
                               </TableView>
+                              <ComboBox fx:id="combo_counterA1" layoutX="225.0" layoutY="100.0" prefWidth="150.0" promptText="Select the counter" />
+                              <ComboBox fx:id="combo_counterA2" layoutX="225.0" layoutY="133.0" prefWidth="150.0" promptText="Second Counter" />
                          </children>
                         </AnchorPane>
                   </content>
@@ -173,6 +177,7 @@
                   </Tab>
               </tabs>
             </TabPane>
+            <Button fx:id="go_back_button" layoutX="14.0" layoutY="446.0" mnemonicParsing="false" onAction="#goBack" prefHeight="33.0" prefWidth="152.0" text="Go Back" />
            
             
            
@@ -236,7 +241,7 @@
                                     <ContextMenu>
                                       <items>
                                         <MenuItem fx:id="modify_menucounter" mnemonicParsing="false" text="Modify Value" />
-                                          <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                                          <MenuItem fx:id="delete_menucounter" mnemonicParsing="false" onAction="#deleteCounter" text="Delete Counter" />
                                       </items>
                                     </ContextMenu>
                                  </contextMenu>

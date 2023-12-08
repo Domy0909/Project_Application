@@ -1139,8 +1139,15 @@ if (triggerValue != null) {
          triggerTA.setText("");
          actionTA.setText("");
     }
-        
+    @FXML
+    private void modifyValue(ActionEvent event) {
+        Counter selectedCounter = counterTable.getSelectionModel().getSelectedItem();
+        if (selectedCounter != null) {
+           CounterModify.modifyValue(selectedCounter);
+           counterTable.refresh(); // Aggiorna la TableView se necessario
+        }
     }
+}
  
   
 

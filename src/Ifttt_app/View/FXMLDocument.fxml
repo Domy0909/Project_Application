@@ -240,7 +240,7 @@
                                  <contextMenu>
                                     <ContextMenu>
                                       <items>
-                                        <MenuItem fx:id="modify_menucounter" mnemonicParsing="false" text="Modify Value" />
+                                        <MenuItem fx:id="modify_menucounter" mnemonicParsing="false" onAction="#modifyValue" text="Modify Value" />
                                           <MenuItem fx:id="delete_menucounter" mnemonicParsing="false" onAction="#deleteCounter" text="Delete Counter" />
                                       </items>
                                     </ContextMenu>

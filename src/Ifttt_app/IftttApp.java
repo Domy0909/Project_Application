@@ -6,6 +6,7 @@ package Ifttt_app;
  */
 
 import Ifttt_app.Model.RuleSet;
+import Ifttt_app.Model.ThreadCheck;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -34,13 +35,14 @@ public class IftttApp extends Application {
         
         primaryStage.setScene(scene);
         primaryStage.show();
-        RuleSet.getInstance().runRuleChecking();
+        ThreadCheck thread = new ThreadCheck(RuleSet.getInstance(),false);
+        thread.runRuleChecking();
     }
     
      @Override
     public void stop() throws Exception {
-        //Chiudi l'applicazione e arresta il thread di controllo dei trigger
-       RuleSet.getInstance().stopRuleChecking();
+       //Chiudi l'applicazione e arresta il thread di controllo dei trigger
+       
     }
 
     /**

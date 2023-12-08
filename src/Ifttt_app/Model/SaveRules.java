@@ -1,8 +1,3 @@
-/*
- * The SaveRules class provides methods for saving and loading rules from a file using serialization and deserialization.
- * The saveRules method takes a RuleSet, serializes its rules into a file named "Ruleset.bin," and handles IOExceptions by printing the stack trace.
- * The loadRules method deserializes rules from the "Ruleset.bin" file into a RuleSet, adding them to the existing set of rules, and handles ClassNotFoundException and IOException by printing relevant error messages.
- */
 
 package Ifttt_app.Model;
 
@@ -16,7 +11,11 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/*
+ * The SaveRules class provides methods for saving and loading rules from a file using serialization and deserialization.
+ * The saveRules method takes a RuleSet, serializes its rules into a file named "Ruleset.bin," and handles IOExceptions by printing the stack trace.
+ * The loadRules method deserializes rules from the "Ruleset.bin" file into a RuleSet, adding them to the existing set of rules, and handles ClassNotFoundException and IOException by printing relevant error messages.
+ */
 public class SaveRules {
      
     public static void saveRules(RuleSet ruleSet) {

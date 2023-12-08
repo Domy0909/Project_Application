@@ -1,64 +1,75 @@
-/*
- * This test class, named RunExternalProgramActionTest, is designed to verify the behavior of the RunExternalProgramAction class.
- * The test involves executing a specified external program in the setUp method and ensuring that the execution is successful within a waiting period.
- * Note: When the external program runs successfully and the showDialog appears, click the OK button before the thread finishes its wait.
- */
 package Ifttt_app.Model.Composite;
 
-import Ifttt_app.Model.Composite.RunExternalProgramAction;
+import java.io.IOException;
 import java.util.ArrayList;
-import javafx.application.Platform;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class RunExternalProgramActionTest {
-    
      private RunExternalProgramAction action1,action2,action3;
+     private String programPath,filepath,filepath2;
+     private ArrayList<String> argument,argument2,argument3;
+    
+     
     @Before
     public void setUp() {
-        String programPath = "./External Programs\\scriptSounds.bat";
-        ArrayList<String> argument= new ArrayList<>();
+        programPath = "./External Programs\\scriptSounds.bat";
+        argument= new ArrayList<>();
         argument.add("Hello");
         action1 = new RunExternalProgramAction(programPath,argument);
-        String filepath="./External Programs\\CommandLine2.jar";
-        ArrayList<String> argument2= new ArrayList<>();
+        filepath="./External Programs\\CommandNotFound.bat";
+        argument2= new ArrayList<>();
         argument2.add("Hello");
         argument2.add("I am");
         argument2.add("Gennaro");
         action2= new RunExternalProgramAction(filepath,argument2);
-        String filepath2="./External Programs\\FileDoesNotExist.jar";
-        ArrayList<String> argument3= new ArrayList<>();
+        filepath2="./External Programs\\ProgramException.jar";
+        argument3= new ArrayList<>();
         argument3.add("Hello");
         argument3.add("I am");
         argument3.add("Marco");
         action3= new RunExternalProgramAction(filepath2,argument3);
     }
-
+    
+/*
+ * TestExecuteWithExitCode0: Executes action1 using the executeFile method and checks that the exit code is 0.
+ * Prints the obtained exit code to the console and asserts equality with the expected value (0).
+ */
      @Test
-    public void TeatExecute1() throws InterruptedException{ 
-        Platform.startup(()->{
-            action1.execute();
-        });
-        Thread.sleep(5000);
-        assertEquals(true,action1.isResult());
-        }
+    public void TestExecuteWithExitCode0() throws InterruptedException, IOException { 
+      String output = action1.executeFile(programPath, argument);
+      int exitCode = action1.getExitcode();
+      System.out.println("Exit Code: " + exitCode);
+
+     assertEquals(0, exitCode);
+    }
     
+    /*
+ * TestExecuteWithExitCode255: Executes action2 using the executeFile method and checks that the exit code is 255.
+ * Prints the obtained exit code to the console, asserts equality with the expected value (255), and ensures the result is false.
+ */
     @Test
-    public void TeatExecute2() throws InterruptedException{ 
-        Platform.startup(()->{
-            action2.execute();
-        });
-        Thread.sleep(5000);
-        assertEquals(true,action2.isResult());
-        }
+    public void TestExecuteWithExitCode255() throws InterruptedException, IOException{ 
+      String output = action2.executeFile(filepath, argument2);
+      int exitCode = action2.getExitcode();
+      System.out.println("Exit Code: " + exitCode);
+
+     assertEquals(255, exitCode);
+     assertFalse(action2.isResult());
+   }
     
+    /*
+ * TestExecuteWithExitCode1: Executes action3 using the executeFile method and checks that the exit code is 1.
+ * Prints the obtained exit code to the console, asserts equality with the expected value (1), and ensures the result is false.
+ */
     @Test
-    public void testExecuteNONE() throws InterruptedException {
-        Platform.startup(()->{
-            action3.execute();
-        });
-        Thread.sleep(5000);
-        assertEquals(false,action3.isResult());
-      }
+    public void TestExecuteWithExitCode1() throws InterruptedException, IOException{ 
+      String output = action3.executeFile(filepath2, argument3);
+      int exitCode = action3.getExitcode();
+      System.out.println("Exit Code: " + exitCode);
+
+     assertEquals(1, exitCode);
+     assertFalse(action3.isResult());
+   } 
 }

@@ -21,7 +21,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
+      <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
          <children>
             <TabPane fx:id="tabpaneRuleCreation" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -84,6 +84,9 @@
                               <ComboBox fx:id="combo_counterT2" layoutX="38.0" layoutY="180.0" prefWidth="150.0" promptText="Second Counter" />
                               <ComboBox fx:id="operationBox" layoutX="38.0" layoutY="141.0" prefWidth="150.0" promptText="OPERATION" />
                               <TextField fx:id="valueTrigger" layoutX="39.0" layoutY="180.0" promptText="insert value" />
+                                  <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="102.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
+     
+                                  <TextField fx:id="fileTextField" layoutX="39.0" layoutY="141.0" promptText="insert the name file" />
            
             
                            </children>
@@ -98,14 +101,11 @@
                                  <TextField fx:id="messagefield" layoutX="39.0" layoutY="95.0" />
                                  <Button fx:id="selectTextFileButton" layoutX="38.0" layoutY="160.0" mnemonicParsing="false" onAction="#selectTextFile" prefHeight="25.0" prefWidth="150.0" text="Select Text File" />
                                  <Button fx:id="selectAudio" layoutX="38.0" layoutY="112.0" mnemonicParsing="false" onAction="#selectAudio" prefHeight="18.0" prefWidth="150.0" text="Select Audio" />
-                                  <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="124.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
             <ListView fx:id="commandlinelistAction" layoutX="38.0" layoutY="255.0" prefHeight="59.0" prefWidth="150.0" />
             <Button fx:id="addcommandLineButtonAction" layoutX="38.0" layoutY="191.0" mnemonicParsing="false" onAction="#addCommandLineAction" prefHeight="25.0" prefWidth="150.0" text="Add command line arg" />
             <TextField fx:id="commandLineTextfieldAction" layoutX="38.0" layoutY="216.0" prefHeight="25.0" prefWidth="150.0" promptText="add argument" />
             <Button fx:id="selectFileButton" layoutX="38.0" layoutY="120.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
             <Button fx:id="ButtonDirectory" layoutX="38.0" layoutY="160.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
-     
-                                  <TextField fx:id="fileTextField" layoutX="38.0" layoutY="163.0" promptText="inserisci il nome del file" />
              <Button fx:id="selectProgramAction" layoutX="39.0" layoutY="148.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
                               <TableView fx:id="actionTable" layoutX="400.0" layoutY="30.0" prefHeight="386.0" prefWidth="330.0">
                                 <columns>
@@ -199,7 +199,7 @@
             
              </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" prefHeight="500.0" prefWidth="800.0">
+      <AnchorPane fx:id="ruleTablePane" disable="true" prefHeight="500.0" prefWidth="800.0" visible="false">
          <children>
             <TabPane fx:id="ruleTabPane" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>

@@ -44,7 +44,7 @@ public class SaveLoadCountersTest {
 
         private CounterSet createSampleCounterSet() {
         CounterSet counterset = CounterSet.getInstance();
-        counterset.addCounter(new Counter("counter1",23));
+        counterset.addCounter(new Counter("Software",23));
        
         return counterset;
     }

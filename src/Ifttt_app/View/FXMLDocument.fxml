@@ -64,7 +64,7 @@
                                     <ContextMenu>
                                       <items>
                                         <MenuItem fx:id="selectTrigger" mnemonicParsing="false" onAction="#SelectTrigger" text="Select This Trigger" />
-                                          <MenuItem fx:id="triggerfield1" mnemonicParsing="false" onAction="#TriggerField1" text="Set Frist Composite field" />
+                                          <MenuItem fx:id="triggerfield1" mnemonicParsing="false" onAction="#TriggerField1" text="Set First Composite field" />
                                           <MenuItem fx:id="triggerfield2" mnemonicParsing="false" onAction="#triggerField2" text="Set Second Composite Field" />
                                           <MenuItem fx:id="delete" mnemonicParsing="false" onAction="#DeleteTrigger" text="Delete Trigger" />
                                       </items>
@@ -80,8 +80,10 @@
                                     <Font name="System Bold Italic" size="12.0" />
                                  </font>
                               </CheckBox>
-                              <ComboBox fx:id="combo_counterT1" layoutX="38.0" layoutY="111.0" prefWidth="150.0" promptText="Select the counter" />
-                              <ComboBox fx:id="combo_counterT2" layoutX="38.0" layoutY="163.0" prefWidth="150.0" promptText="Second Counter" />
+                              <ComboBox fx:id="combo_counterT1" layoutX="38.0" layoutY="102.0" prefWidth="150.0" promptText="Select the counter" />
+                              <ComboBox fx:id="combo_counterT2" layoutX="38.0" layoutY="180.0" prefWidth="150.0" promptText="Second Counter" />
+                              <ComboBox fx:id="operationBox" layoutX="38.0" layoutY="141.0" prefWidth="150.0" promptText="OPERATION" />
+                              <TextField fx:id="valueTrigger" layoutX="39.0" layoutY="180.0" promptText="insert value" />
            
             
                            </children>
@@ -167,12 +169,12 @@
             </Text>
                               <TextArea fx:id="triggerTA" editable="false" layoutX="53.0" layoutY="63.0" prefHeight="124.0" prefWidth="336.0" promptText="Select the trigger from the trigger creation" />
                               <TextArea fx:id="actionTA" editable="false" layoutX="185.0" layoutY="260.0" prefHeight="128.0" prefWidth="316.0" promptText="select action from the action pane" />
-                              <Label layoutX="63.0" layoutY="33.0" prefHeight="32.0" prefWidth="47.0" text="IF ">
+                              <Label layoutX="53.0" layoutY="33.0" prefHeight="32.0" prefWidth="47.0" text="IF ">
                                  <font>
                                     <Font name="System Bold Italic" size="22.0" />
                                  </font>
                               </Label>
-                              <Label layoutX="185.0" layoutY="215.0" prefHeight="32.0" prefWidth="87.0" text="THEN">
+                              <Label layoutX="185.0" layoutY="231.0" prefHeight="32.0" prefWidth="87.0" text="THEN">
                                  <font>
                                     <Font name="System Bold Italic" size="22.0" />
                                  </font>

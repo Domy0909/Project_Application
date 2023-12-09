@@ -1,52 +1,79 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit4TestClass.java to edit this template
- */
+
 package Ifttt_app.Model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author User
- */
 public class TriggerCounterCompValuesTest {
+    
+    Counter softwareCounter = new Counter("Software", 80);
+    private int value1,value2,value3;
     
     // Test if the "GreaterThan" condition is activated correctly
     @Test
     public void testTriggerActivatedGreaterThan() {
-        TriggerCounterCompValues trigger = new TriggerCounterCompValues("GreaterThan", 10);
-        assertTrue(trigger.isTriggerActivated(15));
-        assertFalse(trigger.isTriggerActivated(5));
-        assertFalse(trigger.isTriggerActivated(10));
+       TriggerCounterCompValues trigger1 = new TriggerCounterCompValues(softwareCounter.getValue(),value1, "GreaterThan");
+        trigger1.setValue(30);
+        assertTrue("Software > 30 should return true", trigger1.checkTrigger());
+
+        TriggerCounterCompValues trigger2 = new TriggerCounterCompValues(softwareCounter.getValue(),value2, "GreaterThan");
+        trigger2.setValue(100);
+        assertFalse("Software > 100 should return false", trigger2.checkTrigger());
+
+        TriggerCounterCompValues trigger3 = new TriggerCounterCompValues( softwareCounter.getValue(),value3, "GreaterThan");
+        trigger3.setValue(80);
+        assertFalse("Software > 80 should return false", trigger3.checkTrigger());
     }
+    
+    
+    
 
     // Test if the "LessThan" condition is activated correctly
     @Test
     public void testTriggerActivatedLessThan() {
-        TriggerCounterCompValues trigger = new TriggerCounterCompValues("LessThan", 10);
-        assertTrue(trigger.isTriggerActivated(5));
-        assertFalse(trigger.isTriggerActivated(15));
-        assertFalse(trigger.isTriggerActivated(10));
+        TriggerCounterCompValues trigger1 = new TriggerCounterCompValues(softwareCounter.getValue(),value1, "LessThan");
+        trigger1.setValue(100);
+        assertTrue("Software < 100 should return true", trigger1.checkTrigger());
+
+        TriggerCounterCompValues trigger2 = new TriggerCounterCompValues(softwareCounter.getValue(),value2, "LessThan");
+        trigger2.setValue(30);
+        assertFalse("Software < 30 should return false", trigger2.checkTrigger());
+
+        TriggerCounterCompValues trigger3 = new TriggerCounterCompValues( softwareCounter.getValue(),value3, "LessThan");
+        trigger3.setValue(80);
+        assertFalse("Software < 80 should return false", trigger3.checkTrigger());
     }
 
      // Test if the "EqualTo" condition is activated correctly
     @Test
     public void testTriggerActivatedEqualTo() {
-        TriggerCounterCompValues trigger = new TriggerCounterCompValues("EqualTo", 10);
-        assertTrue(trigger.isTriggerActivated(10));
-        assertFalse(trigger.isTriggerActivated(5));
-        assertFalse(trigger.isTriggerActivated(15));
+        TriggerCounterCompValues trigger1 = new TriggerCounterCompValues(softwareCounter.getValue(),value1, "EqualTo");
+        trigger1.setValue(80);
+        assertTrue("Software = 80 should return true", trigger1.checkTrigger());
+
+        TriggerCounterCompValues trigger2 = new TriggerCounterCompValues(softwareCounter.getValue(),value2, "EqualTo");
+        trigger2.setValue(30);
+        assertFalse("Software = 30 should return false", trigger2.checkTrigger());
+
+        TriggerCounterCompValues trigger3 = new TriggerCounterCompValues( softwareCounter.getValue(),value3, "EqualTo");
+        trigger3.setValue(100);
+        assertFalse("Software = 100 should return false", trigger3.checkTrigger());
     }
 
     // Test if the default condition (invalid) always returns false for any value
     @Test
     public void testTriggerActivatedDefault() {
-        TriggerCounterCompValues trigger = new TriggerCounterCompValues("InvalidCondition", 10);
-        assertFalse(trigger.isTriggerActivated(5));
-        assertFalse(trigger.isTriggerActivated(10));
-        assertFalse(trigger.isTriggerActivated(15));
+        TriggerCounterCompValues trigger1 = new TriggerCounterCompValues(softwareCounter.getValue(),value1, "InvalidCondition");
+        trigger1.setValue(80);
+        assertFalse("Invalid condition should return false", trigger1.checkTrigger());
+
+        TriggerCounterCompValues trigger2 = new TriggerCounterCompValues(softwareCounter.getValue(),value2, "InvalidCondition");
+        trigger2.setValue(30);
+        assertFalse("Invalid condition should return false", trigger2.checkTrigger());
+
+        TriggerCounterCompValues trigger3 = new TriggerCounterCompValues( softwareCounter.getValue(),value3, "InvalidCondition");
+        trigger3.setValue(100);
+        assertFalse("Invalid condition should return false", trigger3.checkTrigger());
     }
     
 }

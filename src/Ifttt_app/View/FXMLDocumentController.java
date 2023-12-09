@@ -154,6 +154,8 @@ public class FXMLDocumentController implements Initializable {
     private ObservableList<Action> actionseq= FXCollections.observableArrayList();
     private Trigger a;
     private Trigger b;
+    private Counter counter1;
+    private Counter counter2;
             
             
     @FXML
@@ -302,7 +304,10 @@ public class FXMLDocumentController implements Initializable {
     private TextField valueTF;
     @FXML
     private CheckBox counter_cb;
-    
+    @FXML
+    private ComboBox<String> operationBox;
+    @FXML
+    private TextField valueTrigger;
 
     /**
      * Initializes the controller class.
@@ -467,6 +472,16 @@ public class FXMLDocumentController implements Initializable {
         triggerfield2.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         
         
+        operationBox.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboTriggerValue = comboTrigger.valueProperty().getValue();
+            return ("Compare Counter to Counter".equals(comboTriggerValue) || "Compare Counter to Value".equals(comboTriggerValue) );
+        },
+        comboTrigger.valueProperty()  
+        )
+        );
+        
         counter_cb.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -533,8 +548,7 @@ public class FXMLDocumentController implements Initializable {
         )
         );
        
-       
-       
+       valueTrigger.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Compare Counter to Value"));
        
         
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -590,7 +604,7 @@ public class FXMLDocumentController implements Initializable {
         
         logicalbox.getItems().addAll("AND","OR");
         
-
+        operationBox.getItems().addAll("EqualsTo","GreaterThan","LessThan");
        
         
         
@@ -976,9 +990,42 @@ if (triggerValue != null) {
              } 
             
             break;    
-        default:
-            // Handle unknown trigger value
-            break;     
+        case "Compare Counter to Counter":
+            CounterSet counterset= CounterSet.getInstance();
+   
+            counter1=counterset.getCounter(combo_counterT1.getValue());
+            counter2=counterset.getCounter(combo_counterT2.getValue());
+            if((counter1.getValue()!=null)&&(counter2.getValue()!=null) && !operationBox.getValue().isEmpty()){
+                if(operationBox.getValue().equals("EqualsTo")){
+                    trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"EqualTo");
+                }if(operationBox.getValue().equals("GreaterThan")){
+                  trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"GreaterThan");
+             }if(operationBox.getValue().equals("LessThan")){
+                    trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"LessThan");
+                }
+            }
+            break;
+        case "Compare Counter to Value":
+            CounterSet counterset1= CounterSet.getInstance();
+            counter1=counterset1.getCounter(combo_counterT1.getValue());
+            
+            //valueTrigger.setText("");
+            if (counter1.getValue()!=null && !operationBox.getValue().isEmpty() && !valueTrigger.getText().isEmpty()) {
+                Integer value1 =Integer.valueOf(valueTrigger.getText());
+                 if(operationBox.getValue().equals("EqualsTo")){
+                    trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"EqualTo");
+                    valueTrigger.setText("");
+                }if(operationBox.getValue().equals("GreaterThan")){
+                  trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"GreaterThan");
+                  valueTrigger.setText("");
+             }if(operationBox.getValue().equals("LessThan")){
+                    trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"LessThan");
+                    valueTrigger.setText("");
+                }
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+            }
+            break;
     }
     if(trigger!=null){
      if(notcheck.isSelected())

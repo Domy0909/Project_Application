@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.SubScene?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -16,10 +17,11 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.View.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0">
          <children>
@@ -53,7 +55,7 @@
             <Label fx:id="LmonthDate" layoutX="94.0" layoutY="106.0" text="Month" />
             <Label fx:id="LyearDate" layoutX="146.0" layoutY="106.0" text="Year" />
              <TextField fx:id="externalTxt" layoutX="38.0" layoutY="163.0" promptText="Insert status code 0 o 1" />
-                              <TableView fx:id="triggertable" layoutX="400.0" layoutY="24.0" prefHeight="350.0" prefWidth="360.0">
+                              <TableView fx:id="triggertable" layoutX="400.0" layoutY="24.0" prefHeight="361.0" prefWidth="360.0">
                                 <columns>
                                   <TableColumn fx:id="triggerList" prefWidth="75.0" text="Triggers" />
                                 </columns>
@@ -87,6 +89,12 @@
                                   <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="102.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
      
                                   <TextField fx:id="fileTextField" layoutX="39.0" layoutY="141.0" promptText="insert the name file" />
+                              <Button fx:id="faqtbutton" layoutX="726.0" layoutY="423.0" mnemonicParsing="false" onAction="#faqtriggerAction" prefHeight="22.0" prefWidth="33.0" text="?" />
+                              <SubScene fx:id="faqtrigger" disable="true" height="434.0" layoutX="185.0" layoutY="15.0" visible="false" width="528.0">
+                                <root>
+                                  <Region />
+                                </root>
+                              </SubScene>
            
             
                            </children>
@@ -107,7 +115,7 @@
             <Button fx:id="selectFileButton" layoutX="38.0" layoutY="120.0" mnemonicParsing="false" onAction="#selectFileButton" prefHeight="25.0" prefWidth="149.0" text="Select File" />
             <Button fx:id="ButtonDirectory" layoutX="38.0" layoutY="160.0" mnemonicParsing="false" onAction="#buttonSelectDirectory" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
              <Button fx:id="selectProgramAction" layoutX="39.0" layoutY="148.0" mnemonicParsing="false" onAction="#selectProgramAction" prefHeight="25.0" prefWidth="149.0" text="Select External Program" />
-                              <TableView fx:id="actionTable" layoutX="400.0" layoutY="30.0" prefHeight="386.0" prefWidth="330.0">
+                              <TableView fx:id="actionTable" layoutX="400.0" layoutY="26.0" prefHeight="362.0" prefWidth="362.0">
                                 <columns>
                                   <TableColumn fx:id="actionList" prefWidth="75.0" text="Actions" />
                                 </columns>
@@ -148,6 +156,12 @@
                                     <Font size="14.0" />
                                  </font>
                               </CheckBox>
+                              <Button fx:id="faqtbutton1" layoutX="728.0" layoutY="423.0" mnemonicParsing="false" onAction="#faqactionAction" prefHeight="22.0" prefWidth="33.0" text="?" />
+                              <SubScene fx:id="faqaction" disable="true" height="434.0" layoutX="185.0" layoutY="15.0" visible="false" width="528.0">
+                                 <root>
+                                    <Region />
+                                 </root>
+                              </SubScene>
                          </children>
                         </AnchorPane>
                   </content>

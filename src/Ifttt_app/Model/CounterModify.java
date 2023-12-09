@@ -22,9 +22,9 @@ public class CounterModify {
     
      public static void modifyValue(Counter selectedCounter) {
          TextInputDialog dialog = new TextInputDialog(selectedCounter.getValue().toString());
-            dialog.setTitle("Modifica valore del contatore");
+            dialog.setTitle("Change the counter value");
             dialog.setHeaderText(null);
-            dialog.setContentText("Inserisci il nuovo valore:");
+            dialog.setContentText("Enter the new value");
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(newValue -> {
@@ -33,9 +33,9 @@ public class CounterModify {
                     selectedCounter.setValue(intValue);
                 } catch (NumberFormatException e) {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle("Errore");
-                    alert.setHeaderText("Valore non valido");
-                    alert.setContentText("Inserisci un numero intero valido.");
+                    alert.setTitle("Error");
+                    alert.setHeaderText("Invalid value");
+                    alert.setContentText("Please input a valid integer");
                     alert.showAndWait();
                 }
             });

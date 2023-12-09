@@ -59,12 +59,14 @@ import java.util.List;
 import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.SubScene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -308,6 +310,14 @@ public class FXMLDocumentController implements Initializable {
     private ComboBox<String> operationBox;
     @FXML
     private TextField valueTrigger;
+    @FXML
+    private SubScene faqtrigger;
+    @FXML
+    private SubScene faqaction;
+    @FXML
+    private Button faqtbutton;
+    @FXML
+    private Button faqtbutton1;
 
     /**
      * Initializes the controller class.
@@ -1292,6 +1302,43 @@ if (triggerValue != null) {
            counterTable.refresh(); // Aggiorna la TableView se necessario
         }
     }
+     @FXML
+    void faqtriggerAction(ActionEvent event) {
+     faqtrigger.setVisible(!faqtrigger.isVisible());
+     
+        FAQ faqtext = new FAQ("trigger");
+        Text textNode = new Text();
+        textNode.setText(faqtext.gettextFAQ());
+        Pane background = new Pane();
+        background.setStyle("-fx-background-color: lightgray;"); // Imposta il colore dello sfondo
+
+        
+        background.getChildren().add(textNode);
+
+        background.setPrefWidth(528); 
+        background.setPrefHeight(434); 
+
+        faqtrigger.setRoot(background);
+  }
+ @FXML
+    void faqactionAction(ActionEvent event) {
+     faqaction.setVisible(!faqaction.isVisible());
+     
+        FAQ faqtext = new FAQ("action");
+        Text textNode = new Text();
+        textNode.setText(faqtext.gettextFAQ());
+       
+        Pane background = new Pane();
+        background.setStyle("-fx-background-color: lightgray;"); // Imposta il colore dello sfondo
+
+        
+        background.getChildren().add(textNode);
+
+        background.setPrefWidth(528); 
+        background.setPrefHeight(434); 
+
+        faqaction.setRoot(background);
+  }
 }
  
   

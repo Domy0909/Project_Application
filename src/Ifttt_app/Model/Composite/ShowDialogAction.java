@@ -32,6 +32,11 @@ public class ShowDialogAction implements Action {
     public String description() {
        return ShowDialogAction.class.getSimpleName()+"\n"+"message: "+specificstring;
     }
-    
+
+    public void setSpecificstring(String specificstring) {
+        this.specificstring = specificstring;
+    }
+
+   
     
 }

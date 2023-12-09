@@ -140,6 +140,12 @@
                               </TableView>
                               <ComboBox fx:id="combo_counterA1" layoutX="225.0" layoutY="100.0" prefWidth="150.0" promptText="Select the counter" />
                               <ComboBox fx:id="combo_counterA2" layoutX="225.0" layoutY="133.0" prefWidth="150.0" promptText="Second Counter" />
+                              <TextField fx:id="valueTF" layoutX="39.0" layoutY="100.0" promptText="value " />
+                              <CheckBox fx:id="counter_cb" layoutX="193.0" layoutY="163.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="198.0" text="Substitute the character '$'&#10;with the value of the &#10;selected  counter" underline="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </CheckBox>
                          </children>
                         </AnchorPane>
                   </content>
@@ -159,8 +165,8 @@
                   <Font name="System Bold" size="10.0" />
                </font>
             </Text>
-                              <TextArea fx:id="triggerTA" layoutX="53.0" layoutY="63.0" prefHeight="124.0" prefWidth="336.0" promptText="Select the trigger from the trigger creation" />
-                              <TextArea fx:id="actionTA" layoutX="185.0" layoutY="260.0" prefHeight="128.0" prefWidth="316.0" promptText="select action from the action pane" />
+                              <TextArea fx:id="triggerTA" editable="false" layoutX="53.0" layoutY="63.0" prefHeight="124.0" prefWidth="336.0" promptText="Select the trigger from the trigger creation" />
+                              <TextArea fx:id="actionTA" editable="false" layoutX="185.0" layoutY="260.0" prefHeight="128.0" prefWidth="316.0" promptText="select action from the action pane" />
                               <Label layoutX="63.0" layoutY="33.0" prefHeight="32.0" prefWidth="47.0" text="IF ">
                                  <font>
                                     <Font name="System Bold Italic" size="22.0" />

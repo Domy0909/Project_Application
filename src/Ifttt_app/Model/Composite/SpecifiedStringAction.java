@@ -16,7 +16,7 @@ import javafx.application.Platform;
 
 public class SpecifiedStringAction implements Action {
     String filePath;
-    String contentToAppend;
+    private String contentToAppend;
     @Override
     public boolean execute() {
        Platform.runLater(() -> {
@@ -45,5 +45,14 @@ public class SpecifiedStringAction implements Action {
         String filename=path.getFileName().toString();
         return SpecifiedStringAction.class.getSimpleName()+"\n"+"append this: "+contentToAppend+"\non:"+filename;
     }
+
+    public String getContentToAppend() {
+        return contentToAppend;
+    }
+
+    public void setContentToAppend(String contentToAppend) {
+        this.contentToAppend = contentToAppend;
+    }
+    
     
 }

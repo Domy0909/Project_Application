@@ -23,6 +23,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import Ifttt_app.Model.*;
+import Ifttt_app.Model.Composite.AddValueCounterAction;
+import Ifttt_app.Model.Composite.SetCounterValueAction;
+import Ifttt_app.Model.Composite.ReplaceShowDialogAction;
+import Ifttt_app.Model.Composite.ReplaceStringAppendAction;
+import Ifttt_app.Model.Composite.SumsCounterAction;
 import java.io.File;
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -293,6 +298,10 @@ public class FXMLDocumentController implements Initializable {
     private Button go_back_button;
     @FXML
     private Button saveCounters;
+    @FXML
+    private TextField valueTF;
+    @FXML
+    private CheckBox counter_cb;
     
 
     /**
@@ -305,11 +314,18 @@ public class FXMLDocumentController implements Initializable {
         
         SaveRules.loadRules(rset);
         SaveLoadCounters.loadCounters(cset);
+        for(Counter c : cset.getCounter_set()){
+              combo_counterT1.getItems().addAll(c.getName()); 
+              combo_counterT2.getItems().addAll(c.getName()); 
+              combo_counterA1.getItems().addAll(c.getName()); 
+              combo_counterA2.getItems().addAll(c.getName()); 
+        }
         
         counterTable.setItems(cset.getCounter_set());
         counterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         counterValueCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue().toString()));
         configureNegativeNumericTextField(valuecounter_TF);
+         configureNegativeNumericTextField(valueTF);
        
         triggertable.setItems(triggertbList);
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
@@ -451,6 +467,16 @@ public class FXMLDocumentController implements Initializable {
         triggerfield2.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         
         
+        counter_cb.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboActionValue = comboAction.valueProperty().getValue();
+            return ("ShowDialog".equals( comboActionValue) || "AppendStringAtFile".equals( comboActionValue));
+        },
+        comboAction.valueProperty()  
+        )
+        );
+        
         combo_counterT1.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -479,7 +505,8 @@ public class FXMLDocumentController implements Initializable {
      Bindings.createBooleanBinding(
         () -> {
             String comboActionValue = comboAction.valueProperty().getValue();
-            return ("SetCounterValue".equals(comboActionValue) || "Add Value to Counter".equals(comboActionValue) || "Sum two Counters".equals(comboActionValue));
+            return ("SetCounterValue".equals(comboActionValue) || "Add Value to Counter".equals(comboActionValue) || "Sum two Counters".equals(comboActionValue) ||
+                    "ShowDialog".equals( comboActionValue) || "AppendStringAtFile".equals( comboActionValue));
         },
         comboAction.valueProperty()  
         )
@@ -495,6 +522,17 @@ public class FXMLDocumentController implements Initializable {
         comboAction.valueProperty()  
         )
         ); 
+        
+        valueTF.visibleProperty().bind(
+     Bindings.createBooleanBinding(
+        () -> {
+            String comboActionValue = comboAction.valueProperty().getValue();
+            return ("SetCounterValue".equals(comboActionValue) || "Add Value to Counter".equals(comboActionValue) );
+        },
+        comboAction.valueProperty()  
+        )
+        );
+       
        
        
        
@@ -624,6 +662,7 @@ public class FXMLDocumentController implements Initializable {
          triggerselected=null;
          triggerTA.setText("");
          actionTA.setText("");
+         counterTable.refresh();
         }
         
         
@@ -639,6 +678,7 @@ public class FXMLDocumentController implements Initializable {
         ruleCreationPane.setVisible(true);
         FilePath=null;
         ruleWarning.setText("");
+        counterTable.refresh();
     }
     
     @FXML
@@ -940,9 +980,13 @@ if (triggerValue != null) {
             // Handle unknown trigger value
             break;     
     }
+    if(trigger!=null){
      if(notcheck.isSelected())
          trigger= new NotTrigger(trigger);
-     triggertbList.add(trigger);
+     else
+      triggertbList.add(trigger);  
+    }
+     
 }
     }
 
@@ -984,7 +1028,13 @@ if (triggerValue != null) {
     Action action=null;
     switch (actionType) {
         case "ShowDialog":
-            action = new ShowDialogAction(messagefield.getText());
+
+            if(counter_cb.isSelected() && !combo_counterA1.getValue().isEmpty()){
+                action= new ReplaceShowDialogAction
+                (new ShowDialogAction(messagefield.getText()),combo_counterA1.getValue());
+            }
+            else
+                action = new ShowDialogAction(messagefield.getText());
             break;
         case "PlayAudio":
             if (FilePath != null) {
@@ -996,6 +1046,12 @@ if (triggerValue != null) {
         case "AppendStringAtFile":
             if (textFilePath != null) {
                 action = new SpecifiedStringAction(textFilePath, messagefield.getText());
+               if(counter_cb.isSelected() && !combo_counterA1.getValue().isEmpty()){
+                action= new ReplaceStringAppendAction
+                (new SpecifiedStringAction(textFilePath, messagefield.getText()),combo_counterA1.getValue());
+            }
+            else
+                action = new ShowDialogAction(messagefield.getText());
             } else {
                 ruleWarning.setText(ruleWarning.getText() + "No valid text file selected.\n");
             }
@@ -1036,10 +1092,42 @@ if (triggerValue != null) {
             }
 
             break;
+            
+           case "SetCounterValue":
+           if (combo_counterA1!=null && !valueTF.getText().isEmpty()) {
+                Integer value=Integer.parseInt(valueTF.getText());
+                action = new SetCounterValueAction( combo_counterA1.getValue(),value);
+                valueTF.setText("");
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+            }
+             break;
+             
+             
+           case "Add Value to Counter":
+           if (combo_counterA1!=null && !valueTF.getText().isEmpty()) {
+                Integer value=Integer.parseInt(valueTF.getText());
+                action = new AddValueCounterAction( combo_counterA1.getValue(),value);
+                valueTF.setText("");
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+            }
+             break;
+             
+           case "Sum two Counters":
+           if (combo_counterA1!=null && combo_counterA2!=null) {
+               
+                action = new SumsCounterAction( combo_counterA1.getValue(),combo_counterA2.getValue());
+            } else {
+                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+            }
+            break;
+            
         default:
             // Handle unknown action type
             break;
     }
+    
     
     actiontbList.add(action);
 }
@@ -1131,6 +1219,7 @@ if (triggerValue != null) {
         combo_counterT2.getItems().remove(name);
         combo_counterA1.getItems().remove(name);
         combo_counterA2.getItems().remove(name);
+        counterTable.refresh();
     }
 
     @FXML
@@ -1144,6 +1233,7 @@ if (triggerValue != null) {
          ruleTablePane.setVisible(true);
          actionselected=null;
          triggerselected=null;
+         counterTable.refresh();
          triggerTA.setText("");
          actionTA.setText("");
     }

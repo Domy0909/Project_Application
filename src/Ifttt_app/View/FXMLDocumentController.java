@@ -291,6 +291,8 @@ public class FXMLDocumentController implements Initializable {
     private MenuItem delete_menucounter;
     @FXML
     private Button go_back_button;
+    @FXML
+    private Button saveCounters;
     
 
     /**
@@ -302,6 +304,7 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         SaveRules.loadRules(rset);
+        SaveLoadCounters.loadCounters(cset);
         
         counterTable.setItems(cset.getCounter_set());
         counterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -641,6 +644,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void Save(ActionEvent event) {
         SaveRules.saveRules(rset);
+    }
+    
+    @FXML
+    void SaveCounters(ActionEvent event) {
+         SaveLoadCounters.saveCounters(cset);
     }
     
     @FXML

@@ -4,11 +4,13 @@
  */
 package Ifttt_app.Model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author aless
  */
-public class Counter {
+public class Counter implements Serializable{
     private String name;
     private Integer value;
 

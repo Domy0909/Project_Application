@@ -7,9 +7,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class RunExternalProgramActionTest {
-     private RunExternalProgramAction action1,action2,action3;
-     private String programPath,filepath,filepath2;
-     private ArrayList<String> argument,argument2,argument3;
+     private RunExternalProgramAction action1,action2,action3,action4;
+     private String programPath,filepath,filepath2,filepath3;
+     private ArrayList<String> argument,argument2,argument3,argument4;
     
      
     @Before
@@ -30,6 +30,12 @@ public class RunExternalProgramActionTest {
         argument3.add("I am");
         argument3.add("Marco");
         action3= new RunExternalProgramAction(filepath2,argument3);
+        filepath3="./External Programs\\ErrorProgram.bat";
+        argument4= new ArrayList<>();
+        argument4.add("Hello");
+        argument4.add("I am");
+        argument4.add("Marco");
+        action4= new RunExternalProgramAction(filepath3,argument4);
     }
     
 /*
@@ -71,5 +77,15 @@ public class RunExternalProgramActionTest {
 
      assertEquals(1, exitCode);
      assertFalse(action3.isResult());
+   } 
+    
+    @Test
+    public void TestExecuteWithExitCode1Bis() throws InterruptedException, IOException{ 
+      String output = action4.executeFile(filepath3, argument4);
+      int exitCode = action4.getExitcode();
+      System.out.println("Exit Code: " + exitCode);
+
+     assertEquals(1, exitCode);
+     assertFalse(action4.isResult());
    } 
 }

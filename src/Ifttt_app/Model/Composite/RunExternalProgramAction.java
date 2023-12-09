@@ -102,7 +102,7 @@ public class RunExternalProgramAction implements Action {
     public boolean execute() {
         File programFile = new File(programPath);
         if (programFile.exists()) {
-            if(exitcode==0){
+            if(this.getExitcode()==0){
                 Platform.runLater(() -> {
             String absolutePath = programFile.getAbsolutePath();
             String output = executeFile(absolutePath,this.arguments);

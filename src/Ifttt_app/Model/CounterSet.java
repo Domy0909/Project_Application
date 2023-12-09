@@ -39,6 +39,10 @@ public class CounterSet {
         this.counter_set.remove(c);
     }
     
+    public void removeallCounter(){
+       this.counter_set.removeAll(this.counter_set);
+    }
+    
     public Counter getCounter(String name){
         Counter c;
         c=this.counter_set.stream().filter(counter -> counter.getName().equals(name)).findFirst().orElse(null);

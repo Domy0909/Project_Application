@@ -2,7 +2,7 @@
 package Ifttt_app.Model;
 
 /**
- * The TriggerValue class represents a value-based trigger that activates based on comparisons between a given value and a threshold.
+ * The TriggerCounterCompValues class represents a value-based trigger that activates based on comparisons between a given value and a threshold.
  * It allows the user to specify a condition for the trigger (GreaterThan, LessThan, EqualTo) and a threshold value.
  * The class provides methods to retrieve the condition and threshold, as well as check whether the trigger should be activated
  * for a given input value based on the specified condition and threshold.

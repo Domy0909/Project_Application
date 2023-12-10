@@ -6,6 +6,7 @@ package Ifttt_app.Model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 public class TriggerCountersCompareTest {
    // Fixed counters with specific values
@@ -13,6 +14,15 @@ public class TriggerCountersCompareTest {
     Counter projectCounter = new Counter("Project", 30);
     Counter engineeringCounter = new Counter("Engineering", 46);
     Counter scrumCounter = new Counter("Scrum", 80);
+       @Before
+   public void setUp(){
+
+    CounterSet set=CounterSet.getInstance();
+    set.addCounter(softwareCounter);
+    set.addCounter(projectCounter);
+    set.addCounter(engineeringCounter);
+    set.addCounter(scrumCounter);   
+   }
 
     @Test
     public void testGreaterThan() {

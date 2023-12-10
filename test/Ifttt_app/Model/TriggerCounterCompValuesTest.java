@@ -3,16 +3,31 @@ package Ifttt_app.Model;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import Ifttt_app.Model.CounterSet;
+import org.junit.Before;
 
 public class TriggerCounterCompValuesTest {
     
     Counter softwareCounter = new Counter("Software", 80);
+    
+   @Before
+   public void setUp(){
+
+    CounterSet set=CounterSet.getInstance();
+    set.addCounter(softwareCounter);
+       
+   }
+
+    
+    
     private int value1,value2,value3;
+  
+    
     
     // Test if the "GreaterThan" condition is activated correctly
     @Test
     public void testTriggerActivatedGreaterThan() {
-       TriggerCounterCompValues trigger1 = new TriggerCounterCompValues(softwareCounter.getName(),value1, "GreaterThan");
+        TriggerCounterCompValues trigger1 = new TriggerCounterCompValues(softwareCounter.getName(),value1, "GreaterThan");
         trigger1.setValue(30);
         assertTrue("Software > 30 should return true", trigger1.checkTrigger());
 

@@ -49,7 +49,7 @@ public class ReplaceStringAppendActionTest {
     @Test
     public void testExecute() {
         Platform.startup(() -> {
-            String filepath="Project_Application\\test\\Ifttt_app\\Model\\TestFile.txt";
+            String filepath="test\\Ifttt_app\\Model\\Composite\\StringAppendTest.txt";
             SpecifiedStringAction action = new SpecifiedStringAction(filepath,"test $");
             ReplaceStringAppendAction replaceAction = new  ReplaceStringAppendAction (action, "showdialogtest");
 
@@ -64,7 +64,7 @@ public class ReplaceStringAppendActionTest {
      */
     @Test
     public void testExecuteNullCounter() {
-            String filepath="Project_Application\\test\\Ifttt_app\\Model\\TestFile.txt";
+            String filepath="test\\Ifttt_app\\Model\\Composite\\StringAppendTest.txt";
             SpecifiedStringAction action = new SpecifiedStringAction(filepath,"test $");
             ReplaceStringAppendAction replaceAction = new  ReplaceStringAppendAction (action, "NULLCOUNTER");
             boolean result = replaceAction.execute();
@@ -78,7 +78,7 @@ public class ReplaceStringAppendActionTest {
      */
      @After
     public void cleanTestFile(){
-        String filePath = "test\\Ifttt_app\\Model\\TestFile.txt";
+        String filePath = "test\\Ifttt_app\\Model\\Composite\\StringAppendTest.txt";
         
         try {
             Path path = FileSystems.getDefault().getPath(filePath);

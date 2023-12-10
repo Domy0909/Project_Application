@@ -13,53 +13,38 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import javafx.application.Platform;
-import javafx.embed.swing.JFXPanel;
 import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.BeforeClass;
 
 /**
- *
- * @author aless
+ * Test case for the SpecifiedStringAction class, verifying its functionality to append a specific string
+ * to a file's content using the execute method.
  */
 public class SpecifiedStringActionTest {
     
-    public SpecifiedStringActionTest() {
-    }
-
     /**
-     * Test of execute method, of class SpecifiedStringAction.
+     * Executes the SpecifiedStringAction by appending a string to a specified file and verifies
+     * the successful execution.
      */
-    
   
     @Test
     public void testExecute() {
         String filePath = "test\\Ifttt_app\\Model\\TestFile.txt";
-        // Specify the content to append
         String contentToAppend = "Test string to append.";
-
-        // Create an instance of SpecifiedStringAction
         SpecifiedStringAction action = new SpecifiedStringAction(filePath,contentToAppend);
-
-        // Execute the action
-        
          Platform.startup(()->{
             boolean result = action.execute();
             assertTrue("Execution should return true on success.",result);
         });
-
-        // Verify the result
-        
          testStringIsInFile();
     }
-    
+    /**
+     * Checks if the specified string content is present in the file.
+     */
     public void testStringIsInFile(){
         String filePath = "test\\Ifttt_app\\Model\\TestFile.txt";
-        // Specify the content to append
         String contentToAppend = "Test string to append.";
-        
-        // Read the file and check if it contains the appended string
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder fileContent = new StringBuilder();
             String line;
@@ -74,14 +59,15 @@ public class SpecifiedStringActionTest {
         
         }    
     }
-    
+     /**
+     * Cleans the contents of the test file after the tests.
+     * It deletes the content inside the specified file.
+     */
     @After
     public void cleanTestFile(){
-           // Specify the path to your text file
         String filePath = "test\\Ifttt_app\\Model\\TestFile.txt";
         
         try {
-            // Open the file with WRITE and TRUNCATE_EXISTING options
             Path path = FileSystems.getDefault().getPath(filePath);
             Files.newOutputStream(path, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING).close();
 

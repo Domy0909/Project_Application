@@ -8,10 +8,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+/**
+ * The ExistenceTrigger class implements the Trigger interface to check for the existence
+ * of a specific file within a defined directory.
+ */
 public class ExistenceTrigger implements Trigger {
-    String directoryPath;
-    String fileName;
+    private String directoryPath;
+    private String fileName;
     @Override
     public boolean checkTrigger() {
         Path filePath = Paths.get(directoryPath, fileName);

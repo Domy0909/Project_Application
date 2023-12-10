@@ -21,24 +21,31 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author aless
+ * Test case for the ReplaceStringAppendAction class, validating its functionality to replace
+ * a specified string pattern within a SpecifiedStringAction instance with the value of a counter
+ * and append it to a file's content.
  */
 public class ReplaceStringAppendActionTest {
     
-    public ReplaceStringAppendActionTest() {
-    }
-
+    
+     /**
+     * Sets up the initial conditions by adding a counter named 'showdialogtest' with a value of 0
+     * to the CounterSet.
+     */
+   
        @Before
     public void setUp() {
         Counter c = new Counter("showdialogtest", 0);
         CounterSet cset = CounterSet.getInstance();
         cset.addCounter(c);
         
-            // Optional: Additional initialization code
         
     }
-
+    /**
+     * Tests the 'execute()' method of ReplaceStringAppendAction by creating a SpecifiedStringAction instance,
+     * replacing a specific string pattern with the value of a counter ('showdialogtest'),
+     * appending it to a file's content, and verifying the successful execution along with the updated content.
+     */
     @Test
     public void testExecute() {
         Platform.startup(() -> {
@@ -51,7 +58,10 @@ public class ReplaceStringAppendActionTest {
             assertEquals("Should be equal", "test 0", replaceAction.action.getContentToAppend());
        });
     }
-
+     /**
+     * Tests the 'execute()' method of ReplaceStringAppendAction with a null counter name,
+     * ensuring that the action does not execute successfully and retains the original content to append.
+     */
     @Test
     public void testExecuteNullCounter() {
             String filepath="Project_Application\\test\\Ifttt_app\\Model\\TestFile.txt";
@@ -62,14 +72,15 @@ public class ReplaceStringAppendActionTest {
             assertEquals("Should be equal", "test $", replaceAction.action.getContentToAppend());
     
     }
-    
+     /**
+     * Cleans the contents of the test file after the tests.
+     * It deletes the content inside the specified file.
+     */
      @After
     public void cleanTestFile(){
-           // Specify the path to your text file
         String filePath = "test\\Ifttt_app\\Model\\TestFile.txt";
         
         try {
-            // Open the file with WRITE and TRUNCATE_EXISTING options
             Path path = FileSystems.getDefault().getPath(filePath);
             Files.newOutputStream(path, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING).close();
 

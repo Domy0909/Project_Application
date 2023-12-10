@@ -1,9 +1,14 @@
 /*
- * The TriggerExternalProgram class implements the Trigger interface and represents a trigger based on the exit status of an external program.
- * It takes the path to the external program and the expected exit status as parameters during instantiation.
- * The checkTrigger method runs the external program using RunExternalProgramAction, retrieves its actual exit status, and compares it with the expected exit status.
+ * The TriggerExternalProgram class implements the Trigger interface and 
+ * represents a trigger based on the exit status of an external program.
+ * It takes the path to the external program and the expected exit status 
+ * as parameters during instantiation.
+ * The checkTrigger method runs the external program using 
+ * RunExternalProgramAction, retrieves its actual exit status, and compares it 
+ * with the expected exit status.
  * If they match, the trigger is considered true; otherwise, it returns false.
- * The description method provides a formatted description of the trigger, including the program path and expected exit status.
+ * The description method provides a formatted description of the trigger, 
+ * including the program path and expected exit status.
  */
 
 package Ifttt_app.Model;

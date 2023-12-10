@@ -25,7 +25,6 @@ public class ThreadCheck extends Thread{
         }
         
         /*
-  
         * Starts rule checking in a separate thread.
         * For each rule in the list, periodically checks if the rule is active,
         * if its trigger is active, and if it has already been executed.

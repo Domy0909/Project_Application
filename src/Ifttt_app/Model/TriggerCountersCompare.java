@@ -34,16 +34,12 @@ public class TriggerCountersCompare implements Trigger{
     
     @Override
     public boolean checkTrigger() {
-        switch (condition) {
-            case "GreaterThan":
-                return counterValue1 > counterValue2;
-            case "LessThan":
-                return counterValue1 < counterValue2;
-            case "EqualTo":
-                return counterValue1 == counterValue2;
-            default:
-                return false;
-        }
+        return switch (condition) {
+            case "GreaterThan" -> counterValue1 > counterValue2;
+            case "LessThan" -> counterValue1 < counterValue2;
+            case "EqualTo" -> counterValue1 == counterValue2;
+            default -> false;
+        };
     }
     
     
@@ -51,13 +47,16 @@ public class TriggerCountersCompare implements Trigger{
     @Override
     public String description() {
         switch(condition){
-            case "GreaterThan":
+            case "GreaterThan" -> {
                 return " ( "+ counterValue1+" ) \n GreaterThan \n( "+counterValue2+" )";
+            }
             
-            case "LessThan":
+            case "LessThan" -> {
                 return " ( "+ counterValue1+" ) \n LessThan \n( "+counterValue2+" )";
-            case "EqualTo":
+            }
+            case "EqualTo" -> {
                 return " ( "+ counterValue1+" ) \n EqualTo \n( "+counterValue2+" )";
+            }
         }
         return condition;
             

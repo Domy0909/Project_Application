@@ -40,28 +40,27 @@ public class TriggerCounterCompValues implements Trigger{
 
     @Override
     public boolean checkTrigger() {
-       switch (condition) {
-            case "GreaterThan":
-                return counterValue > value;
-            case "LessThan":
-                return counterValue < value;
-            case "EqualTo":
-                return counterValue == value;
-            default:
-                return false;
-        }
+        return switch (condition) {
+            case "GreaterThan" -> counterValue > value;
+            case "LessThan" -> counterValue < value;
+            case "EqualTo" -> counterValue == value;
+            default -> false;
+        };
     }
 
     @Override
     public String description() {
       switch(condition){
-            case "GreaterThan":
+            case "GreaterThan" -> {
                 return " ( "+ counterValue+" ) \n GreaterThan \n( "+value+" )";
+            }
             
-            case "LessThan":
+            case "LessThan" -> {
                 return " ( "+ counterValue+" ) \n LessThan \n( "+value+" )";
-            case "EqualTo":
+            }
+            case "EqualTo" -> {
                 return " ( "+ counterValue+" ) \n EqualTo \n( "+value+" )";
+            }
         }
         return condition;
     }

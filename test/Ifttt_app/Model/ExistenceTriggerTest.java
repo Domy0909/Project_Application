@@ -8,28 +8,32 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author aless
+ * Test case for the ExistenceTrigger class, validating its 'checkTrigger' method functionality
+ * when dealing with file existence.
  */
+
 public class ExistenceTriggerTest {
     
     public ExistenceTriggerTest() {
     }
 
     /**
-     * Test of checkTrigger method, of class ExistenceTrigger.
+     * Tests the 'checkTrigger' method of ExistenceTrigger when the specified file exists.
      */
     @Test
     public void testTriggerWhenFileExists() {
-        String directoryPath = "test\\Ifttt_app\\Model"; // Change this to the actual path
+        String directoryPath = "test\\Ifttt_app\\Model"; 
         String fileName = "TestFile.txt";
 
         ExistenceTrigger existenceTrigger = new ExistenceTrigger(directoryPath, fileName);
         assertTrue("Trigger should be true for an existing file.",existenceTrigger.checkTrigger());
     }
+     /**
+     * Tests the 'checkTrigger' method of ExistenceTrigger when the specified file does not exist.
+     */
      @Test
     public void testTriggerWhenFileDoesNotExist() {
-        String directoryPath = "test\\Ifttt_app\\Model"; // Change this to the actual path
+        String directoryPath = "test\\Ifttt_app\\Model";
         String fileName = "nonexistentfile.txt";
 
         ExistenceTrigger existenceTrigger = new ExistenceTrigger(directoryPath, fileName);

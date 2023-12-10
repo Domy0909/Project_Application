@@ -23,23 +23,6 @@ public class RuleSetTest {
      Rule rule1;
      Rule rule2;
     
-     public RuleSetTest() {
-    }
-
-    /**
-     * Test of getInstance method, of class RuleSet.
-     */
-    @Test
-    public void testGetInstance() {
-    }
-
-    /**
-     * Test of getRules method, of class RuleSet.
-     */
-    @Test
-    public void testGetRules() {
-    }
-
     @Before
     public void setUp() {
         ruleSet = RuleSet.getInstance();

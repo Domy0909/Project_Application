@@ -17,8 +17,8 @@ public class CompositeTriggerTest {
     public CompositeTriggerTest() {
     }
 
-    /**
-     * Test of checkTrigger method, of class CompositeTrigger.
+     /**
+     * Tests the 'checkTrigger' method of CompositeTrigger using various combinations of triggers.
      */
    @Test
     public void testCheckTrigger() {

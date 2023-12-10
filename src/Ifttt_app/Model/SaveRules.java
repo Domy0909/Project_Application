@@ -20,7 +20,7 @@ public class SaveRules {
      
     public static void saveRules(RuleSet ruleSet) {
         List<Rule> list = new ArrayList<>();
-        for(Rule e : ruleSet.ruleSet)
+        for(Rule e : ruleSet.getRules())
             list.add(e);
         try (ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream("Ruleset.bin")))) {
             out.writeObject(list);

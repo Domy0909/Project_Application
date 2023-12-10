@@ -10,6 +10,10 @@ import javafx.scene.control.Alert.AlertType;
 /**
  *
  * @author aless
+ * This class, ErrorDialogController, manages the display of an error dialog.
+ * When an error occurs, the showErrorDialog method is called, which creates and shows an 
+ * Alert-type dialog window
+ * containing the specified error message.
  */
 public class ErrorDialogController {
 

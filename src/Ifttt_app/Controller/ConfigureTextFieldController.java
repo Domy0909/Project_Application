@@ -18,8 +18,12 @@ public class ConfigureTextFieldController {
     public ConfigureTextFieldController() {
     }
     
-    
-    //this fun
+        
+    /*
+    This function configures a TextField to accept negative numeric input only.
+    This function sets up a TextFormatter for the provided TextField, allowing the entry of negative numeric values.
+    It uses a regular expression to ensure that the entered text represents a valid negative numeric state.
+    */
     
     public void configureNegativeNumericTextField(TextField textField) {
         Pattern validEditingState = Pattern.compile("-?\\d*");

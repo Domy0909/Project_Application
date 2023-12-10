@@ -13,6 +13,8 @@ import javafx.stage.FileChooser;
 /**
  *
  * @author aless
+ * This class is used for selecting an external program file. This class provides functionality to open
+ * a FileChooser dialog, filter executable file types, and retrieve the selected program's file path.
  */
 public class SelectProgramController {
     

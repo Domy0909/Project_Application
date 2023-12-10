@@ -9,8 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author aless
+ * Test case for the NotTrigger class, specifically evaluating the behavior of the 'checkTrigger' method.
+ * Verifies if the 'NotTrigger' correctly returns false when applied to a 'TimeTrigger' set in the past.
  */
 public class NotTriggerTest {
     
@@ -30,9 +30,5 @@ public class NotTriggerTest {
        
     }
 
-    /**
-     * Test of description method, of class NotTrigger.
-     */
-  
     
 }

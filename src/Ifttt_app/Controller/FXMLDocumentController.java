@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package Ifttt_app.View;
+package Ifttt_app.Controller;
 
+import Ifttt_app.Controller.ConfigureTextFieldController;
+import Ifttt_app.Controller.ErrorDialogController;
 import Ifttt_app.Model.Composite.RunExternalProgramAction;
 import Ifttt_app.Model.Composite.ShowDialogAction;
 import Ifttt_app.Model.Composite.SpecifiedStringAction;
@@ -332,9 +334,10 @@ public class FXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        SaveRules.loadRules(rset);
-        SaveLoadCounters.loadCounters(cset);
+        SaveRules.loadRules(rset); //load the saved rules
+        SaveLoadCounters.loadCounters(cset); //load the saved counters
         
+        //add the names of the loaded counters to the following comboboxes
         for(Counter c : cset.getCounter_set()){
               combo_counterT1.getItems().addAll(c.getName()); 
               combo_counterT2.getItems().addAll(c.getName()); 

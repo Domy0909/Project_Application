@@ -1,17 +1,17 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+This class contains a set of rules create by the user. 
+The Singleton pattern was employed in designing this class,
+ensuring the existence of only a single instance of the class.
  */
 package Ifttt_app.Model;
 
-import Ifttt_app.Model.ChainOfResponsability.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 
-public class RuleSet extends Thread{
+public class RuleSet {
     private static RuleSet instance;
-    public ObservableList<Rule> ruleSet;
+    private ObservableList<Rule> ruleSet;
     private boolean running;
 
     private RuleSet() {

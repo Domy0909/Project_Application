@@ -55,7 +55,6 @@ public class SaveLoadRulesTest {
        
         File file = new File(filePath);
         assertTrue(file.exists());
-        // Chiamare il metodo di caricamento
         ruleSet.removeallRule();
         SaveRules.loadRules(ruleSet);
         

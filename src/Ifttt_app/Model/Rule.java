@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Ifttt_app.Model;
 
 import Ifttt_app.Model.Composite.ShowDialogAction;
@@ -16,13 +12,13 @@ public class Rule implements Serializable{
     private Action action;
     private Trigger trigger;
     private boolean active;
-    private boolean firedOnlyOnce; //variabile che mi dice se la regola deve essere eseguita solo una volta
-    private boolean fired_oo; //variabile che mi dice se la regola è stata eseguita già una volta
-    private boolean sleeping; //variabile che indica se la regola ha un periodo di "sonno"
-    private int day; //variabile che indiaca il numero di giorni che la regola deve dormire
-    private int hours; //variabile che indiaca il numero di ore che la regola deve dormire
-    private int minutes; //variabile che indiaca il numero di minuti che la regola deve dormire
-    private LocalDateTime awake; //variabile che mi dice quando la regola si sveglia dopo il periodo di "sonno"
+    private boolean firedOnlyOnce; //this variable tells me if the rule must be fired only once.
+    private boolean fired_oo; //this variable tells me if the rule has already been executed once.
+    private boolean sleeping; //this variable tells me if the rule has a sleepig period.
+    private int day; //this variable indicates the number of days the rule must sleep.
+    private int hours; //this variable indicates the number of hours the rule must sleep.
+    private int minutes; //this variable indicates the number of minutes the rule must sleep.
+    private LocalDateTime awake; //this variable tells me when the rule ends its sleeping period.
 
     public Rule(Action action, Trigger trigger) {
         this.action = action;
@@ -33,7 +29,7 @@ public class Rule implements Serializable{
         this.sleeping=false;
     }
     /*
-    Costruttore usato per i testing
+    Used for testing
     */
     public Rule(){
        this.fired_oo = false;
@@ -43,7 +39,9 @@ public class Rule implements Serializable{
        this.minutes = 5;
     
     }
-    
+    /*
+    Used for testing
+    */
     public Rule(Action action,Trigger trigger, boolean active, int day, int hours, int minutes){
         this.action = action;
         this.trigger = trigger;
@@ -146,9 +144,9 @@ public class Rule implements Serializable{
     
     }
     /*
-    La funzione whenAwake viene usata quando bisogna calcolare la data di risveglio della regole.
-    Aggiunge alla data di quando viene invocata i giorno le ore e i minuti impostati dall'utente e si calcola
-    la data di risveglio, poi setta la variabile awake a quella data.
+    The whenAwake function is used when you need to calculate the awakening date of the rules.
+    Adds days hours and minutes set by the user to the date when the rule is invoked and calculates
+    the awakening date, then set the awake variable to the date calculated.
     */
     public void whenAwake(){
         LocalDateTime today = LocalDateTime.now();
@@ -160,8 +158,8 @@ public class Rule implements Serializable{
         this.setAwake(plus);
     }
     /*
-    La funzione isAwake mi dice se la regola sta nel suo periodo di sonno oppure no.
-    Esegue un semplice controllo fra la data di quando viene invocata e la data di risveglio.
+    The isAwake function tells me if the rule is in his sleep period or not.
+    Performs a simple check between the date when the rule is invoked and the awakening date.
     */
     public boolean isAwake(){
         LocalDateTime today = LocalDateTime.now();

@@ -10,8 +10,8 @@ import java.time.LocalTime;
 import org.junit.*;
 import static org.junit.Assert.*;
 /**
- *
- * @author marco
+ *This class contains tests that assess various aspects of the Rule class, 
+ * ensuring the correctness of its main functionalities in different scenarios
  */
 public class RuleTest {
 

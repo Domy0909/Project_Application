@@ -1008,11 +1008,11 @@ if (triggerValue != null) {
             counter2=counterset.getCounter(combo_counterT2.getValue());
             if(!(counter1==null)&& (!(counter2==null)) && !(operationBox.getValue()==null)){
                 if(operationBox.getValue().equals("EqualsTo")){
-                    trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"EqualTo");
+                    trigger = new TriggerCountersCompare(counter1.getName(),counter2.getName(),"EqualTo");
                 }if(operationBox.getValue().equals("GreaterThan")){
-                  trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"GreaterThan");
+                  trigger = new TriggerCountersCompare(counter1.getName(),counter2.getName(),"GreaterThan");
              }if(operationBox.getValue().equals("LessThan")){
-                    trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"LessThan");
+                    trigger = new TriggerCountersCompare(counter1.getName(),counter2.getName(),"LessThan");
                 }
             }
             else
@@ -1027,13 +1027,13 @@ if (triggerValue != null) {
             if (counter1 != null && operationBox.getValue()!=null && !valueTrigger.getText().isEmpty()) {
                 Integer value1 =Integer.valueOf(valueTrigger.getText());
                  if(operationBox.getValue().equals("EqualsTo")){
-                    trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"EqualTo");
+                    trigger = new TriggerCounterCompValues(counter1.getName(),value1,"EqualTo");
                     valueTrigger.setText("");
                 }if(operationBox.getValue().equals("GreaterThan")){
-                  trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"GreaterThan");
+                  trigger = new TriggerCounterCompValues(counter1.getName(),value1,"GreaterThan");
                   valueTrigger.setText("");
              }if(operationBox.getValue().equals("LessThan")){
-                    trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"LessThan");
+                    trigger = new TriggerCounterCompValues(counter1.getName(),value1,"LessThan");
                     valueTrigger.setText("");
                 }
             } else {
@@ -1115,8 +1115,8 @@ private void CreateAction(ActionEvent event) {
                if(counter_cb.isSelected() && !(combo_counterA1.getValue()==null)){
                 action= new ReplaceStringAppendAction
                 (new SpecifiedStringAction(textFilePath, messagefield.getText()),combo_counterA1.getValue());
-            }
-            else
+               }
+            else if(counter_cb.isSelected() && (combo_counterA1.getValue()==null))
                 error.showErrorDialog("Select a counter to replace $ with its value.\n");
             } else {
                 error.showErrorDialog("No valid text file selected.\n");

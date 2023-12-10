@@ -10,23 +10,17 @@ package Ifttt_app.Model;
  * and retrieve a description of the trigger.
  */
 public class TriggerCountersCompare implements Trigger{
-    private final int counterValue1;
-    private final int counterValue2;
+    private final String countername1;
+    private final String countername2;
     private final String condition;
 
-    public TriggerCountersCompare(int counterValue1, int counterValue2, String condition) {
-        this.counterValue1 = counterValue1;
-        this.counterValue2 = counterValue2;
+    public TriggerCountersCompare(String countername1, String countername2, String condition) {
+        this.countername1 = countername1;
+        this.countername2 = countername2;
         this.condition = condition;
     }
 
-    public int getCounterValue1() {
-        return counterValue1;
-    }
-
-    public int getCounterValue2() {
-        return counterValue2;
-    }
+  
 
     public String getCondition() {
         return condition;
@@ -34,6 +28,9 @@ public class TriggerCountersCompare implements Trigger{
     
     @Override
     public boolean checkTrigger() {
+        Integer counterValue1=CounterSet.getInstance().getCounter(countername1).getValue();
+        Integer counterValue2=CounterSet.getInstance().getCounter(countername2).getValue();
+        
         switch (condition) {
             case "GreaterThan":
                 return counterValue1 > counterValue2;
@@ -52,12 +49,12 @@ public class TriggerCountersCompare implements Trigger{
     public String description() {
         switch(condition){
             case "GreaterThan":
-                return " ( "+ counterValue1+" ) \n GreaterThan \n( "+counterValue2+" )";
+                return " ( "+ countername1+" value) \n GreaterThan \n( "+countername2+" value)";
             
             case "LessThan":
-                return " ( "+ counterValue1+" ) \n LessThan \n( "+counterValue2+" )";
+                return " ( "+ countername1+" value) \n LessThan \n( "+countername2+" value)";
             case "EqualTo":
-                return " ( "+ counterValue1+" ) \n EqualTo \n( "+counterValue2+" )";
+                return " ( "+ countername1+" value) \n EqualTo \n( "+countername2+" value )";
         }
         return condition;
             

@@ -9,25 +9,23 @@ package Ifttt_app.Model;
 public class TriggerCounterCompValues implements Trigger{
     
     private final String condition;
-    private final int counterValue;
+    private final String countername;
     private Integer value;
 
-    public TriggerCounterCompValues(int counterValue, Integer value, String condition) {
-        this.counterValue = counterValue;
+    public TriggerCounterCompValues(String countername, Integer value, String condition) {
+        this.countername=countername;
         this.value = value;
         this.condition = condition;
     }
-    
-    
-    
+
     public String getCondition() {
         return condition;
     }
 
-    public double getCounterValue() {
-        return counterValue;
+    public String getCountername() {
+        return countername;
     }
-
+   
     public Integer getValue() {
         return value;
     }
@@ -40,6 +38,7 @@ public class TriggerCounterCompValues implements Trigger{
 
     @Override
     public boolean checkTrigger() {
+       Integer counterValue=CounterSet.getInstance().getCounter(countername).getValue();
        switch (condition) {
             case "GreaterThan":
                 return counterValue > value;
@@ -56,12 +55,12 @@ public class TriggerCounterCompValues implements Trigger{
     public String description() {
       switch(condition){
             case "GreaterThan":
-                return " ( "+ counterValue+" ) \n GreaterThan \n( "+value+" )";
+                return " ( "+ countername+" value ) \n GreaterThan \n( "+value+" )";
             
             case "LessThan":
-                return " ( "+ counterValue+" ) \n LessThan \n( "+value+" )";
+                return " ( "+ countername+" value ) \n LessThan \n( "+value+" )";
             case "EqualTo":
-                return " ( "+ counterValue+" ) \n EqualTo \n( "+value+" )";
+                return " ( "+ countername+" value ) \n EqualTo \n( "+value+" )";
         }
         return condition;
     }

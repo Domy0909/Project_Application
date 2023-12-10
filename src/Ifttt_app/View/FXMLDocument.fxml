@@ -21,7 +21,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.Controller.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.Controller.FXMLDocumentController">
    <children>
       <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="500.0" prefWidth="800.0" stylesheets="@view.css" visible="false">
          <children>
@@ -240,10 +240,10 @@
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <Button fx:id="createRuleButton" layoutX="278.0" layoutY="338.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="36.0" prefWidth="143.0" text="Create Rule" />
+                              <Button fx:id="createRuleButton" layoutX="215.0" layoutY="338.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="36.0" prefWidth="143.0" text="Create Rule" />
                               <Button fx:id="saveRuleButton" layoutX="28.0" layoutY="338.0" mnemonicParsing="false" onAction="#Save" prefHeight="36.0" prefWidth="79.0" text="Save Rule" />
                               <Button fx:id="deleteRuleButton" layoutX="651.0" layoutY="338.0" mnemonicParsing="false" onAction="#Delete" prefHeight="36.0" prefWidth="104.0" styleClass="red-button" text="Delete Rule" />
-                              <Button fx:id="buttonRefresh1" layoutX="484.0" layoutY="340.0" mnemonicParsing="false" onAction="#refreshTables" prefHeight="33.0" prefWidth="96.0" text="Refresh Table" />
+                              <Button fx:id="buttonRefresh1" layoutX="463.0" layoutY="340.0" mnemonicParsing="false" onAction="#refreshTables" prefHeight="33.0" prefWidth="96.0" text="Refresh Table" />
                            </children>
                         </AnchorPane>
                   </content>

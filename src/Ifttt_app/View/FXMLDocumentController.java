@@ -61,6 +61,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.SubScene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -329,6 +330,7 @@ public class FXMLDocumentController implements Initializable {
         
         SaveRules.loadRules(rset);
         SaveLoadCounters.loadCounters(cset);
+        
         for(Counter c : cset.getCounter_set()){
               combo_counterT1.getItems().addAll(c.getName()); 
               combo_counterT2.getItems().addAll(c.getName()); 
@@ -336,11 +338,13 @@ public class FXMLDocumentController implements Initializable {
               combo_counterA2.getItems().addAll(c.getName()); 
         }
         
+       
+        
         counterTable.setItems(cset.getCounter_set());
         counterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
         counterValueCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue().toString()));
-        configureNegativeNumericTextField(valuecounter_TF);
-         configureNegativeNumericTextField(valueTF);
+        
+       
        
         triggertable.setItems(triggertbList);
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
@@ -353,30 +357,29 @@ public class FXMLDocumentController implements Initializable {
         actionseqcol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         
         
-        //Crea un UnaryOperator per filtrare l'input e consentire solo numeri interi
-        UnaryOperator<TextFormatter.Change> filter = change -> {
-            String newText = change.getControlNewText();
+       
+        
+        ConfigureTextFieldController tfedit=new ConfigureTextFieldController();
+        
+        tfedit.configureNegativeNumericTextField(valuecounter_TF);
+        tfedit.configureNegativeNumericTextField(valueTF);
+        tfedit.configureNegativeNumericTextField(valueTrigger);
+        
+        
+        tfedit.configurePositiveNumericTextField(sleepingdays);
+        tfedit.configurePositiveNumericTextField(sleepinghours);
+        tfedit.configurePositiveNumericTextField(sleepingminutes);
 
-            if (newText.isEmpty()) {
-                return change;
-            }
-
-            if (Pattern.matches("^\\d*$", newText)) {
-                return change;
-            } else {
-                return null; // Reject the change
-            }
-        };
+        tfedit.configurePositiveNumericTextField(hspin.getEditor());
+        tfedit.configurePositiveNumericTextField(msp.getEditor());
+        tfedit.configurePositiveNumericTextField(ssp.getEditor());
         
-        sleepingdays.setTextFormatter(new TextFormatter<>(filter));
-        sleepinghours.setTextFormatter(new TextFormatter<>(filter));
-        sleepingminutes.setTextFormatter(new TextFormatter<>(filter));
+        tfedit.configurePositiveNumericTextField(fileSizeTextField);
         
-        hspin.getEditor().setTextFormatter(new TextFormatter<>(filter));
-        msp.getEditor().setTextFormatter(new TextFormatter<>(filter));
-        ssp.getEditor().setTextFormatter(new TextFormatter<>(filter));
-        
-        fileSizeTextField.setTextFormatter(new TextFormatter<>(filter));
+        tfedit.configurePositiveNumericTextField(daySpinner.getEditor());
+        tfedit.configurePositiveNumericTextField(daySpn.getEditor());
+        tfedit.configurePositiveNumericTextField(monthSpn.getEditor());
+        tfedit.configurePositiveNumericTextField(yearSpn.getEditor());
         
        
         
@@ -441,6 +444,7 @@ public class FXMLDocumentController implements Initializable {
         1,
         YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue()).lengthOfMonth(),
         LocalDate.now().getDayOfMonth()));
+             
         monthSpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
         1,12,LocalDate.now().getMonthValue()));
         yearSpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
@@ -578,39 +582,42 @@ public class FXMLDocumentController implements Initializable {
         selectFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")).or(Bindings.equal(comboAction.valueProperty(), "Delete File")));
         ButtonDirectory.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")));
         
-        
-        comboTrigger.getItems().addAll("CurrentTime");
-        comboTrigger.getItems().addAll("Day Of Week");
-        comboTrigger.getItems().addAll("Day Of Month");
-        comboTrigger.getItems().addAll("Date");
-        comboTrigger.getItems().addAll("FileExistence");
-        comboTrigger.getItems().addAll("FileSize");
-        comboTrigger.getItems().addAll("RunExternalProgramTrigger");
-        comboTrigger.getItems().addAll("CompositeTrigger");
-        comboTrigger.getItems().addAll("Compare Counter to Value");
-        comboTrigger.getItems().addAll("Compare Counter to Counter");
-        
-        comboAction.getItems().addAll("ShowDialog");
-        comboAction.getItems().addAll("PlayAudio");
-        comboAction.getItems().addAll("AppendStringAtFile");
-        comboAction.getItems().addAll("RunExternalProgramAction");
-        comboAction.getItems().addAll("Copy File");
-        comboAction.getItems().addAll("Move File");
-        comboAction.getItems().addAll("Delete File");
-        comboAction.getItems().addAll("Action Sequence");
-        comboAction.getItems().addAll("SetCounterValue");
-        comboAction.getItems().addAll("Add Value to Counter");
-        comboAction.getItems().addAll("Sum two Counters");
-       
-        
-        
-        daySelector.getItems().addAll("Monday");
-        daySelector.getItems().addAll("Tuesday");
-        daySelector.getItems().addAll("Wednesday");
-        daySelector.getItems().addAll("Thursday");
-        daySelector.getItems().addAll("Friday");
-        daySelector.getItems().addAll("Saturday");
-        daySelector.getItems().addAll("Sunday");
+        comboTrigger.getItems().addAll(
+        "CurrentTime",
+        "Day Of Week",
+        "Day Of Month",
+        "Date",
+        "FileExistence",
+        "FileSize",
+        "RunExternalProgramTrigger",
+        "CompositeTrigger",
+        "Compare Counter to Value",
+        "Compare Counter to Counter"
+);
+
+comboAction.getItems().addAll(
+        "ShowDialog",
+        "PlayAudio",
+        "AppendStringAtFile",
+        "RunExternalProgramAction",
+        "Copy File",
+        "Move File",
+        "Delete File",
+        "Action Sequence",
+        "SetCounterValue",
+        "Add Value to Counter",
+        "Sum two Counters"
+);
+
+daySelector.getItems().addAll(
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+);
         
         logicalbox.getItems().addAll("AND","OR");
         
@@ -619,7 +626,7 @@ public class FXMLDocumentController implements Initializable {
         
         
        
-       addRuleButton.disableProperty().bind(
+    addRuleButton.disableProperty().bind(
     Bindings.createBooleanBinding(() ->
         triggerTA.getText().isEmpty() ||
         actionTA.getText().isEmpty() ||
@@ -633,11 +640,11 @@ public class FXMLDocumentController implements Initializable {
         sleepingdays.textProperty(),
         sleepinghours.textProperty(),
         sleepingminutes.textProperty()
-    )
-);
+     )
+    );
         
        
-       create_counter_button.disableProperty().bind(
+    create_counter_button.disableProperty().bind(
                Bindings.createBooleanBinding(()-> namecounter_TF.getText().isEmpty() || valuecounter_TF.getText().isEmpty()
                        , namecounter_TF.textProperty(),
                        valuecounter_TF.textProperty()
@@ -828,30 +835,11 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     void selectProgram(ActionEvent event) throws IOException {
-        FileChooser fileChooser = new FileChooser();
-
-        fileChooser.setTitle("Select a File");
-
-        File currentDirectory = new File(new File("./External Programs").getAbsolutePath());
-        File initialDirectory = new File(currentDirectory.getCanonicalPath());
-        fileChooser.setInitialDirectory(initialDirectory);
-        fileChooser.setTitle("Open Executable File");
-        // Define a list of executable file extensions
-        List<String> executableExtensions = Arrays.asList(
-                "*.exe", "*.com", "*.bat", "*.cmd", "*.msi",
-                "*.vbs", "*.js", "*.jar", "*.ps1", "*.psm1",
-                "*.py", "*.pyc", "*.ps1xml", "*.wsf"
-        );
-
-        // Create an ExtensionFilter that includes all executable extensions
-        FileChooser.ExtensionFilter executableFilter = new FileChooser.ExtensionFilter(
-                "Executable Files", executableExtensions
-        );
-        fileChooser.getExtensionFilters().add(executableFilter);
-        File selectedFile = fileChooser.showOpenDialog(null);
-            if (selectedFile != null) {
-                ProgramPath = selectedFile.getAbsolutePath();
-            }
+        
+        SelectProgramController selector=new SelectProgramController();
+        selector.selectProgram();
+        ProgramPath=selector.getProgramPath();
+        
     }
 
     @FXML
@@ -867,7 +855,7 @@ public class FXMLDocumentController implements Initializable {
         
         File selectedFile = fileChooser.showOpenDialog(null);
         if(selectedFile != null)
-            copyFilePath = selectedFile.getAbsolutePath();
+           copyFilePath = selectedFile.getAbsolutePath();
     }
 
     @FXML
@@ -939,6 +927,7 @@ public class FXMLDocumentController implements Initializable {
         
         String triggerValue = comboTrigger.getValue();
         Trigger trigger=null;
+        ErrorDialogController error = new ErrorDialogController();
 
 if (triggerValue != null) {
     switch (triggerValue) {
@@ -947,14 +936,15 @@ if (triggerValue != null) {
             break;
 
         case "FileExistence":
-            if (directoryPath != null && fileTextField.getText() != null) {
+            if (directoryPath != null && !fileTextField.getText().isEmpty()) {
                 trigger = new ExistenceTrigger(directoryPath, fileTextField.getText());
             } else {
                 if (directoryPath == null) {
-                    ruleWarning.setText(ruleWarning.getText() + "No valid trigger directory selected." + "\n");
+                    error.showErrorDialog( "No valid trigger directory selected.");
+                    
                 }
-                if (fileTextField.getText() == null) {
-                    ruleWarning.setText(ruleWarning.getText() + "Empty name for file trigger existence." + "\n");
+                if (fileTextField.getText().isEmpty()) {
+                    error.showErrorDialog( "Empty name for file trigger existence.");
                 }
             }
             break;
@@ -973,39 +963,46 @@ if (triggerValue != null) {
 
         case "FileSize":
             if (sizeFilePath != null) {
-                trigger = new SizeFileTrigger(sizeFilePath, Integer.parseInt(fileSizeTextField.getText()));
+                if (fileSizeTextField.getText().isEmpty()) 
+                     error.showErrorDialog( "0 bytes to size trigger");
+                else{
+                     trigger = new SizeFileTrigger(sizeFilePath, Integer.parseInt(fileSizeTextField.getText()));
+                }
+                   
             } else {
-                if (directoryPath == null) {
-                    ruleWarning.setText(ruleWarning.getText() + "No valid file selected." + "\n");
-                }
-                if (fileSizeTextField.getText() == null) {
-                    ruleWarning.setText(ruleWarning.getText() + "0 bytes to size trigger" + "\n");
-                }
+                  error.showErrorDialog( "No valid file selected");
+                
             }
             break;
 
         case "RunExternalProgramTrigger":
             ArrayList<String> arguments = new ArrayList<>(triggerCommandList);
-            trigger = new TriggerExternalProgram(ProgramPath, arguments, Integer.parseInt(externalTxt.getText()));
+            if(ProgramPath!=null && !externalTxt.getText().isEmpty())
+             trigger = new TriggerExternalProgram(ProgramPath, arguments, Integer.parseInt(externalTxt.getText()));
+            else
+                 error.showErrorDialog( "Select a program and an exitcode");
             break;
       
         case "CompositeTrigger":
           
             
-            if ((a != null)&&(a != null) && !logicalbox.getValue().isEmpty()) {
+            if ((a != null)&&(b != null) && !(logicalbox.getValue()==null)) {
                 if(logicalbox.getValue().equals("AND"))
                     trigger = new CompositeTrigger(a,b,true);
                 else
                     trigger = new CompositeTrigger(a,b,false);
-             } 
-            
+             }
+            else if((a == null)&&(b == null))
+              error.showErrorDialog( "Select two triggers");
+            else  if(logicalbox.getValue()==null)  
+               error.showErrorDialog( "Select a logical operation");
             break;    
         case "Compare Counter to Counter":
             CounterSet counterset= CounterSet.getInstance();
    
             counter1=counterset.getCounter(combo_counterT1.getValue());
             counter2=counterset.getCounter(combo_counterT2.getValue());
-            if((counter1.getValue()!=null)&&(counter2.getValue()!=null) && !operationBox.getValue().isEmpty()){
+            if(!(counter1==null)&& (!(counter2==null)) && !(operationBox.getValue()==null)){
                 if(operationBox.getValue().equals("EqualsTo")){
                     trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"EqualTo");
                 }if(operationBox.getValue().equals("GreaterThan")){
@@ -1014,13 +1011,15 @@ if (triggerValue != null) {
                     trigger = new TriggerCountersCompare(counter1.getValue(),counter2.getValue(),"LessThan");
                 }
             }
+            else
+                 error.showErrorDialog( "Select two Counter and a logical operation");
             break;
         case "Compare Counter to Value":
             CounterSet counterset1= CounterSet.getInstance();
             counter1=counterset1.getCounter(combo_counterT1.getValue());
             
             //valueTrigger.setText("");
-            if (counter1.getValue()!=null && !operationBox.getValue().isEmpty() && !valueTrigger.getText().isEmpty()) {
+            if (counter1==null && !(operationBox.getValue()==null) && !(valueTrigger.getText().isEmpty())) {
                 Integer value1 =Integer.valueOf(valueTrigger.getText());
                  if(operationBox.getValue().equals("EqualsTo")){
                     trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"EqualTo");
@@ -1033,14 +1032,15 @@ if (triggerValue != null) {
                     valueTrigger.setText("");
                 }
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+                error.showErrorDialog( "Select a Counter, a logical operation and a value");
             }
             break;
     }
     if(trigger!=null){
-     if(notcheck.isSelected())
-         trigger= new NotTrigger(trigger);
-     else
+     if(notcheck.isSelected()){
+           trigger= new NotTrigger(trigger);
+    
+     }
       triggertbList.add(trigger);  
     }
      
@@ -1079,38 +1079,43 @@ if (triggerValue != null) {
     }
 
     @FXML
-    private void CreateAction(ActionEvent event) {
+private void CreateAction(ActionEvent event) {
   if (comboAction.getValue() != null) {
     String actionType = comboAction.getValue();
     Action action=null;
+    ErrorDialogController error = new ErrorDialogController();
     switch (actionType) {
         case "ShowDialog":
 
-            if(counter_cb.isSelected() && !combo_counterA1.getValue().isEmpty()){
+            if(counter_cb.isSelected() && !(combo_counterA1.getValue()==null)){
                 action= new ReplaceShowDialogAction
                 (new ShowDialogAction(messagefield.getText()),combo_counterA1.getValue());
             }
-            else
+            if(counter_cb.isSelected() && (combo_counterA1.getValue()==null))
+                 error.showErrorDialog("Select a counter to replace $ with its value.\n");
+            else if(!counter_cb.isSelected())
                 action = new ShowDialogAction(messagefield.getText());
             break;
         case "PlayAudio":
             if (FilePath != null) {
                 action = new ActionPlayAudio(FilePath);
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid audio file selected.\n");
+                error.showErrorDialog("No valid audio file selected.\n");
+                
             }
             break;
         case "AppendStringAtFile":
             if (textFilePath != null) {
                 action = new SpecifiedStringAction(textFilePath, messagefield.getText());
-               if(counter_cb.isSelected() && !combo_counterA1.getValue().isEmpty()){
+               if(counter_cb.isSelected() && !(combo_counterA1.getValue()==null)){
                 action= new ReplaceStringAppendAction
                 (new SpecifiedStringAction(textFilePath, messagefield.getText()),combo_counterA1.getValue());
             }
             else
-                action = new ShowDialogAction(messagefield.getText());
+                error.showErrorDialog("Select a counter to replace $ with its value.\n");
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid text file selected.\n");
+                error.showErrorDialog("No valid text file selected.\n");
+ 
             }
             break;
         case "RunExternalProgramAction":
@@ -1118,7 +1123,7 @@ if (triggerValue != null) {
                 ArrayList<String> arguments = new ArrayList<>(actionCommandList);
                 action = new RunExternalProgramAction(ProgramPath, arguments);
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+                error.showErrorDialog("No valid program file selected.\n");
             }
             break;
         case "Copy File":
@@ -1137,7 +1142,8 @@ if (triggerValue != null) {
                         break;
                 }
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid file paths selected.\n");
+                error.showErrorDialog("No valid file paths selected.\n");
+                
             }
             break;
             case "Action Sequence":
@@ -1145,7 +1151,7 @@ if (triggerValue != null) {
                 ArrayList<Action> arguments = new ArrayList<>(actionseq);
                 action = new CompositeAction(arguments);
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+                 error.showErrorDialog("No actions in the sequence.\n");
             }
 
             break;
@@ -1156,7 +1162,7 @@ if (triggerValue != null) {
                 action = new SetCounterValueAction( combo_counterA1.getValue(),value);
                 valueTF.setText("");
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+               error.showErrorDialog("Select a counter and set a value.\n");
             }
              break;
              
@@ -1167,7 +1173,7 @@ if (triggerValue != null) {
                 action = new AddValueCounterAction( combo_counterA1.getValue(),value);
                 valueTF.setText("");
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+                 error.showErrorDialog("Select a counter and set a value.\n");
             }
              break;
              
@@ -1176,7 +1182,7 @@ if (triggerValue != null) {
                
                 action = new SumsCounterAction( combo_counterA1.getValue(),combo_counterA2.getValue());
             } else {
-                ruleWarning.setText(ruleWarning.getText() + "No valid program file selected.\n");
+                 error.showErrorDialog("Select a counter and a second counter.\n");
             }
             break;
             
@@ -1185,8 +1191,8 @@ if (triggerValue != null) {
             break;
     }
     
-    
-    actiontbList.add(action);
+    if(action!=null)
+     actiontbList.add(action);
 }
 }
 
@@ -1250,22 +1256,6 @@ if (triggerValue != null) {
         
      }
      
-    
-    
-    private void configureNegativeNumericTextField(TextField textField) {
-        Pattern validEditingState = Pattern.compile("-?\\d*");
-
-        UnaryOperator<Change> filter = change -> {
-            String text = change.getControlNewText();
-            if (validEditingState.matcher(text).matches()) {
-                return change;
-            }
-            return null;
-        };
-
-        TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        textField.setTextFormatter(textFormatter);
-    }
 
     @FXML
     private void deleteCounter(ActionEvent event) {
@@ -1320,6 +1310,7 @@ if (triggerValue != null) {
 
         faqtrigger.setRoot(background);
   }
+    
  @FXML
     void faqactionAction(ActionEvent event) {
      faqaction.setVisible(!faqaction.isVisible());

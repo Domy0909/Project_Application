@@ -337,7 +337,7 @@ public class FXMLDocumentController implements Initializable {
         SaveRules.loadRules(rset); //load the saved rules
         SaveLoadCounters.loadCounters(cset); //load the saved counters
         
-        //add the names of the loaded counters to the following comboboxes
+        //Add the names of the loaded counters to the following comboboxes located in the trigger creation pane and action creation pane
         for(Counter c : cset.getCounter_set()){
               combo_counterT1.getItems().addAll(c.getName()); 
               combo_counterT2.getItems().addAll(c.getName()); 
@@ -346,18 +346,24 @@ public class FXMLDocumentController implements Initializable {
         }
         
        
-        
+        // Set the items in the counterTable by retrieving the counter set from the CounterSet singleton instance
         counterTable.setItems(cset.getCounter_set());
+        // Configure the counterNameCol to display the name of each counter in the table
         counterNameCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+        // Configure the counterValueCol to display the value of each counter in the table
         counterValueCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getValue().toString()));
         
        
-       
+       //Set the items of the triggertable the created triggers
         triggertable.setItems(triggertbList);
+        //display the description of each trigger
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         
+        //Set the table for the created actions
         actionTable.setItems(actiontbList);
+        //Set the table for the actions that will form a sequence
         actionseqTA.setItems(actionseq);
+        
         
         triggerList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
         actionList.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().description()));
@@ -365,14 +371,15 @@ public class FXMLDocumentController implements Initializable {
         
         
        
-        
+        // Instantiate a ConfigureTextFieldController for configuring text fields.
         ConfigureTextFieldController tfedit=new ConfigureTextFieldController();
         
+        // Configure text fields to only accept negative numeric input.
         tfedit.configureNegativeNumericTextField(valuecounter_TF);
         tfedit.configureNegativeNumericTextField(valueTF);
         tfedit.configureNegativeNumericTextField(valueTrigger);
         
-        
+        // Configure text fields to only accept positive numeric input.
         tfedit.configurePositiveNumericTextField(sleepingdays);
         tfedit.configurePositiveNumericTextField(sleepinghours);
         tfedit.configurePositiveNumericTextField(sleepingminutes);
@@ -393,22 +400,26 @@ public class FXMLDocumentController implements Initializable {
         ruleTable.setItems(rset.getRules()); 
         actioncol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAction().description()) );
         triggercol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTrigger().description()));
+        
+        //this column display the repetition of a rule
         repcolumn.setCellValueFactory(cellData -> {
         Rule rowData = cellData.getValue();
         
         
-
+       //the data
        if (!rowData.isSleeping()) {
         // If isSleeping() returns false, set the value as isfoo
         return new SimpleStringProperty("Can only be triggered once"+"\nhas been fired: "+Boolean.toString(rowData.isFired_oo()));
        } else {
-        // If isSleeping() returns true, set the value as getday + gethour
+        // If isSleeping() returns true, set the value as getday + gethour + +getminutes
         return new SimpleStringProperty("when triggered sleeps for :\n"+rowData.getDay()+" days\n"+rowData.getHours()+" hours \n"+rowData.getMinutes()+" minutes");
        }
       });
-                
+        
+        // Configure visibility and settings for the "activecol" TableColumn.        
         activecol.setCellValueFactory(new PropertyValueFactory<>("active"));
         
+        // Configure visibility and settings for the time-related Spinners and Labels.
         Lhours.setVisible(false);
         hspin.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,23,1));
         Lmin.setVisible(false);
@@ -416,24 +427,27 @@ public class FXMLDocumentController implements Initializable {
         Lsec.setVisible(false);
         ssp.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory (0,59,1));
         
-        
+        // Set initial values for the Spinners based on the current local time.
         hspin.getValueFactory().setValue(LocalTime.now().getHour());
         msp.getValueFactory().setValue(LocalTime.now().getMinute());
         ssp.getValueFactory().setValue(LocalTime.now().getSecond());
         
-        
+        // Disable Spinners based on the selected trigger not being "CurrentTime."
         hspin.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         msp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.disableProperty().bind(Bindings.notEqual(comboTrigger.valueProperty(), "CurrentTime"));
         
+        // Set Spinners and Labels visibility based on the selected trigger being "CurrentTime."
         hspin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         msp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         ssp.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
+        // Configure visibility and initial settings for "daySelector" based on the selected trigger being "Day Of Week."
         daySelector.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Week"));
         Lday.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Week"));
         daySelector.setValue(LocalDate.now().getDayOfWeek().toString());
         
+        // Configure visibility and initial settings for "daySpinner" based on the selected trigger being "Day Of Month."
         daySpinner.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Month"));
         Lmonth.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Day Of Month"));
         daySpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
@@ -441,6 +455,8 @@ public class FXMLDocumentController implements Initializable {
         YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue()).lengthOfMonth(),
         LocalDate.now().getDayOfMonth()));
         
+        
+        // Configure visibility and settings for date-related components based on the selected trigger being "Date."
         LdayDate.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
         LmonthDate.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
         LyearDate.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Date"));
@@ -451,12 +467,12 @@ public class FXMLDocumentController implements Initializable {
         1,
         YearMonth.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue()).lengthOfMonth(),
         LocalDate.now().getDayOfMonth()));
-             
         monthSpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
         1,12,LocalDate.now().getMonthValue()));
         yearSpn.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
         LocalDate.now().getYear(), LocalDate.now().plusYears(50).getYear() ,LocalDate.now().getYear()));
         
+        // Configure visibility for components related to file existence and size based on the selected trigger.
         selectDirectoryButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
         fileTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileExistence"));
                 
@@ -464,35 +480,39 @@ public class FXMLDocumentController implements Initializable {
         fileSizeSelectorButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileSize"));
         fileSizeTextField.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "FileSize"));
                 
+        // Configure visibility for components related to audio playback and text file manipulation based on the selected action.
         selectAudio.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "PlayAudio"));
         selectTextFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "AppendStringAtFile"));
         messagefield.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "ShowDialog").or(Bindings.equal(comboAction.valueProperty(), "AppendStringAtFile")));
         
+        // Configure visibility for time-related labels based on the selected trigger being "CurrentTime."
         Lhours.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         Lmin.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         Lsec.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CurrentTime"));
         
+        // Configure items for ListView based on the selected trigger or action being "RunExternalProgramTrigger" or "RunExternalProgramAction."
         commandlinelistAction.setItems(actionCommandList);
         commandlinelistTrigger.setItems(triggerCommandList);
-        
         commandlinelistTrigger.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         commandlinelistAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
         addcommandLineButtonAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
         addcommandLineTriggerButton.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         commandLineTextfieldAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
         commandLineTextfieldTrigger.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
-               
+        
+        // Configure visibility for components related to external program execution based on the selected action and trigger.
         selectProgramAction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "RunExternalProgramAction"));
         selectProgram1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
         externalTxt.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "RunExternalProgramTrigger"));
-        
+        // Configure visibility for components related to composite triggers.
         fristTriggerFieldTA.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         secondTriggerFieldTA.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         logicalbox.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         triggerfield1.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         triggerfield2.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "CompositeTrigger"));
         
-        
+        // Control the visibility of "operationBox" based on the selected value in "comboTrigger".
+// The box is visible if the selected trigger is "Compare Counter to Counter" or "Compare Counter to Value".
         operationBox.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -503,6 +523,8 @@ public class FXMLDocumentController implements Initializable {
         )
         );
         
+        // Control the visibility of "counter_cb" based on the selected value in "comboAction".
+// The checkbox is visible if the selected action is "ShowDialog" or "AppendStringAtFile".
         counter_cb.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -513,6 +535,8 @@ public class FXMLDocumentController implements Initializable {
         )
         );
         
+        // Control the visibility of "combo_counterT1" based on the selected value in "comboTrigger".
+// The combo box is visible if the selected trigger is "Compare Counter to Value" or "Compare Counter to Counter".
         combo_counterT1.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -523,6 +547,9 @@ public class FXMLDocumentController implements Initializable {
         )
         );
         
+        
+        // Control the visibility of "combo_counterT2" based on the selected value in "comboTrigger".
+// The combo box is visible if the selected trigger is "Compare Counter to Counter".
         combo_counterT2.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -533,10 +560,21 @@ public class FXMLDocumentController implements Initializable {
         )
         );
         
+        
+       // These items are visible if the selected action is "Action Sequence". 
         addseqmenu.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));
         deleteSqaction.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));  
         actionseqTA.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Action Sequence"));  
         
+        
+ // This binding controls the visibility of "combo_counterA1" based on the selected value in "comboAction".
+// The visibility is determined by the conditions specified in the lambda expression:
+// The combo box is visible if the selected action is one of the following:
+// - SetCounterValue
+// - Add Value to Counter
+// - Sum two Counters
+// - ShowDialog
+// - AppendStringAtFile
         combo_counterA1.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -549,6 +587,8 @@ public class FXMLDocumentController implements Initializable {
         );
         
         
+ // This binding controls the visibility of "combo_counterA2" based on the selected value in "comboAction".
+// The combo box is visible if the selected action is "Sum two Counters".
         combo_counterA2.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -559,6 +599,12 @@ public class FXMLDocumentController implements Initializable {
         )
         ); 
         
+
+// This binding controls the visibility of "valueTF" based on the selected value in "comboAction".
+// The visibility is determined by the conditions specified in the lambda expression:
+// The text field is visible if the selected action is one of the following:
+// - SetCounterValue
+// - Add Value to Counter        
         valueTF.visibleProperty().bind(
      Bindings.createBooleanBinding(
         () -> {
@@ -569,26 +615,39 @@ public class FXMLDocumentController implements Initializable {
         )
         );
        
+  // This binding controls the visibility of "valueTrigger" based on the selected value in "comboTrigger".
+// The text field is visible if the selected trigger is "Compare Counter to Value".
+      
        valueTrigger.visibleProperty().bind(Bindings.equal(comboTrigger.valueProperty(), "Compare Counter to Value"));
        
-        
+        // Create a ToggleGroup for radio buttons to ensure that only one can be selected at a time.
         ToggleGroup toggleGroup = new ToggleGroup();
         firedradiobutton.setToggleGroup(toggleGroup);
         sleepingradiobutton.setToggleGroup(toggleGroup);
         firedradiobutton.setSelected(true);
         
+        // Disable the "sleepingdays," "sleepinghours," and "sleepingminutes" TextFields when "firedradiobutton" is selected.
         sleepingdays.disableProperty().bind(firedradiobutton.selectedProperty());
         sleepinghours.disableProperty().bind(firedradiobutton.selectedProperty());
         sleepingminutes.disableProperty().bind(firedradiobutton.selectedProperty());
         
-        
+        // Control the visibility of "sleepingdays," "sleepinghours," and "sleepingminutes" based on the selected radio button.
+// These components are visible only when "sleepingradiobutton" is selected.
         sleepingdays.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         sleepinghours.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         sleepingminutes.visibleProperty().bind(sleepingradiobutton.selectedProperty());
         
-        selectFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")).or(Bindings.equal(comboAction.valueProperty(), "Delete File")));
-        ButtonDirectory.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").or(Bindings.equal(comboAction.valueProperty(), "Move File")));
+ // Control the visibility of "selectFileButton" based on the selected value in "comboAction".
+// The button is visible if the selected action is "Copy File," "Move File," or "Delete File."
+        selectFileButton.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").
+                or(Bindings.equal(comboAction.valueProperty(), "Move File")).
+                or(Bindings.equal(comboAction.valueProperty(), "Delete File")));
         
+   // Control the visibility of "ButtonDirectory" based on the selected value in "comboAction."
+// The button is visible if the selected action is "Copy File" or "Move File."         
+        ButtonDirectory.visibleProperty().bind(Bindings.equal(comboAction.valueProperty(), "Copy File").
+                or(Bindings.equal(comboAction.valueProperty(), "Move File")));
+       
         comboTrigger.getItems().addAll(
         "CurrentTime",
         "Day Of Week",
@@ -632,7 +691,18 @@ daySelector.getItems().addAll(
        
         
         
-       
+    
+ // This binding is used to disable the "addRuleButton" based on certain conditions.
+// It is bound to the combined Boolean result of various properties, including
+// the text properties of trigger and action TextAreas, and the selected properties
+// of the "sleepingradiobutton" along with the text properties of associated TextFields.
+// The button will be disabled if any of the specified conditions are met:
+// 1. Trigger TextArea is empty
+// 2. Action TextArea is empty
+// 3. If "sleepingradiobutton" is selected, then any of the following:
+//    a. Sleeping Days TextField is empty
+//    b. Sleeping Hours TextField is empty
+//    c. Sleeping Minutes TextField is empty    
     addRuleButton.disableProperty().bind(
     Bindings.createBooleanBinding(() ->
         triggerTA.getText().isEmpty() ||
@@ -650,7 +720,11 @@ daySelector.getItems().addAll(
      )
     );
         
-       
+     
+ // This binding is used to disable the "create_counter_button" based on certain conditions.
+// It is bound to the combined Boolean result of the text properties of the name and value
+// counter TextFields. The button will be disabled if either the name or value counter
+// TextField is empty.
     create_counter_button.disableProperty().bind(
                Bindings.createBooleanBinding(()-> namecounter_TF.getText().isEmpty() || valuecounter_TF.getText().isEmpty()
                        , namecounter_TF.textProperty(),
@@ -664,7 +738,10 @@ daySelector.getItems().addAll(
         
     }
     
-    
+ /**
+ * Handles the addition of a new rule by retrieving selected trigger and action, creating a rule instance,
+ * configuring rule properties based on UI inputs, adding the rule to a rule set, and updating the UI elements accordingly.
+ */ 
     @FXML
     private void addRuleButton(ActionEvent event) {
         
@@ -708,6 +785,10 @@ daySelector.getItems().addAll(
         
     }
 
+    
+ /*This method manages various tasks related to the user interface, facilitating the 
+transition from the rule display interface to the rule creation interface, reset certain 
+variables, and update the counter table display as part of the rule creation process.*/
     @FXML
     private void CreateRuleButtonEvent(ActionEvent event) {
         ruleTablePane.setDisable(true);
@@ -718,16 +799,21 @@ daySelector.getItems().addAll(
         ruleWarning.setText("");
         counterTable.refresh();
     }
-    
+     // Save the rules
     @FXML
     private void Save(ActionEvent event) {
         SaveRules.saveRules(rset);
     }
-    
+     //Save the counter  
     @FXML
     void SaveCounters(ActionEvent event) {
          SaveLoadCounters.saveCounters(cset);
     }
+    
+/* 
+Deletes the selected rule from the rule table.
+Retrieves the selected rule, removes it from the rule set, and updates the rule table.
+*/
     
     @FXML
     private void Delete(ActionEvent event) {
@@ -742,75 +828,92 @@ daySelector.getItems().addAll(
         }   
     }
     
+    /**
+ * Opens a file chooser dialog to select a WAV file.
+ * Sets initial directory and filters for WAV files, storing the selected file path.
+ */ 
+    
     @FXML
     void selectAudio(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
 
-        // Settare titolo file chooser
+    
         fileChooser.setTitle("Select a File");
 
-        // Settare directory iniziale
+
         File currentDirectory = new File(new File(".").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         fileChooser.setInitialDirectory(initialDirectory);
 
-        // Settare extension filter per file WAV
+    
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("WAV files (.wav)", "*.wav");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        //Mostra finestra id dialogo quando il bottone viene premuto
+     
         File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 FilePath = selectedFile.getAbsolutePath();
             }
     }
 
+    
+   /**
+ * Toggles the active status of the selected rule in the rule table.
+ * Updates the active status of the selected rule and refreshes the rule table display.
+ */
     @FXML
     private void activeDeactive(ActionEvent event) {
-        //Prendo la regola selezionata
+     
         Rule selectedRule = ruleTable.getSelectionModel().getSelectedItem();
         selectedRule.setActive(!selectedRule.isActive());
         ruleTable.refresh();
     }
+    
+    
+    // Method for selecting a text file using FileChooser
+    // Sets initial directory and extension filter for .txt files
+    // Updates the textFilePath variable with the selected file path
 
     @FXML
     private void selectTextFile(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
 
-        // Settare titolo file chooser
+
         fileChooser.setTitle("Select a File");
 
-        // Settare directory iniziale
+ 
         File currentDirectory = new File(new File(".").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         fileChooser.setInitialDirectory(initialDirectory);
 
-        // Settare extension filter per file text
+   
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text files (.txt)", "*.txt");
         fileChooser.getExtensionFilters().add(extFilter);
 
-        //Mostra finestra id dialogo quando il bottone viene premuto
+
         File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                 textFilePath = selectedFile.getAbsolutePath();
             }
     }
 
+    
+ // Method for selecting a directory using DirectoryChooser
+// Sets initial directory and updates the directoryPath variable with the selected directory path
     @FXML
     private void selectDirectoryButton(ActionEvent event) throws IOException {
          
-        // Creo un DirectoryChooser
+    
         DirectoryChooser directoryChooser = new DirectoryChooser();
 
       
         directoryChooser.setTitle("Select a Directory");
 
-        // Settare directory iniziale
+   
         File currentDirectory = new File(new File(".").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         directoryChooser.setInitialDirectory( initialDirectory);
 
-        //Mostra finestra di dialogo quando il bottone viene premuto
         File selectedDirectory = directoryChooser.showDialog(null);
 
         if (selectedDirectory != null) {
@@ -821,25 +924,30 @@ daySelector.getItems().addAll(
         }
     }
 
+    
+ // Method for selecting a file for size-related operations using FileChooser
+// Updates the sizeFilePath variable with the selected file path
     @FXML
     private void fileSizeSelector(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
 
-        // Settare titolo file chooser
+       
         fileChooser.setTitle("Select a File");
 
-        // Settare directory iniziale
+
         File currentDirectory = new File(new File(".").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         fileChooser.setInitialDirectory(initialDirectory);
 
-        //Mostra finestra id dialogo quando il bottone viene premuto
+      
         File selectedFile = fileChooser.showOpenDialog(null);
             if (selectedFile != null) {
                sizeFilePath = selectedFile.getAbsolutePath();
             }
     }
     
+ // Method for selecting an external program file using FileChooser
+// Invokes a method in the SelectProgramController and updates the ProgramPath variable
     @FXML
     void selectProgram(ActionEvent event) throws IOException {
         
@@ -849,6 +957,8 @@ daySelector.getItems().addAll(
         
     }
 
+ // Method for selecting a file using FileChooser
+// Updates the copyFilePath variable with the selected file path
     @FXML
     private void selectFileButton(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -865,20 +975,22 @@ daySelector.getItems().addAll(
            copyFilePath = selectedFile.getAbsolutePath();
     }
 
+  // Method for selecting a directory using DirectoryChooser
+ // Updates the directoryPathFile variable with the selected directory path
     @FXML
     private void buttonSelectDirectory(ActionEvent event) throws IOException {
-        // Creo un DirectoryChooser
+
         DirectoryChooser directoryChooser = new DirectoryChooser();
 
       
         directoryChooser.setTitle("Select a Directory");
 
-        // Settare directory iniziale
+      
         File currentDirectory = new File(new File(".").getAbsolutePath());
         File initialDirectory = new File(currentDirectory.getCanonicalPath());
         directoryChooser.setInitialDirectory( initialDirectory);
 
-        //Mostra finestra di dialogo quando il bottone viene premuto
+       
         File selectedDirectory = directoryChooser.showDialog(null);
 
         if (selectedDirectory != null) {
@@ -889,18 +1001,23 @@ daySelector.getItems().addAll(
         }
     }
 
+    
+    // Method for adding a command line to a list
     @FXML
     private void addCommandLine(ActionEvent event) {
         triggerCommandList.add(commandLineTextfieldTrigger.getText());
         commandLineTextfieldTrigger.setText("");
     }
 
+    // Method for adding a command line action to a list
     @FXML
     private void addCommandLineAction(ActionEvent event) {
         actionCommandList.add(commandLineTextfieldAction.getText());
         commandLineTextfieldAction.setText("");
     }
 
+    // Method for selecting an external program file for an action using FileChooser
+// Updates the ProgramPath variable with the selected file path
     @FXML
     private void selectProgramAction(ActionEvent event) throws IOException {
           FileChooser fileChooser = new FileChooser();
@@ -929,6 +1046,9 @@ daySelector.getItems().addAll(
             }
     }
 
+    
+    // Method for creating a trigger based on user inputs
+   // Creates instances of various trigger classes based on user selection
     @FXML
     private void CreateTrigger(ActionEvent event) {
         
@@ -1054,38 +1174,42 @@ if (triggerValue != null) {
      
 }
     }
-
+    
+// Method for selecting a trigger from a table and displaying its description, this trigger will then be used for the creation of a rule
     @FXML
     private void SelectTrigger(ActionEvent event) {
         triggerselected=triggertable.getSelectionModel().getSelectedItem();
         triggerTA.setText(triggerselected.description());
     }
-
+// Method for selecting the first trigger field in a composite trigger
     @FXML
     private void TriggerField1(ActionEvent event) {
         a=triggertable.getSelectionModel().getSelectedItem();
         fristTriggerFieldTA.setText(a.description());
         
     }
-
+    
+// Method for selecting the second trigger field in a composite trigger
     @FXML
     private void triggerField2(ActionEvent event) {
         b=triggertable.getSelectionModel().getSelectedItem();
         secondTriggerFieldTA.setText(b.description());
     }
-
+    
+// Method for deleting a selected trigger from the trigger table
     @FXML
     private void DeleteTrigger(ActionEvent event) {
            Trigger selectedTrigger= triggertable.getSelectionModel().getSelectedItem();
 
         if (selectedTrigger != null) {
-          // Rimuovi la regola dalla ruleSet
+         
            triggertbList.remove(selectedTrigger);
-          // Aggiorna la tabella
+    
           triggertable.refresh();
         }  
     }
-
+// Method for creating an action based on user inputs
+// Creates instances of various action classes based on user selection
     @FXML
 private void CreateAction(ActionEvent event) {
   if (comboAction.getValue() != null) {
@@ -1204,12 +1328,16 @@ private void CreateAction(ActionEvent event) {
 }
 }
 
+
+// Method for selecting an action from a table and displaying its description
+// the action selected will be used for the creation of a rule
     @FXML
     private void SelectAction(ActionEvent event) {
         actionselected = actionTable.getSelectionModel().getSelectedItem();
         actionTA.setText(actionselected.description());
     }
 
+    // Method for deleting a selected action from the action table
     @FXML
     private void DeleteAction(ActionEvent event) {
          Action selectedAction= actionTable.getSelectionModel().getSelectedItem();
@@ -1221,26 +1349,27 @@ private void CreateAction(ActionEvent event) {
           actionTable.refresh();
         }  
     }
-
+    
+// Method for adding an action to a sequence
     @FXML
     private void addSequenceAction(ActionEvent event) {
         actionseq.add(actionTable.getSelectionModel().getSelectedItem());
         actionseqTA.refresh();
         
     }
-
+// Method for removing an action from a sequence
     private void removeSequenceAction(ActionEvent event) {
         compaction.removeAction(actionTable.getSelectionModel().getSelectedItem());
         actionseqTA.refresh();
       
     }
-
+// Method for deleting an action from a sequence
     @FXML
     private void DeleteActionFromSequence(ActionEvent event) {
         actionseq.remove(actionseqTA.getSelectionModel().getSelectedItem());
         actionseqTA.refresh();
     }
-
+// Method for creating or modifying a counter based on user input
     @FXML
     private void createCounter(ActionEvent event) {
         String name=namecounter_TF.getText();
@@ -1264,6 +1393,7 @@ private void CreateAction(ActionEvent event) {
         
      }
      
+    // Method for deleting a counter from the counter table
 
     @FXML
     private void deleteCounter(ActionEvent event) {
@@ -1276,7 +1406,7 @@ private void CreateAction(ActionEvent event) {
         combo_counterA2.getItems().remove(name);
         counterTable.refresh();
     }
-
+// Method for navigating back to the rule table view
     @FXML
     private void goBack(ActionEvent event) {
          FilePath=null;
@@ -1292,14 +1422,17 @@ private void CreateAction(ActionEvent event) {
          triggerTA.setText("");
          actionTA.setText("");
     }
+    
+    // Method for modifying the value of a selected counter
     @FXML
     private void modifyValue(ActionEvent event) {
         Counter selectedCounter = counterTable.getSelectionModel().getSelectedItem();
         if (selectedCounter != null) {
            CounterModify.modifyValue(selectedCounter);
-           counterTable.refresh(); // Aggiorna la TableView se necessario
+           counterTable.refresh(); 
         }
     }
+     // Method for displaying or hiding the trigger FAQ information
      @FXML
     void faqtriggerAction(ActionEvent event) {
      faqtrigger.setVisible(!faqtrigger.isVisible());
@@ -1318,6 +1451,7 @@ private void CreateAction(ActionEvent event) {
 
         faqtrigger.setRoot(background);
   }
+    // Method for displaying or hiding the action FAQ information
     
  @FXML
     void faqactionAction(ActionEvent event) {
@@ -1338,7 +1472,7 @@ private void CreateAction(ActionEvent event) {
 
         faqaction.setRoot(background);
   }
-
+ // Method for refreshing the counter and rule tables
     @FXML
     private void refreshTables(ActionEvent event) {
         counterTable.refresh();

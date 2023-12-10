@@ -12,6 +12,12 @@ import Ifttt_app.Model.CounterSet;
  *
  * @author aless
  */
+/**
+ * Represents an action to set the value of a counter.
+ * Implements the Action interface.
+ * 
+ */
+
 public class SetCounterValueAction implements Action {
     private String a;
     private Integer b;
@@ -21,7 +27,11 @@ public class SetCounterValueAction implements Action {
         this.b = b;
     }
 
-   
+     /**
+     * Executes the action by setting the value of the specified counter.
+     *
+     *
+     */
     @Override
     public boolean execute() {
        Counter c=CounterSet.getInstance().getCounter(a);
@@ -30,7 +40,7 @@ public class SetCounterValueAction implements Action {
            return true;
        }
       
-       return false;
+       return false;  // Counter with the specified name not found
            
     }
 

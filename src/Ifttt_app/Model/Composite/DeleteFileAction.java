@@ -15,6 +15,12 @@ import javafx.application.Platform;
  *
  * @author marco
  */
+
+/**
+ * Represents an action to delete a file.
+ * Implements the Action interface.
+ * 
+ */
 public class DeleteFileAction implements Action{
     private final String filePath;
     
@@ -25,6 +31,14 @@ public class DeleteFileAction implements Action{
     public String getFilePath(){
         return this.filePath;
     }
+    
+    
+      /**
+     * Executes the action by deleting the specified file.
+     * Uses Platform.runLater to execute the file deletion operation on the JavaFX application thread.
+     *
+     * @return True if the action was executed successfully, false otherwise.
+     */
     @Override
     public boolean execute() {
         Platform.runLater( () -> {
@@ -38,7 +52,7 @@ public class DeleteFileAction implements Action{
         });
         return true;
     }
-
+   
     @Override
     public String description() {
         return DeleteFileAction.class.getSimpleName() + "\n" + "delete this file:";

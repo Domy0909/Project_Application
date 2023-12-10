@@ -12,6 +12,11 @@ import Ifttt_app.Model.CounterSet;
  *
  * @author aless
  */
+/*
+ * Represents an action to sum the values of two counters.
+ * Implements the Action interface.
+ *
+ */
 public class SumsCounterAction implements Action {
     private String a;
     private String b;
@@ -23,7 +28,11 @@ public class SumsCounterAction implements Action {
 
     
     
-    
+    /**
+     * Executes the action by summing the values of the specified counters.
+     *
+     * 
+     */
     
     @Override
     public boolean execute() {
@@ -34,7 +43,7 @@ public class SumsCounterAction implements Action {
            return true;
        }
        
-       return false;
+       return false;  // One or both counters not found
            
     }
 

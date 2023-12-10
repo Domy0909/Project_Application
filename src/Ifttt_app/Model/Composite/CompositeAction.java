@@ -12,6 +12,13 @@ import java.util.List;
  *
  * @author Asus
  */
+/**
+ * Represents a composite action that consists of a sequence of individual actions.
+ * Implements the Action interface.
+ * The overall result of the composite action reflects whether all individual actions
+ * were executed successfully or not.
+ *
+ */
 public class CompositeAction implements Action{
     private List<Action> actions;
     private boolean overallResult=false;
@@ -59,7 +66,7 @@ public class CompositeAction implements Action{
         return this.isOverallResult();
         
     }
-
+//the overall description of the sequence of action is the sum of the description of the singular actions
     @Override
     public String description() {
         StringBuilder descriptionBuilder = new StringBuilder("Composite Action:\n");

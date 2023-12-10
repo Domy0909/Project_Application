@@ -1017,9 +1017,10 @@ if (triggerValue != null) {
         case "Compare Counter to Value":
             CounterSet counterset1= CounterSet.getInstance();
             counter1=counterset1.getCounter(combo_counterT1.getValue());
+            //System.out.println(counter1.getName()+operationBox.getValue()+valueTrigger.getText());
             
             //valueTrigger.setText("");
-            if (counter1==null && !(operationBox.getValue()==null) && !(valueTrigger.getText().isEmpty())) {
+            if (counter1 != null && operationBox.getValue()!=null && !valueTrigger.getText().isEmpty()) {
                 Integer value1 =Integer.valueOf(valueTrigger.getText());
                  if(operationBox.getValue().equals("EqualsTo")){
                     trigger = new TriggerCounterCompValues(counter1.getValue(),value1,"EqualTo");

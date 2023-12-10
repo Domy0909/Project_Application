@@ -8,9 +8,20 @@ import Ifttt_app.Model.Composite.Action;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 
-
+/**
+ * Represents an action to show a dialog with a specific message.
+ * Implements the Action interface.
+ * Provides methods to execute the action and obtain a description of the action.
+ */
 public class ShowDialogAction implements Action {
     String specificstring;
+    
+     /**
+     * Executes the action by showing a dialog with the specified message.
+     * Uses Platform.runLater to execute the dialog operation on the JavaFX application thread.
+     *
+     * 
+     */
     @Override
     public boolean execute() {
         Platform.runLater(() -> {

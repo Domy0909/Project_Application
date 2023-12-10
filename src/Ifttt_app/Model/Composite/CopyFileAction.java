@@ -16,6 +16,12 @@ import javafx.application.Platform;
  *
  * @author marco
  */
+
+/**
+ * Represents an action to copy a file to a specified directory.
+ * Implements the Action interface.
+ * Provides methods to get the file path and directory path.
+ */
 public class CopyFileAction implements Action{
     private final String filePath;
     private final String directoryPath;
@@ -35,7 +41,13 @@ public class CopyFileAction implements Action{
         this.filePath = filePath;
     }
     
-
+    
+    /**
+     * Executes the action by copying the specified file to the specified directory.
+     * Uses Platform.runLater to execute the file copy operation on the JavaFX application thread.
+     *
+     * @return True if the action was executed successfully, false otherwise.
+     */
     @Override
     public boolean execute() {
         Platform.runLater( () -> {
@@ -51,7 +63,7 @@ public class CopyFileAction implements Action{
         return true;
 
     }
-
+    //Provides a description of the CopyFileAction.
     @Override
     public String description() {
         return CopyFileAction.class.getSimpleName() + "\n" + "copy this file:" + this.getFilePath() + "\n" + "to this directory" + this.getDirectoryPath();

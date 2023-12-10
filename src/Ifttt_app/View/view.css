@@ -1,0 +1,59 @@
+/* styles.css */
+
+/* Stilizzazione della TableView */
+.table-view {
+    -fx-background-color: #f4f4f4; /* Colore di sfondo */
+}
+
+/* Stilizzazione delle righe della TableView */
+.table-row-cell {
+    -fx-background-color: #ffffff; /* Colore di sfondo delle righe */
+}
+
+/* Stilizzazione delle righe alterne della TableView */
+.table-row-cell:odd {
+    -fx-background-color: #f9f9f9; /* Colore di sfondo delle righe alterne */
+}
+
+/* Stilizzazione dell'header della TableView */
+.table-view .column-header-background {
+    -fx-background-color: #e0e0e0; /* Colore di sfondo dell'header */
+}
+
+/* Stilizzazione delle celle della TableView */
+.table-cell {
+    -fx-alignment: CENTER; /* Allineamento del testo al centro */
+}
+
+/* Aggiunta di uno stile al passaggio del mouse su una riga */
+.table-row-cell:hover {
+    -fx-background-color: #d9d9d9; /* Colore di sfondo al passaggio del mouse */
+}
+/* Stilizzazione della selezione della riga */
+.table-row-cell:selected {
+    -fx-background-color: #3498db; /* Colore di sfondo durante la selezione */
+    -fx-text-fill: white; /* Colore del testo durante la selezione */
+}
+/* styles.css */
+
+/* styles.css */
+
+/* Stilizzazione del pulsante */
+.button {
+    -fx-background-color: #2c3e50; /* Colore di sfondo */
+    -fx-text-fill: #ecf0f1; /* Colore del testo */
+    -fx-font-size: 12px; /* Dimensione del carattere */
+    -fx-font-weight: normal; /* Peso normale del carattere */
+    -fx-padding: 6px 12px; /* Spaziatura interna del pulsante */
+    -fx-background-radius: 5px; /* Angoli arrotondati */
+}
+
+/* Effetto al passaggio del mouse sul pulsante */
+.button:hover {
+    -fx-background-color: #34495e; /* Colore di sfondo al passaggio del mouse */
+}
+
+/* Effetto alla pressione del pulsante */
+.button:pressed {
+    -fx-background-color: #2c3e50; /* Colore di sfondo durante la pressione */
+}

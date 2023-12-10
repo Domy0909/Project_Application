@@ -21,9 +21,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.Controller.FXMLDocumentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Ifttt_app.Controller.FXMLDocumentController">
    <children>
-      <AnchorPane fx:id="ruleCreationPane" prefHeight="500.0" prefWidth="800.0" visible="false">
+      <AnchorPane fx:id="ruleCreationPane" disable="true" prefHeight="500.0" prefWidth="800.0" stylesheets="@view.css" visible="false">
          <children>
             <TabPane fx:id="tabpaneRuleCreation" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -88,7 +88,7 @@
                               <TextField fx:id="valueTrigger" layoutX="39.0" layoutY="180.0" promptText="insert value" />
                                   <Button fx:id="selectDirectoryButton" layoutX="38.0" layoutY="102.0" mnemonicParsing="false" onAction="#selectDirectoryButton" prefHeight="25.0" prefWidth="149.0" text="Select Directory" />
      
-                                  <TextField fx:id="fileTextField" layoutX="39.0" layoutY="141.0" promptText="insert the name file" />
+                                  <TextField fx:id="fileTextField" layoutX="39.0" layoutY="141.0" promptText="insert the name file" styleClass="text-input" />
                               <Button fx:id="faqtbutton" layoutX="726.0" layoutY="423.0" mnemonicParsing="false" onAction="#faqtriggerAction" prefHeight="22.0" prefWidth="33.0" text="?" />
                               <SubScene fx:id="faqtrigger" disable="true" height="434.0" layoutX="185.0" layoutY="15.0" visible="false" width="528.0">
                                 <root>
@@ -213,7 +213,7 @@
             
              </children>
       </AnchorPane>
-      <AnchorPane fx:id="ruleTablePane" prefHeight="500.0" prefWidth="800.0">
+      <AnchorPane fx:id="ruleTablePane" prefHeight="500.0" prefWidth="800.0" stylesheets="@view.css">
          <children>
             <TabPane fx:id="ruleTabPane" prefHeight="500.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
@@ -242,7 +242,7 @@
                               </TableView>
                               <Button fx:id="createRuleButton" layoutX="278.0" layoutY="338.0" mnemonicParsing="false" onAction="#CreateRuleButtonEvent" prefHeight="36.0" prefWidth="143.0" text="Create Rule" />
                               <Button fx:id="saveRuleButton" layoutX="28.0" layoutY="338.0" mnemonicParsing="false" onAction="#Save" prefHeight="36.0" prefWidth="79.0" text="Save Rule" />
-                              <Button fx:id="deleteRuleButton" layoutX="651.0" layoutY="338.0" mnemonicParsing="false" onAction="#Delete" prefHeight="36.0" prefWidth="79.0" text="Delete Rule" />
+                              <Button fx:id="deleteRuleButton" layoutX="651.0" layoutY="338.0" mnemonicParsing="false" onAction="#Delete" prefHeight="36.0" prefWidth="104.0" styleClass="red-button" text="Delete Rule" />
                               <Button fx:id="buttonRefresh1" layoutX="484.0" layoutY="340.0" mnemonicParsing="false" onAction="#refreshTables" prefHeight="33.0" prefWidth="96.0" text="Refresh Table" />
                            </children>
                         </AnchorPane>

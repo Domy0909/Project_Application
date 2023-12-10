@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -31,6 +32,8 @@ public class IftttApp extends Application {
         
         Scene scene = new Scene(root);
         
+        Image icon = new Image("file:IFTTT.png");
+        primaryStage.getIcons().add(icon);
         primaryStage.setTitle("IFTTT APP");
         
         primaryStage.setScene(scene);

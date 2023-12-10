@@ -8,10 +8,20 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-
+/*
+This SizeFileTrigger class implements the Trigger interface. Its main function 
+is to check if the size of a file exceeds a certain threshold in bytes.
+*/
 public class SizeFileTrigger implements Trigger{
-    String filePath;
-    int thresholdBytes;
+    private String filePath;
+    private int thresholdBytes;
+    
+    /*
+    The checkTrigger() method is implemented to verify if the file exists and 
+    if its size exceeds the specified threshold. It returns true if the file 
+    exists and its size surpasses the threshold; otherwise, it returns false. 
+    If the file doesn't exist, it throws an IllegalArgumentException.
+    */
     @Override
     public boolean checkTrigger() {
         File file = new File(filePath);

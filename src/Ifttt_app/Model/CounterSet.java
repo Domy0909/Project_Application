@@ -9,7 +9,12 @@ import javafx.collections.ObservableList;
 
 /**
  *
- * @author aless
+The class provides an interface to manage a set of counters within an 
+* application, enabling addition, removal, and access to the counters within 
+* the set. Additionally, it utilizes the Singleton design pattern to ensure 
+* the existence of a single instance, using getInstance(), of CounterSet 
+* throughout the application's lifecycle The instance is created only if it 
+* hasn't been initialized already.
  */
 public class CounterSet {
     

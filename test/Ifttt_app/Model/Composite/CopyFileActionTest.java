@@ -10,30 +10,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author marco
+ * Test case for the CopyFileAction class, validating the file copying functionality.
  */
 public class CopyFileActionTest {
     
-    public CopyFileActionTest() {
-    }
 
-    /**
-     * Test of getFilePath method, of class CopyFileAction.
-     */
-    @Test
-    public void testGetFilePath() {
-    }
-
-    /**
-     * Test of getDirectoryPath method, of class CopyFileAction.
-     */
-    @Test
-    public void testGetDirectoryPath() {
-    }
-
-    /**
-     * Test of execute method, of class CopyFileAction.
+       /**
+     * Verifies the functionality of copying a file from a source location to a destination.
+     * It instantiates CopyFileAction with a source file path and a destination directory path,
+     * executes the copy operation within the Platform context, and asserts that the execution
+     * of the 'execute()' method returns true, indicating a successful file copy operation.
      */
     @Test
     public void testExecute() {
@@ -44,13 +30,5 @@ public class CopyFileActionTest {
             boolean result = test.execute();
             assertTrue("Execution should return true on success.",result);
         });
-    }
-
-    /**
-     * Test of description method, of class CopyFileAction.
-     */
-    @Test
-    public void testDescription() {
-    }
-    
+    }  
 }

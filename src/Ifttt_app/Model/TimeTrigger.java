@@ -7,13 +7,15 @@ package Ifttt_app.Model;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-
+/*this class TimeTrigger, implementing the Trigger interface, aims to verify if 
+the current time is equal to or later than the time specified within the trigger.*/
 public class TimeTrigger implements Trigger{
     
-    LocalTime timetrigger;
+    private LocalTime timetrigger;
     
-    
-    //questa funzione verifica se il
+    /*The checkTrigger() function compares the current timestamp with the time 
+    specified in the trigger. If the current time is equal to or later than the 
+    trigger's time, it will return true; otherwise, it will return false.*/
     @Override
     public boolean checkTrigger() {
       if(LocalTime.now().compareTo(this.timetrigger) >= 0)   
@@ -30,7 +32,5 @@ public class TimeTrigger implements Trigger{
     public String description() {
       return TimeTrigger.class.getSimpleName()+"\n"+"after "+timetrigger.toString();
     }
-
-   
-   
+  
 }

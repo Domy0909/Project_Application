@@ -28,6 +28,7 @@ public class TriggerCountersCompare implements Trigger{
     
     @Override
     public boolean checkTrigger() {
+
         Integer counterValue1=CounterSet.getInstance().getCounter(countername1).getValue();
         Integer counterValue2=CounterSet.getInstance().getCounter(countername2).getValue();
         
@@ -41,6 +42,7 @@ public class TriggerCountersCompare implements Trigger{
             default:
                 return false;
         }
+
     }
     
     
@@ -55,6 +57,7 @@ public class TriggerCountersCompare implements Trigger{
                 return " ( "+ countername1+" value) \n LessThan \n( "+countername2+" value)";
             case "EqualTo":
                 return " ( "+ countername1+" value) \n EqualTo \n( "+countername2+" value )";
+
         }
         return condition;
             

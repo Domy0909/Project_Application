@@ -5,11 +5,11 @@
 package Ifttt_app.Model;
 
 /**
- *
- * @author aless
+ *The NotTrigger class implements the Trigger interface and reverses the 
+ * behavior of another Trigger object passed as an argument in its constructor.
  */
 public class NotTrigger implements Trigger {
-    Trigger trigger;
+    private Trigger trigger;
 
     @Override
     public boolean checkTrigger() {

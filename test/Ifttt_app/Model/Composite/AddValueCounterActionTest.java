@@ -15,16 +15,16 @@ import org.junit.Before;
  * @author aless
  */
 public class AddValueCounterActionTest {
-    
+    /**
+    * Test case for the AddValueCounterAction class, which verifies the functionality
+   * of adding a value to a counter.
+    */
     public AddValueCounterActionTest() {
     }
 
-    /**
-     * Test of execute method, of class AddValueCounterAction.
-     */
-
-    /**
-     * Test of execute method, of class SetCounterValueAction.
+   /**
+     * Setting up the initial conditions for the tests.
+     * Adds a counter named "setcountertest" with an initial value of 1 to the CounterSet.
      */
     @Before
     public void setup() {
@@ -34,7 +34,10 @@ public class AddValueCounterActionTest {
    
     
     CounterSet cset=CounterSet.getInstance();
-    
+    /**
+     * Verifies the execution of adding a specific value to a counter and checks if
+     * the action has been executed correctly.
+     */
     @Test
     public void testExecute() {
        AddValueCounterAction action=new AddValueCounterAction("setcountertest",99);

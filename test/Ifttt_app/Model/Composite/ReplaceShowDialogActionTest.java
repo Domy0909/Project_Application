@@ -15,24 +15,28 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 /**
- *
- * @author aless
+ * Test case for the ReplaceShowDialogAction class, verifying its functionality to replace
+ * a specific string pattern within a ShowDialogAction with the value of a counter.
  */
+
 public class ReplaceShowDialogActionTest {
     
-    public ReplaceShowDialogActionTest() {
-    }
-
+    
+    /**
+     * Sets up initial conditions by adding a counter named 'showdialogtest' with a value of 0
+     * to the CounterSet.
+     */
      @Before
     public void setUp() {
         Counter c = new Counter("showdialogtest", 0);
         CounterSet cset = CounterSet.getInstance();
-        cset.addCounter(c);
-        
-            // Optional: Additional initialization code
-        
+        cset.addCounter(c);      
     }
-
+    /**
+     * Tests the 'execute()' method of ReplaceShowDialogAction by creating a ShowDialogAction,
+     * replacing a specific string pattern with the value of a counter ('showdialogtest'),
+     * and verifying the successful execution along with the expected description update.
+     */
     @Test
     public void testExecute() {
         Platform.startup(() -> {
@@ -45,6 +49,10 @@ public class ReplaceShowDialogActionTest {
        });
     }
 
+    /**
+     * Tests the 'execute()' method of ReplaceShowDialogAction with a null counter name,
+     * ensuring that the action does not execute successfully and retains the original string pattern.
+     */
     @Test
     public void testExecuteNullCounter() {
        
@@ -56,15 +64,5 @@ public class ReplaceShowDialogActionTest {
             assertEquals("Should be equal", "test $", replaceAction.action.getSpecificstring());
     
     }
-    
-    
-
 }
-
-
-    /**
-     * Test of description method, of class ReplaceShowDialogAction.
-     */
-  
-    
 

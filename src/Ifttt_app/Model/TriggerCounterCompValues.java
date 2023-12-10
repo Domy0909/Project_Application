@@ -49,11 +49,13 @@ public class TriggerCounterCompValues implements Trigger{
             default:
                 return false;
         }
+
     }
 
     @Override
     public String description() {
       switch(condition){
+
             case "GreaterThan":
                 return " ( "+ countername+" value ) \n GreaterThan \n( "+value+" )";
             
@@ -61,6 +63,7 @@ public class TriggerCounterCompValues implements Trigger{
                 return " ( "+ countername+" value ) \n LessThan \n( "+value+" )";
             case "EqualTo":
                 return " ( "+ countername+" value ) \n EqualTo \n( "+value+" )";
+
         }
         return condition;
     }

@@ -10,23 +10,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author marco
+ * Test case for the DeleteFileAction class, evaluating the file deletion functionality.
  */
 public class DeleteFileActionTest {
     
-    public DeleteFileActionTest() {
-    }
-
     /**
-     * Test of getFilePath method, of class DeleteFileAction.
-     */
-    @Test
-    public void testGetFilePath() {
-    }
-
-    /**
-     * Test of execute method, of class DeleteFileAction.
+     * Verifies the 'execute()' method functionality of the DeleteFileAction class,
+     * which deletes a specified file. It instantiates DeleteFileAction with a file path,
+     * executes the deletion operation within the Platform context, and asserts that
+     * the execution of 'execute()' returns true, indicating a successful file deletion.
      */
     @Test
     public void testExecute() {
@@ -38,11 +30,5 @@ public class DeleteFileActionTest {
         });
     }
 
-    /**
-     * Test of description method, of class DeleteFileAction.
-     */
-    @Test
-    public void testDescription() {
-    }
     
 }

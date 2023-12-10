@@ -36,12 +36,12 @@ public class CompositeActionTest {
     @Test
     public void testExecuteCompositeFailure() throws InterruptedException {
         
-        Action successfulAction1 = new ShowDialogAction("test");
-        Action successfulAction2 = new ActionPlayAudio("hello.wav");
+        Action action1 = new ShowDialogAction("test");
+        Action action2 = new ActionPlayAudio("hello.wav");
 
         CompositeAction compositeAction = new CompositeAction();
-        compositeAction.addAction(successfulAction1);
-        compositeAction.addAction(successfulAction2);
+        compositeAction.addAction(action1);
+        compositeAction.addAction(action2);
 
         CountDownLatch latch = new CountDownLatch(1);
 

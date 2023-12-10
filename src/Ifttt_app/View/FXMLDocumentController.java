@@ -319,6 +319,10 @@ public class FXMLDocumentController implements Initializable {
     private Button faqtbutton;
     @FXML
     private Button faqtbutton1;
+    @FXML
+    private Button buttonRefresh;
+    @FXML
+    private Button buttonRefresh1;
 
     /**
      * Initializes the controller class.
@@ -1331,6 +1335,12 @@ private void CreateAction(ActionEvent event) {
 
         faqaction.setRoot(background);
   }
+
+    @FXML
+    private void refreshTables(ActionEvent event) {
+        counterTable.refresh();
+        ruleTable.refresh();
+    }
 }
  
   

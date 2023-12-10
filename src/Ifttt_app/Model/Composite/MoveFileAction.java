@@ -16,6 +16,11 @@ import javafx.application.Platform;
  *
  * @author marco
  */
+/**
+ * Represents an action to move a file to a specified directory.
+ * Implements the Action interface.
+ * 
+ */
 public class MoveFileAction implements Action{
     private final String filePath;
     private final String directoryPath;
@@ -33,6 +38,12 @@ public class MoveFileAction implements Action{
         return directoryPath;
     }
     
+    /**
+     * Executes the action by moving the specified file to the specified directory.
+     * Uses Platform.runLater to execute the file move operation on the JavaFX application thread.
+     *
+     * @return True if the action was executed successfully
+     */
     
 
     @Override

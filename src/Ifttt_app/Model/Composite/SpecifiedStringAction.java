@@ -13,10 +13,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.application.Platform;
 
-
+/**
+ * Represents an action to append a specified string to a file.
+ * Implements the Action interface.
+ * Provides methods to execute the action and obtain a description of the action.
+ */
 public class SpecifiedStringAction implements Action {
     String filePath;
     private String contentToAppend;
+    
+    /**
+     * Executes the action by appending the specified content to the specified file.
+     * Uses Platform.runLater to execute the file append operation on the JavaFX application thread.
+     *
+     * 
+     */
     @Override
     public boolean execute() {
        Platform.runLater(() -> {
@@ -33,7 +44,8 @@ public class SpecifiedStringAction implements Action {
         }); 
        return true;
     }
-
+    
+     
     public SpecifiedStringAction(String filePath, String contentToAppend) {
         this.filePath = filePath;
         this.contentToAppend = contentToAppend;

@@ -19,7 +19,7 @@ import javafx.scene.control.Alert;
  * The description method provides a simple description of the action, including the type of action and the program path.
  */
 public class RunExternalProgramAction implements Action {
-    private final String programPath;
+   private final String programPath;
    private final ArrayList<String> arguments;
    private int exitcode;
    private boolean result=false;

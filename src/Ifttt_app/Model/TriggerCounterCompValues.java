@@ -1,6 +1,8 @@
 
 package Ifttt_app.Model;
 
+import java.util.Objects;
+
 /**
  * This class represents a trigger for comparing a counter value to a specified integer value.
  * It implements the Trigger interface and provides methods to check the trigger condition
@@ -45,7 +47,7 @@ public class TriggerCounterCompValues implements Trigger{
             case "LessThan":
                 return counterValue < value;
             case "EqualTo":
-                return counterValue == value;
+                return Objects.equals(counterValue, value);
             default:
                 return false;
         }

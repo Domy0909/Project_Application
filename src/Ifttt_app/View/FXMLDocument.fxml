@@ -54,7 +54,7 @@
             <Label fx:id="LdayDate" layoutX="40.0" layoutY="106.0" text="Day" />
             <Label fx:id="LmonthDate" layoutX="94.0" layoutY="106.0" text="Month" />
             <Label fx:id="LyearDate" layoutX="146.0" layoutY="106.0" text="Year" />
-             <TextField fx:id="externalTxt" layoutX="38.0" layoutY="163.0" promptText="Insert status code 0 o 1" />
+             <TextField fx:id="externalTxt" layoutX="38.0" layoutY="163.0" promptText="Insert status code " />
                               <TableView fx:id="triggertable" layoutX="400.0" layoutY="24.0" prefHeight="361.0" prefWidth="360.0">
                                 <columns>
                                   <TableColumn fx:id="triggerList" prefWidth="75.0" text="Triggers" />

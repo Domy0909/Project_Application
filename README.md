@@ -1,5 +1,3 @@
-# Project_Application
-
 # Task Automation Application (IFTTT-like)
 
 ## Project Description
